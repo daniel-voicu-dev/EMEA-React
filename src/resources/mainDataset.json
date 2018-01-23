@@ -1,0 +1,129 @@
+[
+    {
+        "type": "group",
+        "id": 111,
+        "content": {
+            "title": "INTERIOR TRIMS & DÉCOR ITEMS",
+            "id": 9,
+            "image": "http://via.placeholder.com/1000x500/f1f1f1/73a1a9",
+            "children": [
+                {
+                    "productId": "PRODA",
+                    "partId": "094499-02-000",
+                    "title": "SHADE-SCREEN DR,516X850",
+                    "uom": "EA",
+                    "currency": "$",
+                    "price": "429.99",
+                    "addToCartLink": "/addtocartLink",
+                    "isFavorite": false,
+                    "addToFavoritesLink" : "/addtofavorite",
+                    "removeFromFavoritesLinik": "/removefromfavorites"
+                },
+                {
+                    "productId": "PRODB",
+                    "partId": "144628-03-CHT",
+                    "title": " EXTINGUISHER-FIRE,DRY,1A10BC",
+                    "uom": "EA",
+                    "currency": "$",
+                    "price": "132.99",
+                    "addToCartLink": "/addtocartLink",
+                    "isFavorite": false,
+                    "addToFavoritesLink" : "/addtofavorite",
+                    "removeFromFavoritesLinik": "/removefromfavorites"
+                },
+                {
+                    "productId": "PRODC",
+                    "partId": "094499-02-000",
+                    "title": "SHADE-SCREEN DR,516X850",
+                    "uom": "EA",
+                    "currency": "$",
+                    "price": "429.99",
+                    "addToCartLink": "/addtocartLink",
+                    "isFavorite": false,
+                    "addToFavoritesLink" : "/addtofavorite",
+                    "removeFromFavoritesLinik": "/removefromfavorites"
+                },
+                {
+                    "productId": "PRODD",
+                    "partId": "144628-03-CHT",
+                    "title": " EXTINGUISHER-FIRE,DRY,1A10BC",
+                    "uom": "EA",
+                    "currency": "$",
+                    "price": "132.99",
+                    "addToCartLink": "/addtocartLink",
+                    "isFavorite": false,
+                    "addToFavoritesLink" : "/addtofavorite",
+                    "removeFromFavoritesLinik": "/removefromfavorites"
+                },
+                {
+                    "productId": "PRODE",
+                    "partId": "094499-02-000",
+                    "title": "SHADE-SCREEN DR,516X850",
+                    "uom": "EA",
+                    "currency": "$",
+                    "price": "429.99",
+                    "addToCartLink": "/addtocartLink",
+                    "isFavorite": false,
+                    "addToFavoritesLink" : "/addtofavorite",
+                    "removeFromFavoritesLinik": "/removefromfavorites"
+                },
+                {
+                    "productId": "PRODF",
+                    "partId": "144628-03-CHT",
+                    "title": " EXTINGUISHER-FIRE,DRY,1A10BC",
+                    "uom": "EA",
+                    "currency": "$",
+                    "price": "132.99",
+                    "addToCartLink": "/addtocartLink",
+                    "isFavorite": false,
+                    "addToFavoritesLink" : "/addtofavorite",
+                    "removeFromFavoritesLinik": "/removefromfavorites"
+                },
+                {
+                    "productId": "PRODG",
+                    "partId": "094499-02-000",
+                    "title": "SHADE-SCREEN DR,516X850",
+                    "uom": "EA",
+                    "currency": "$",
+                    "price": "429.99",
+                    "addToCartLink": "/addtocartLink",
+                    "isFavorite": false,
+                    "addToFavoritesLink" : "/addtofavorite",
+                    "removeFromFavoritesLinik": "/removefromfavorites"
+                },
+                {
+                    "productId": "PRODH",
+                    "partId": "144628-03-CHT",
+                    "title": " EXTINGUISHER-FIRE,DRY,1A10BC",
+                    "uom": "EA",
+                    "currency": "$",
+                    "price": "132.99",
+                    "addToCartLink": "/addtocartLink",
+                    "isFavorite": false,
+                    "addToFavoritesLink" : "/addtofavorite",
+                    "removeFromFavoritesLinik": "/removefromfavorites"
+                }
+            ]
+        }
+    },
+    {
+        "type": "group",
+        "id": 1,
+        "content": {
+            "title": "Winnebago 2018",
+            "id": 9,
+            "image": "http://via.placeholder.com/1000x500",
+            "children": []
+        }
+    },
+    {
+        "type": "group",
+        "id": 11,
+        "content": {
+            "title": "WF727K",
+            "id": 9,
+            "image": "http://via.placeholder.com/1000x500/73a1a9/ffffff",
+            "children": []
+        }
+    }
+]

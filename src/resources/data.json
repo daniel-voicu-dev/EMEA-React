@@ -1,0 +1,32 @@
+
+{
+  "tree": {},
+  "main": {}
+}
+axios -> middleare - > 
+{
+  "tree": [
+    {},{},{}
+  ],
+  "main": {
+    "type": "group",
+    "title": "GWF2007",
+    "image": "/image.jpg",
+    "products" : [{},{},{}]    
+  }
+}
+
+//or
+
+{
+  "tree": [
+    {},{},{}
+  ],
+  "main": {
+    "type": "product",
+    "title": "Product A",
+    "id": "PRODA",
+    "image": "/image.jpg",
+    "variantCombination" : [{},{},{}]
+  }
+}

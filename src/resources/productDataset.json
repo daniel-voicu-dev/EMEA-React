@@ -1,0 +1,68 @@
+{
+  "type": "product",
+  "content": {
+    "title": "SCREEN DOOR SHADE",
+    "productId": "PRODA",
+    "productNumber": "32589-44",
+    "summary": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>",
+    "price": 179.00,
+    "currency": "$",
+    "options": [
+      {
+        "label": "Color",
+        "values": [{
+            "label": "Blue",
+            "value": "C01"
+          },
+          {
+            "label": "Green",
+            "value": "C02"
+          }
+        ]
+      },
+      {
+        "label": "Size",
+        "values": [{
+            "label": "S",
+            "value:": "S01"
+          },
+          {
+            "label": "M",
+            "value": "S02"
+          },
+          {
+            "label": "L",
+            "value": "S03"
+          }
+        ]
+      },
+      {
+        "label": "Configuration",
+        "values": [{
+            "label": "Maple with Blue & Red",
+            "value": "Z01"
+          },
+          {
+            "label": "Cherry with Brown & Black",
+            "value": "Z02"
+          }
+        ]
+      }
+    ],
+    "images": ["http://via.placeholder.com/1000x1000/f1f1f1/73a1a9","http://via.placeholder.com/1000x1000","http://via.placeholder.com/1000x1000/73a1a9/ffffff"],
+    "stock": 20,
+    "tabs": [
+      {
+        "label": "Description",
+        "content" : "<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p><p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam.</p>"
+      },
+      {
+        "label": "Description 2",
+        "content" : "<p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p><p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam.</p>"
+      }
+    ]
+    
+
+
+  }
+}
