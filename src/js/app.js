@@ -5,12 +5,9 @@ import {Provider} from 'react-redux';
 import Layout from "./components/Layout";
 import store from "./store";
 
-
-// import treeDatasource from '../resources/treeDataset.json';
-import mainDatasource from '../resources/mainDataset.json';
-import productDatasource from '../resources/productDataset.json';
-
-
+import getStart from "../resources/getStart.json";
+import getUser from "../resources/getUser.json";
+import getReview from "../resources/getReview.json";
 
 const app = document.getElementById("app");
 ReactDOM.render(<Provider store={store}><Layout /></Provider>, app);

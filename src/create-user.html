@@ -1,0 +1,135 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Edele</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    label {
+      font-weight: 500;
+    }
+    strong {
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+  <main id="app">
+    <header class="container-fluid">
+      <div class="row">
+        <h1 class="w-100 mb-3 display-4 bg-primary text-white text-center py-3 d-block font-weight-light mb-4">Directions EMEA</h1>
+      </div>
+    </header>
+    <div class="container">
+      <div class="row">
+        <article class="col-12">
+          <div class="row">
+            <div class="col-4">
+              <img class="img-fluid" src="http://placehold.it/1600x1600" alt="" />
+            </div>
+            <div class="col-8 d-flex align-items-center flex-wrap">
+              <div>
+                <h2 class="h2 font-weight-light text-primary">Welcome to Directions EMEA registration process.</h2>
+                <p>We could not find a user for your email address. In order to continue please create an account.</p>
+                <form>
+                  <div class="form-group">
+                    <label for="Email">Email</label>
+                    <input type="email" id="Email" class="form-control" value="" />
+                  </div>
+                  <div class="form-group">
+                      <label for="Password">Password</label>
+                      <input type="email" id="Password" class="form-control" />                      
+                      <small class="invalid-feedback">
+                          Invalid password
+                      </small>
+                  </div>
+                  <div class="form-group">
+                      <label for="FullName">Full Name</label>
+                      <input type="email" id="FullName" class="form-control" /> 
+                  </div>
+                  <div class="form-group">
+                      <label for="Address">Address</label>
+                      <input type="email" id="Address" class="form-control" /> 
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group col">
+                          <label for="City">City</label>
+                          <input type="email" id="City" class="form-control" /> 
+                      </div>
+                      <div class="form-group col">
+                          <label for="ZipCode">Zip Code</label>
+                          <input type="email" id="ZipCode" class="form-control" /> 
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="Country">Country</label>
+                      <select type="email" id="Country" class="form-control">
+                        <option value="">Select a country</option>
+                        <option value="US">United States of America</option>
+                        <option value="CA">Canada</option>
+                      </select> 
+                  </div>
+                  <div class="form-group">
+                      <p class="alert alert-primary">There is no company assosciated with this email. You need to <a href="#" data-toggle="modal" data-target="#AddCompanyModal"><u><strong>create a Company</strong></u></a> to continue.</p> 
+                      <label for="Company">Company</label>
+                      <select type="email" id="Company" class="form-control">
+                        <option value="">Select a company</option>
+                        <option value="C1">Company 1</option>
+                        <option value="C2">Company 2</option>
+                      </select>
+                      <button type="button" class="btn btn-dark mt-2" data-toggle="modal" data-target="#AddCompanyModal">Add a company</button> 
+                      <div id="AddCompanyModal" class="modal" tabindex="-1" role="dialog">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title">Add Company</h5>
+                                <button type="button" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form action="">
+                                    <div class="form-group">
+                                        <label for="CompanyAdd">Company</label>
+                                        <input type="text" id="CompanyAdd" class="form-control" /> 
+                                    </div>
+                                </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                        <label class="form-check-label" for="inlineCheckbox1">I have read and agreed with <u>Terms and Conditions</u></label>
+                      </div>
+                  </div>
+                  
+                  <div class="form-group">
+                      <button type="button" class="px-5 btn btn-primary">Continue</button>
+                  </div> 
+                </form>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+  
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.js"></script>
+
+</body>
+</html>

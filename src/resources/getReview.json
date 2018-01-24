@@ -1,0 +1,36 @@
+{
+  "users": [
+    {
+      "name": "Person 1",
+      "id": 1
+    },
+    {
+      "name": "Person 2",
+      "id": 2
+    },
+    {
+      "name": "Person 3",
+      "id": 3
+    },
+    {
+      "name": "Person 4",
+      "id": 4
+    },
+    {
+      "name": "Person 5",
+      "id": 5
+    }
+  ],
+  "company": {
+    "name": "Company 1",
+    "country": "United States of America",
+    "state": "Washington",
+    "city": "Seattle",
+    "zip": "98101",
+    "address": "497 Evergreen Rd."
+
+  },
+  "quantity": 5,
+  "price": 1500.00,
+  "currency": "Euro"
+}
