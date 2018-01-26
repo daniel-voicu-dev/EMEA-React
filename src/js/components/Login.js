@@ -12,6 +12,7 @@ import store from "../store";
   return {
     email: store.user.email,
     domain: store.user.domain,
+    token: store.user.token,
     error: store.user.error
   }
 })

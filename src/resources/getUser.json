@@ -1,12 +1,9 @@
 [
   {
+    "username": "test@test.com",
     "email": "test@test.com",
+    "company": "Company 1",
     "password": "test",
     "token": "ABCD"    
-  },
-  {
-    "email": "test2@test.com",
-    "password": "test2",
-    "token": "1234"
   }
 ]

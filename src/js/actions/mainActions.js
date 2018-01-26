@@ -1,23 +1,10 @@
 import axios from 'axios';
 import store from "../store";
 
-export function fetchTree() {
-  return (dispatch) => {
-   axios.get("resources/treeDataset.json").then(r => {
-    //  console.log("FETCHEDINFO", r.data);
-      dispatch({type: "FETCH_TREE_FULFILLED", payload: r.data}); 
-    }).catch((error) => {
-      dispatch({type: "FETCH_TREE_REJECTED", payload: error});
-    })
-  }
-
-}
-
 export function getStepOne(history, email) {
   return (dispatch) => {   
-    axios.get("resources/getStart.json").then(r=>{
-      let isUser = r.data.userExists
-      isUser = r.data.email === email;  // FOR DEVELOPMENT ONLY MUST BE DELEATED
+    axios.get("resources/getStart.json").then(r=>{     
+      let isUser = r.data.Email === email;  // FOR DEVELOPMENT ONLY MUST BE DELEATED
       if (isUser) {
         let email = r.data.email;
         let domain = "@" + email.split("@")[1];

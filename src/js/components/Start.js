@@ -53,15 +53,14 @@ export default class Start extends Component {
                 <div className="col-4">
                   <img className="img-fluid" src="http://placehold.it/1600x1600" alt="" />
                 </div>
-                <div className="col-8 d-flex align-items-center flex-wrap">
-                  
+                <div className="col-8 d-flex align-items-center flex-wrap">                  
                   <div>
                     <h2 className="h2 font-weight-light text-primary">Welcome to Directions EMEA registration process.</h2>
                     <p className="">In order to continue please enter your business email</p>
                     <p className={alertClass}>Please fill in all the fields to continue.</p>
                     <form onSubmit={(e) => this.blockSubmit(e)}>
                       <div className="form-group">                        
-                        <Email required={true} readonly={false}  getEmail={(email) => {this.getEmail(email)}}/>
+                        <Email required={true} readonly={false} getEmail={(email) => {this.getEmail(email)}}/>
                       </div>
                       <div className="form-group">
                         <button type="button" className="px-5 btn btn-primary" onClick={(e) => this.handleSend(e)}>Next</button>   

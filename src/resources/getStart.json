@@ -1,5 +1,7 @@
 {
-  "userExists": true,
-  "username": "UserName",
-  "email": "test@test.com"   
+  "Name": "Illidan Stormrage",
+  "Login": "test@test.com",
+  "CompanyNo": "Company1",
+  "CompanyName": "Company 1",
+  "PhoneNo": "555-1212121
 }

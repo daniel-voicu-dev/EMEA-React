@@ -1,0 +1,28 @@
+{
+  "eventItems": [
+    {
+      "eventName": "EMEA ASIA",
+      "eventNo": "EVENTASIA",
+      "eventDescription" : "EMEA ASIA DESCRIPTION",
+      "itemNo": "EventASIAItem1",
+      "itemDescription": "EMEA ASIA ITEM1 DESCRIPTION",
+      "itemPrice": 1500.00  
+    },
+    {
+      "eventName": "EMEA EUROPE",
+      "eventNo": "EVENTEUROPE",
+      "eventDescription" : "EMEA EUROPE DESCRIPTION",
+      "itemNo": "EventEUROPEItem1",
+      "itemDescription": "EMEA EUROPE ITEM1 DESCRIPTION",
+      "itemPrice": 1500.00  
+    },
+    {
+      "eventName": "EMEA AMERICA",
+      "eventNo": "EVENTAMERICA",
+      "eventDescription" : "EMEA AMERICA DESCRIPTION",
+      "itemNo": "EventAMERICAItem1",
+      "itemDescription": "EMEA AMERICA ITEM1 DESCRIPTION",
+      "itemPrice": 1500.00  
+    }
+  ]
+}

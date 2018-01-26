@@ -63,7 +63,7 @@ export default class ReviewRegister extends Component {
                   <small>* prices do not include VAT or other applicable taxes</small>
                 </div>
                 <div className="mt-3">
-                  <Link to="/add-new-user" className="btn btn-dark px-5 mr-3">Add new user</Link>
+                  <Link to="/add-new-member" className="btn btn-dark px-5 mr-3">Add new user</Link>
                   <Link to="/registration-completed" className="btn btn-primary px-5">Send the registration</Link>
                 </div>
               </div>

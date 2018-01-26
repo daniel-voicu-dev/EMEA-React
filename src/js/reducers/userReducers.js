@@ -1,11 +1,11 @@
-export default function counter(state = {id: "", token: "", domain: "", email: "", company: "", error: "" }, {type,payload}) {   
+export default function counter(state = {Name: "", Token: "", Domain: "", Email: "", CompanyNo: "",CompanyName: "", error: "", users: [] }, {type,payload}) {   
   switch (type) {   
   case "FETCH_EMAIL_FULFILLED":
-    return {...state, email: payload};
+    return {...state, Email: payload};
   case "FETCH_DOMAIN_FULFILLED":
-    return {...state, domain: payload}; 
+    return {...state, Domain: payload}; 
   case "FETCH_USER_FULFILLED": 
-    return {...state, id: payload.id, token: payload.token};
+    return {...state, Name: payload.Name, Token: payload.Token, CompanyName: payload.CompanyName, CompanyNo: payload.CompanyNo};
   case "ERROR_CREDENTIALS_UPDATE":
     return {...state, error: payload }     
   case "ERROR_RESET":
