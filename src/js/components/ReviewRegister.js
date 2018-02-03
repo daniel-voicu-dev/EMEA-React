@@ -1,31 +1,38 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import Header from "./Header";
 
 import axios from 'axios';
 
+@connect ((store) => {
+  return {
+    users: store.order.Users,
+    company: store.order.Company,
+    price: store.event.itemPrice
+  }
+})
 export default class ReviewRegister extends Component {  
   constructor(props) {
     super(props);
     this.state = {      
-      users: [],      
-      company: {},
-      quantity: null,
-      price: 160.00,
-      currency: ""
+      // users: props.users,      
+      // company: props.company,
+      // quantity: props.users.length,
+      // price: props.price,
+      currency: "EURO"
     };
   }  
-  componentWillMount() {
-    axios.get("resources/getReview.json").then((r)=> {
-      this.setState({users: r.data.users});
-      this.setState({company: r.data.company});
-      this.setState({quantity: r.data.quantity});
-      this.setState({price: r.data.price});
-      this.setState({currency: r.data.currency});
-    });
-  }
-  render() {   
-    let hasCompany = Object.keys(this.state.company).length > 0 ? true : false;
+  // componentWillMount() {
+  //   axios.get("resources/getReview.json").then((r)=> {
+  //     this.setState({users: r.data.users});
+  //     this.setState({company: r.data.company});
+  //     this.setState({quantity: r.data.quantity});
+  //     this.setState({price: r.data.price});
+  //     this.setState({currency: r.data.currency});
+  //   });
+  // }
+  render() {      
     return (
       <React.Fragment>
       <Header />
@@ -43,24 +50,20 @@ export default class ReviewRegister extends Component {
                 <div className="">
                   <p className="mb-1 text-primary font-weight-bold">These are the participants included in your registration:</p>
                   <ul className="list-unstyled">
-                    {this.state.users.map((o,i) => {return (<li key={i}><strong>{o.name}</strong></li>)})}                   
+                    {this.props.users.map((o,i) => {return (<li key={i}><strong>{o.Name}</strong></li>)})}                   
                   </ul>
-                  <p className="mb-1 text-primary font-weight-bold">Company details:</p>                  
-                    { hasCompany === true &&    
+                  <p className="mb-1 text-primary font-weight-bold">Company details:</p>  
                       <ul className="list-unstyled">                    
-                        <li><strong>{this.state.company.name}</strong></li>
-                        <li>{this.state.company.address}</li>
-                        <li>{this.state.company.state}</li>
-                        <li>{this.state.company.city}, {this.state.company.zip}</li>
-                        <li>{this.state.company.country}</li>
-                      </ul>
-                    }                  
-                  { this.state.quantity !== null &&  
+                        <li><strong>{this.props.company.CompanyName}</strong></li>
+                        <li>{this.props.company.Address}</li>
+                        <li>{this.props.company.State}</li>
+                        <li>{this.props.company.City}, {this.props.company.PostalCode}</li>
+                        <li>{this.props.company.Country}</li>
+                      </ul> 
                     <p className="mb-0 text-primary font-weight-bold">
-                      Order total: {this.state.quantity} x {this.state.price} EURO = {this.state.quantity*this.state.price} {this.state.currency}*
+                      Order total: {this.props.users.length} x {this.props.price} {this.props.currency} = {this.props.users.length*this.props.price} {this.state.currency}*
                     </p>
-                  }
-                  <small>* prices do not include VAT or other applicable taxes</small>
+                    <small>* prices do not include VAT or other applicable taxes</small>
                 </div>
                 <div className="mt-3">
                   <Link to="/add-new-member" className="btn btn-dark px-5 mr-3">Add new user</Link>

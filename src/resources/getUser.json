@@ -1,9 +1,24 @@
 [
-  {
-    "username": "test@test.com",
-    "email": "test@test.com",
-    "company": "Company 1",
-    "password": "test",
-    "token": "ABCD"    
+  {       
+    "Name": "Illidan Stormrage", 
+    "Token": "YOUARENOTPREPARED", 
+    "Email": "test@test.com", 
+    "CompanyNo": "CompanyNo1",
+    "CompanyName": "Teldrassil",
+    "CompanyList": [
+      {
+        "CompanyNo": "CompanyNo1",
+        "CompanyName": "Teldrassil"
+      },
+      {
+        "CompanyNo": "CompanyNo2",
+        "CompanyName": "Stormwind"
+      },
+      {
+        "CompanyNo": "CompanyNo3",
+        "CompanyName": "Ironforge"
+      }
+    ],  
+    "Password": "test"
   }
 ]

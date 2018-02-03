@@ -5,14 +5,14 @@ import Header from "./Header";
 import Email from "./Email";
 import Password from "./Password";
 
-import { getUser } from '../actions/mainActions';
+import { getUser } from '../actions/userActions';
 import store from "../store";
 
 @connect ((store) => {
   return {
-    email: store.user.email,
-    domain: store.user.domain,
-    token: store.user.token,
+    email: store.user.Email,
+    domain: store.user.Domain,
+    token: store.user.Token,
     error: store.user.error
   }
 })
@@ -21,7 +21,7 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {      
-      email: this.props.email,
+      email: props.email,
       password: "",
       alert: false
     };
@@ -33,16 +33,14 @@ export default class Login extends Component {
     this.setState({password});
   }
   handleSend(e) {
-    let canSend = this.state.email !== "" && this.state.password !== "";
-    console.log(canSend = this.state.email !== "" && this.state.password !== "");
+    let canSend = this.state.email !== "" && this.state.password !== "";   
     if (canSend) {
       this.props.dispatch(getUser(this.props.history, this.state.email, this.state.password));
     } else {
       this.setState({alert: true});      
     }
   }
-  render() {
-    // let canSend = this.state.email !== "" && this.state.password !== "" ? true : false; 
+  render() {   
     let alertClass = this.state.alert === true ? "alert alert-danger" : "alert alert-danger d-none";
     let alertGeneralClass = this.props.error !== "" ? "alert alert-danger" : "alert alert-danger d-none";
     return (

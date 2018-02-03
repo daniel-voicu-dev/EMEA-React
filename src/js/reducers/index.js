@@ -2,6 +2,6 @@ import { combineReducers } from "redux"
 
 import user from "./userReducers"
 import event from "./eventReducers"
-// import main from "./mainReducers"
+import order from "./orderReducers"
 
-export default combineReducers({event,user})
+export default combineReducers({event,user, order})

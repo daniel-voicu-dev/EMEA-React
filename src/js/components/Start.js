@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Header from "./Header";
 import Email from "./Email";
 
-import { getStepOne } from '../actions/mainActions';
+import { getStepOne } from '../actions/userActions';
 import store from "../store";
 
 @connect ((store) => {
@@ -21,11 +21,7 @@ export default class Start extends Component {
       email: "",
       alert: false
     };
-  }  
-  componentWillMount() {
-    console.log("Test",this.props)
-    
-  }
+  }    
   getEmail(email) {
     this.setState({email});     
   }
@@ -36,9 +32,6 @@ export default class Start extends Component {
     } else {
       this.setState({alert: true});      
     }
-  }
-  blockSubmit(e) {
-    e.preventDefault();
   }
   render() {  
     let canSend = this.state.email !== "" ? true : false; 
@@ -58,15 +51,14 @@ export default class Start extends Component {
                     <h2 className="h2 font-weight-light text-primary">Welcome to Directions EMEA registration process.</h2>
                     <p className="">In order to continue please enter your business email</p>
                     <p className={alertClass}>Please fill in all the fields to continue.</p>
-                    <form onSubmit={(e) => this.blockSubmit(e)}>
+                    <div id="form">
                       <div className="form-group">                        
                         <Email required={true} readonly={false} getEmail={(email) => {this.getEmail(email)}}/>
                       </div>
                       <div className="form-group">
                         <button type="button" className="px-5 btn btn-primary" onClick={(e) => this.handleSend(e)}>Next</button>   
-                      </div>
-                      
-                    </form>
+                      </div>                      
+                    </div>
                   </div>
                 </div>
               </div>

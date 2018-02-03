@@ -23,8 +23,7 @@ export default class Event extends Component {
       alert: false
     };
   }  
-  componentWillMount() {
-    console.log(this.props)
+  componentWillMount() {   
     axios.get("resources/getEvent.json").then(r=>{
       let events = r.data.eventItems;
       this.setState({events});

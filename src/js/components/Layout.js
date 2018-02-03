@@ -12,6 +12,7 @@ import ReviewRegister from "./ReviewRegister";
 import RegisterCompleted from "./RegisterCompleted";
 import AddMoreMembers from "./AddMoreMembers";
 import AddNewMember from "./AddNewMember";
+import PickCompany from "./PickCompany";
 import "../../sass/main.sass";
 
 
@@ -38,6 +39,7 @@ export default class Layout extends Component {
           <Route path='/registration-completed' component={RegisterCompleted} />
           <Route path='/add-more-members' component={AddMoreMembers} />
           <Route path='/add-new-member' component={AddNewMember} />
+          <Route path='/pick-company' component={PickCompany} />
         </React.Fragment>
       </HashRouter>
     );

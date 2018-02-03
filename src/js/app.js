@@ -10,6 +10,7 @@ import getStart from "../resources/getStart.json";
 import getUser from "../resources/getUser.json";
 import getReview from "../resources/getReview.json";
 import getEvent from "../resources/getEvent.json";
+import getCompany from "../resources/getCompany.json";
 
 const app = document.getElementById("app");
 ReactDOM.render(<Provider store={store}><Layout /></Provider>, app);

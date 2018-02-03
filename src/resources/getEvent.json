@@ -14,7 +14,7 @@
       "eventDescription" : "EMEA EUROPE DESCRIPTION",
       "itemNo": "EventEUROPEItem1",
       "itemDescription": "EMEA EUROPE ITEM1 DESCRIPTION",
-      "itemPrice": 1500.00  
+      "itemPrice": 1200.00  
     },
     {
       "eventName": "EMEA AMERICA",
@@ -22,7 +22,7 @@
       "eventDescription" : "EMEA AMERICA DESCRIPTION",
       "itemNo": "EventAMERICAItem1",
       "itemDescription": "EMEA AMERICA ITEM1 DESCRIPTION",
-      "itemPrice": 1500.00  
+      "itemPrice": 1000.00  
     }
   ]
 }

@@ -1,0 +1,35 @@
+{       
+  "Name": "Illidan Stormrage", 
+  "Email": "test@test.com", 
+  "CompanyNo": "CompanyNo2",
+  "CompanyName": "Teldrassil",
+  "CompanyList": [
+    {
+      "CompanyNo": "CompanyNo1",
+      "CompanyName": "Teldrassil",
+      "Address": "Str. Elune",
+      "City": "Dalaran",
+      "State": "Teldrassil",
+      "PostalCode": "91000",
+      "CountryCode": "US"
+    },
+    {
+      "CompanyNo": "CompanyNo2",
+      "CompanyName": "Elwynn Forrest",
+      "Address": "Str. Anduin",
+      "City": "Stormwind",
+      "State": "Elwynn Forrest",
+      "PostalCode": "91100",
+      "CountryCode": "US"
+    },
+    {
+      "CompanyNo": "CompanyNo3",
+      "CompanyName": "Dun Morogh",
+      "Address": "Str. Smelt",
+      "City": "Ironforge",
+      "State": "Dun Morogh",
+      "PostalCode": "91200",
+      "CountryCode": "US"
+    }
+  ]  
+}

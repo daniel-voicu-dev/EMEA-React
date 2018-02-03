@@ -1,4 +1,4 @@
-export default function counter(state = {Name: "", Token: "", Domain: "", Email: "", CompanyNo: "",CompanyName: "", error: "", users: [] }, {type,payload}) {   
+export default function counter(state = {Name: "", Token: "", Domain: "", Email: "", CompanyNo: "",CompanyName: "", error: "", CompanyList: [] }, {type,payload}) {   
   switch (type) {   
   case "FETCH_EMAIL_FULFILLED":
     return {...state, Email: payload};
