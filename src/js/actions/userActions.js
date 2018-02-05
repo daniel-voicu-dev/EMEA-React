@@ -12,6 +12,9 @@ export function getStepOne(history, email) {
         dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
         history.push("/login");
       } else {
+        let domain = "@" + email.split("@")[1];
+        dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
+        dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
         history.push("/create-user");
       }
     })

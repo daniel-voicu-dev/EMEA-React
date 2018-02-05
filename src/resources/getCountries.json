@@ -1,0 +1,24 @@
+{
+  "CountryList": [
+    {
+      "Name": "United States of America",
+      "EUCode": "",
+      "Code": "US"
+    },
+    {
+      "Name": "Canada",
+      "EUCode": "",
+      "Code": "CA"
+    },
+    {
+      "Name": "France",
+      "EUCode": "FR",
+      "Code": "FR"
+    },
+    {
+      "Name": "Germany",
+      "EUCode": "DE",
+      "Code": "DE"
+    }
+  ]
+}
