@@ -9,7 +9,8 @@ import store from "../store";
 
 @connect ((store) => {
   return {
-    user: store.user
+    user: store.user,
+    event: store.event
   }
 })
 
@@ -22,6 +23,11 @@ export default class Start extends Component {
       alert: false
     };
   }    
+  // componentWillMount() {
+  //   if (Object.keys(this.props.event).length === 0) {
+  //     this.props.history.push("/");
+  //   }
+  // }
   getEmail(email) {
     this.setState({email});     
   }

@@ -12,7 +12,7 @@ export default class Select extends Component {
     return (
       <select className="form-control" id={this.props.id} required={this.props.required} readOnly={readonly} onChange={(e)=> this.props.getValue(e.currentTarget.value)} value={value}>
         <option value="">{this.props.firstOption}</option>
-        {this.props.options.map((o,i)=>{ return( <option key={i} value={o.CompanyNo}>{o.CompanyName}</option>) })}
+        {this.props.options.map((o,i)=>{ return( <option key={i} value={o.label}>{o.value}</option>) })}
       </select>
     );
   }

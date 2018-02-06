@@ -13,7 +13,7 @@ import store from "../store";
     email: store.user.Email,
     domain: store.user.Domain,
     token: store.user.Token,
-    error: store.user.error
+    error: store.user.error   
   }
 })
 
@@ -26,6 +26,7 @@ export default class Login extends Component {
       alert: false
     };
   }  
+  
   getEmail(email) {
     this.setState({email});
   }

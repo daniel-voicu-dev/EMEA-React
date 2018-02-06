@@ -5,6 +5,7 @@ import Header from "./Header";
 import axios from 'axios';
 
 import { setEvent } from '../actions/eventActions';
+import { getCountries } from '../actions/userActions';
 import store from "../store";
 
 @connect ((store) => {
@@ -28,6 +29,7 @@ export default class Event extends Component {
       let events = r.data.eventItems;
       this.setState({events});
     })    
+    this.props.dispatch(getCountries());
   }  
   setEvent(e) {
     let selectedEvent = this.state.events.filter(x=>x.eventNo === e.currentTarget.value)[0] !== undefined ? this.state.events.filter(x=>x.eventNo === e.currentTarget.value)[0] : {};

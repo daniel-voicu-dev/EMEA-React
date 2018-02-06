@@ -24,9 +24,8 @@ import "../../sass/main.sass";
 })
 
 
-export default class Layout extends Component {
-  render() {
-    console.log(this.props);
+export default class Layout extends Component {  
+  render() {    
     return (
       <HashRouter basename="/">
         <React.Fragment>
