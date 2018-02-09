@@ -5,10 +5,15 @@ import bootstrap from "bootstrap";
 import {apiDomain} from "./variables";
 export function getStepOne(history, email) {
   return (dispatch) => {   
-    axios.get("resources/getStart.json").then(r=>{     
-      let isUser = r.data.Login === email;  // FOR DEVELOPMENT ONLY MUST BE DELEATED
-      if (isUser) {
-        let email = r.data.Login;
+    let postDomain = apiDomain + "/api/personinformation";
+    let sendObj = {
+      "Login": email,      
+      "EventNo": "EVT_00009"
+    };  
+    axios.post(postDomain, sendObj).then(r=>{
+      console.log(r.data);
+      if (r.data.No !== null && r.data.No !== "") {
+        let email = r.data.Email;
         let domain = "@" + email.split("@")[1];
         dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
         dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
@@ -19,7 +24,22 @@ export function getStepOne(history, email) {
         dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
         history.push("/create-user");
       }
-    })
+    });
+    // axios.get("resources/getStart.json").then(r=>{     
+    //   let isUser = r.data.Login === email;  // FOR DEVELOPMENT ONLY MUST BE DELEATED
+    //   if (isUser) {
+    //     let email = r.data.Login;
+    //     let domain = "@" + email.split("@")[1];
+    //     dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
+    //     dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
+    //     history.push("/login");
+    //   } else {
+    //     let domain = "@" + email.split("@")[1];
+    //     dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
+    //     dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
+    //     history.push("/create-user");
+    //   }
+    // })
   }
 }
 
@@ -43,6 +63,15 @@ export function getUser(history, email, password) {
     // })
     axios.post(postDomain, sendObj).then(r=>{
       console.log(r.data);
+      if (r.data.Login !== null && r.data.Login !== "" ) {    
+        dispatch({type: "GET_TOKEN", payload: r.data.Token});    
+        dispatch({type: "ERROR_RESET", payload: ""});
+        history.push("/pick-company");
+      } else {
+        dispatch({type: "ERROR_CREDENTIALS_UPDATE", payload: "Wrong credentials. Please try again."});
+      }
+    }).catch((error) => {
+      dispatch({type: "ERROR_CREDENTIALS_UPDATE", payload: "Wrong credentials. Please try again."});
     });
   }
 }
@@ -54,6 +83,24 @@ export function getCountries() {
       dispatch({type: "FETCH_COUNTRIES_FULFILLED", payload: r.data.Countries});   
     });
   }
+}
+
+export function getUserInfo() {
+  let postDomain = apiDomain + "/api/personinformation";  
+  let sendObj = {
+    "Login": store.getState().user.Email,      
+    "EventNo": "EVT_00009"
+    // "Token": store.getState().user.Token
+  }
+  return (dispatch) => {
+    axios.post(postDomain, sendObj).then(r=>{  
+      console.log(r.data); 
+      dispatch({type: "FETCH_USER_FULFILLED", payload: r.data});
+      dispatch({type: "SET_COMPANY", payload: r.data.Company});
+      dispatch({type: "GET_COMPANIES", payload: r.data.CompaniesForDomain});
+    });
+  }
+ 
 }
 
 export function createUser(history,data) {
@@ -72,7 +119,8 @@ export function createUser(history,data) {
     };  
     console.log(sendObj);
     axios.post(postDomain, sendObj).then(r => {      
-      console.log(r.data);      
+      console.log(r.data);    
+      history.push("/login");  
     });
   }
 }

@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import Header from "./Header";
 
 import axios from 'axios';
+import { getCompanyInfo } from '../actions/orderActions';
 
 @connect ((store) => {
   return {
@@ -20,7 +21,12 @@ export default class ReviewRegister extends Component {
       // company: props.company,
       // quantity: props.users.length,
       // price: props.price,
-      currency: "EURO"
+      currency: "EURO",
+      CompanyAddress: "Test Address",
+      CompanyState: "Washington",
+      CompanyCity: "Seattle",
+      CompanyCountry: "United States of America",
+      CompanyPostalCode: "98101"
     };
   }  
   // componentWillMount() {
@@ -32,6 +38,9 @@ export default class ReviewRegister extends Component {
   //     this.setState({currency: r.data.currency});
   //   });
   // }
+  componentWillMount() {
+    this.props.dispatch(getCompanyInfo(this.state.user.company.CompanyNo))
+  }
   render() {      
     return (
       <React.Fragment>
@@ -54,11 +63,11 @@ export default class ReviewRegister extends Component {
                   </ul>
                   <p className="mb-1 text-primary font-weight-bold">Company details:</p>  
                       <ul className="list-unstyled">                    
-                        <li><strong>{this.props.company.CompanyName}</strong></li>
-                        <li>{this.props.company.Address}</li>
-                        <li>{this.props.company.State}</li>
-                        <li>{this.props.company.City}, {this.props.company.PostalCode}</li>
-                        <li>{this.props.company.Country}</li>
+                        <li><strong>{this.props.company.Name}</strong></li>
+                        <li>{this.state.CompanyAddress}</li>
+                        <li>{this.state.CompanyState}</li>
+                        <li>{this.state.CompanyCity}, {this.state.CompanyPostalCode}</li>
+                        <li>{this.state.CompanyCountry}</li>
                       </ul> 
                     <p className="mb-0 text-primary font-weight-bold">
                       Order total: {this.props.users.length} x {this.props.price} {this.props.currency} = {this.props.users.length*this.props.price} {this.state.currency}*

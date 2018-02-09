@@ -9,9 +9,13 @@ export default function counter(state = {Name: "", Token: "", Domain: "", Email:
   case "ADD_COMPANY_FULFILLED":
     return {...state, CompanyList: [...state.CompanyList, payload]};    
   // case "SET_COMPANY":
-  //   return {...state, CompanyNo: payload};       
+  //   return {...state, CompanyNo: payload};      
+  case "GET_TOKEN":
+    return {...state, Token: payload}
+  case "GET_COMPANIES":
+    return {...state, CompanyList: payload}  
   case "FETCH_USER_FULFILLED": 
-    return {...state, Name: payload.Name, Token: payload.Token, CompanyName: payload.CompanyName, CompanyNo: payload.CompanyNo};
+    return {...state, Name: payload.Name, CompanyName: payload.Company.CompanyName, CompanyNo: payload.Company.CompanyNo};
   case "ERROR_CREDENTIALS_UPDATE":
     return {...state, error: payload }     
   case "ERROR_RESET":

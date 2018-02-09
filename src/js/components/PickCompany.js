@@ -5,6 +5,7 @@ import Header from "./Header";
 import axios from 'axios';
 
 import { setCompany, addUserToOrder } from '../actions/orderActions';
+import {getUserInfo} from '../actions/userActions';
 import store from "../store";
 
 @connect ((store) => {
@@ -27,19 +28,14 @@ export default class PickCompany extends Component {
     };
   }  
   componentWillMount() { 
-    if(this.props.token === "") {
-      alert("Session lost");
-      return;
-    }  
-    axios.get('resources/getCompany.json?token='+this.props.token).then(r=>{
-      let companyList = r.data.CompanyList;
-      this.setState({companyList});
-      this.setState({selectedCompany: r.data.CompanyNo});
-    })    
+    this.props.dispatch(getUserInfo());   
   }  
+  componentWillReceiveProps(props) {
+    this.setState({companyList: props.companyList});
+  }
   setCompany(e) {
-    let selectedCompanyObj = this.state.companyList.filter(x=>x.CompanyNo === e.currentTarget.value)[0] !== undefined ? this.state.companyList.filter(x=>x.CompanyNo === e.currentTarget.value)[0]: {};
-    let selectedCompany = this.state.companyList.filter(x=>x.CompanyNo === e.currentTarget.value)[0] !== undefined ? this.state.companyList.filter(x=>x.CompanyNo === e.currentTarget.value)[0].CompanyNo : "";
+    let selectedCompanyObj = this.state.companyList.filter(x=>x.No === e.currentTarget.value)[0] !== undefined ? this.state.companyList.filter(x=>x.No === e.currentTarget.value)[0]: {};
+    let selectedCompany = this.state.companyList.filter(x=>x.No === e.currentTarget.value)[0] !== undefined ? this.state.companyList.filter(x=>x.No === e.currentTarget.value)[0].No : "";
     this.props.dispatch(setCompany(selectedCompanyObj));
     this.props.dispatch(addUserToOrder(this.props.user));
     this.setState({selectedCompany});
@@ -71,7 +67,7 @@ export default class PickCompany extends Component {
                     <p className={alertClass}>Please select a company to continue</p>                 
                     <select onChange={(e)=>this.setCompany(e)} className="form-control mb-3" value={this.state.selectedCompany}>
                       <option value="">Please select a company</option>
-                      {this.state.companyList.map((o,i)=> {return( <option key={i} value={o.CompanyNo}>{o.CompanyName}</option>)})}
+                      {this.state.companyList.map((o,i)=> {return( <option key={i} value={o.No}>{o.Name}</option>)})}
                     </select>
                     <button type="button" onClick={() => this.goToAddMoreMembers()} className="btn btn-primary px-5">Next</button>
                   </div>
