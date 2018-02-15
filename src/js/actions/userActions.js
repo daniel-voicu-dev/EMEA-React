@@ -125,6 +125,12 @@ export function createUser(history,data) {
   }
 }
 
+export function setAdmin(arg) {
+  return (dispatch) => {
+    dispatch({type: "SET_ADMIN", payload: arg});
+  }
+}
+
 export function registerCompany(data) {
   return (dispatch) => {
    let sendObj = {

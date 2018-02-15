@@ -38,9 +38,9 @@ export default class ReviewRegister extends Component {
   //     this.setState({currency: r.data.currency});
   //   });
   // }
-  componentWillMount() {
-    this.props.dispatch(getCompanyInfo(this.state.user.company.CompanyNo))
-  }
+  // componentWillMount() {
+  //   this.props.dispatch(getCompanyInfo(this.state.user.company.CompanyNo))
+  // }
   render() {      
     return (
       <React.Fragment>

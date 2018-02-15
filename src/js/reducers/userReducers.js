@@ -1,4 +1,4 @@
-export default function counter(state = {Name: "", Token: "", Domain: "", Email: "", CompanyNo: "",CompanyName: "", error: "", CompanyList: [], CountryList: []}, {type,payload}) {   
+export default function counter(state = {Name: "", Token: "", Domain: "", Email: "", CompanyNo: "",CompanyName: "", error: "", CompanyList: [], CountryList: [], isAdmin: true}, {type,payload}) {   
   switch (type) {   
   case "FETCH_EMAIL_FULFILLED":
     return {...state, Email: payload};
@@ -6,6 +6,8 @@ export default function counter(state = {Name: "", Token: "", Domain: "", Email:
     return {...state, Domain: payload};
   case "FETCH_COUNTRIES_FULFILLED":
     return {...state, CountryList: payload}; 
+  case "SET_ADMIN":
+    return {...state, isAdmin: payload};   
   case "ADD_COMPANY_FULFILLED":
     return {...state, CompanyList: [...state.CompanyList, payload]};    
   // case "SET_COMPANY":
