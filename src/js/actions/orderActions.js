@@ -21,7 +21,11 @@ export function addUserToOrder(o) {
   return (dispatch) => {       
     dispatch({type: "ADD_USER_TO_ORDER", payload: o});
   }
-
+}
+export function removeUserFromOrder(o) {
+  return (dispatch) => {       
+    dispatch({type: "REMOVE_USER_FROM_ORDER", payload: o});
+  }
 }
 export function addCurrentUserToOrder(history,user) {
   return (dispatch) => {  

@@ -1,8 +1,56 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 import Header from './Header';
-
+import {connect} from 'react-redux';
+import { addUserToOrder, removeUserFromOrder } from '../actions/orderActions';
+@connect ((store) => {
+  return {
+    currentUser: store.user.Email,
+    users: store.order.Company.UnregisteredPerson,
+    order: store.order.Users
+  }
+})
 class AddMoreMembers extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {      
+      
+  //   };
+  // }  
+  handleCheck(e){
+    console.dir(e.target);
+    console.log(e.target.checked);
+    if(e.target.checked === true ) {
+      this.props.dispatch(removeUserFromOrder(e.target.value));
+    } else {
+      this.props.dispatch(addUserToOrder(e.target.value));
+    }
+    // e.target.checked = !e.target.checked;
+
+  } 
+  renderChild(o,i) {
+    let id= "check-" + i;
+    let defaultCheck = this.props.order.filter(o=>o.Login === e.target.value).length > 1;
+    console.log(defaultCheck);
+    if(o.Email === this.props.currentUser) {
+      return (
+        <div className="form-check" key={i}>
+          <input className="form-check-input" type="checkbox" value={o.Email} id={id} defaultChecked="true" onChange={(e)=>this.handleCheck(e)}/>
+          <label className="form-check-label text-primary" htmlFor={id}>
+            <strong>{o.Name}(Admin)</strong>
+          </label>
+        </div>
+      );
+    } 
+    return (
+      <div className="form-check" key={i}>
+        <input className="form-check-input" type="checkbox" value={o.Email} id={id} onChange={(e)=>this.handleCheck(e)} />
+        <label className="form-check-label" htmlFor={id}>
+          {o.Name}
+        </label>
+      </div>
+    )
+  }
   render() {
     return (
       <React.Fragment>
@@ -19,20 +67,7 @@ class AddMoreMembers extends Component {
                     <h2 className="h2 font-weight-light text-primary">Welcome to Directions EMEA registration process.</h2>
                     <p>We have found the following list of users assigned to your company. Please select the users you want to add to registration or <Link to="/add-new-user">add new user</Link> for your company.</p>
                     <div action="">
-                      <div className="form-group">
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                            <label className="form-check-label" htmlFor="defaultCheck1">
-                              User 1
-                            </label>
-                          </div>
-                          <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="defaultCheck2" />
-                            <label className="form-check-label" htmlFor="defaultCheck2">
-                              User 2
-                            </label>
-                          </div>
-                      </div>
+                      {this.props.users.map((o,i)=> {return this.renderChild(o,i)})}                      
                     </div>
                     <div className="mt-3">
                       <Link to="/add-new-member" className="btn btn-dark mr-3">Add new user</Link>
