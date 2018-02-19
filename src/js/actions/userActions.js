@@ -8,7 +8,7 @@ export function getStepOne(history, email) {
     let postDomain = apiDomain + "/api/personinformation";
     let sendObj = {
       "Login": email,      
-      "EventNo": "EVT_00009"
+      "EventNo": store.getState().event.eventNo
     };  
     axios.post(postDomain, sendObj).then(r=>{
       console.log(r.data);
@@ -22,6 +22,12 @@ export function getStepOne(history, email) {
         let domain = "@" + email.split("@")[1];
         dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
         dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
+        if (r.data.CompaniesForDomain.length > 0) {
+          let companies = r.data.CompaniesForDomain.reduce((r,v,k)=>{            
+            return [...r,{CompanyName: v.Name, CompanyNo: v.No, Login: v.Login}];
+          },[]);
+          dispatch({type: "GET_COMPANIES", payload: companies})
+        }
         history.push("/create-user");
       }
     });
@@ -48,7 +54,7 @@ export function getUser(history, email, password) {
   let sendObj = {
     "Login": email,
     "Password": password,
-    "EventNo": "EVT_00009"
+    "EventNo":  store.getState().event.eventNo
   };  
   return (dispatch) => {   
     // axios.get("resources/getUser.json").then(r=>{
@@ -89,7 +95,7 @@ export function getUserInfo() {
   let postDomain = apiDomain + "/api/personinformation";  
   let sendObj = {
     "Login": store.getState().user.Email,      
-    "EventNo": "EVT_00009"
+    "EventNo": store.getState().event.eventNo
     // "Token": store.getState().user.Token
   }
   return (dispatch) => {

@@ -36,7 +36,7 @@ export default class PickCompany extends Component {
   setCompany(e) {
     let selectedCompanyObj = this.state.companyList.filter(x=>x.No === e.currentTarget.value)[0] !== undefined ? this.state.companyList.filter(x=>x.No === e.currentTarget.value)[0]: {};
     let selectedCompany = this.state.companyList.filter(x=>x.No === e.currentTarget.value)[0] !== undefined ? this.state.companyList.filter(x=>x.No === e.currentTarget.value)[0].No : "";
-    console.log(selectedCompany , this.props.user.CompanyNo, selectedCompany === this.props.user.CompanyNo)
+    // console.log(selectedCompany , this.props.user.CompanyNo, selectedCompany === this.props.user.CompanyNo)
     if (selectedCompany === this.props.user.CompanyNo) {
       this.props.dispatch(setAdmin(true));
     } else {

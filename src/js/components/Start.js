@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Header from "./Header";
 import Email from "./Email";
 
-import { getStepOne } from '../actions/userActions';
+import { getStepOne,  getCountries } from '../actions/userActions';
 import store from "../store";
 
 @connect ((store) => {
@@ -23,11 +23,12 @@ export default class Start extends Component {
       alert: false
     };
   }    
-  // componentWillMount() {
-  //   if (Object.keys(this.props.event).length === 0) {
-  //     this.props.history.push("/");
-  //   }
-  // }
+  componentWillMount() {
+    // if (Object.keys(this.props.event).length === 0) {
+    //   this.props.history.push("/");
+    // }
+    this.props.dispatch(getCountries());
+  }
   getEmail(email) {
     this.setState({email});     
   }

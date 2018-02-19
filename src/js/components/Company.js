@@ -10,7 +10,8 @@ import {registerCompany} from "../actions/userActions";
     companyList: store.user.CompanyList,
     companySelected: store.order.Company.CompanyNo !== undefined ? store.order.Company.CompanyNo : "",
     domain: store.user.Domain,
-    countries: store.user.CountryList   
+    countries: store.user.CountryList,
+    admin: store.user.isAdmin   
   }
 })
 export default class Company extends Component {
@@ -81,7 +82,10 @@ export default class Company extends Component {
         }
         <label htmlFor="Company">Company</label>
         <CompanySelect id="Company" firstOption="Select a company" required="true" getValue={(v) => this.getCompany(v)} options={this.props.companyList} setValue={this.props.companySelected} />
-        <button type="button" className="btn btn-dark mt-2" data-toggle="modal" data-target="#AddCompanyModal">Add a company</button> 
+        {this.props.companyList.length === 0 &&
+          <button type="button" className="btn btn-dark mt-2" data-toggle="modal" data-target="#AddCompanyModal">Add a company</button> 
+        }
+        
         <div id="AddCompanyModal" className="modal" tabIndex="-1" role="dialog">
             <div className="modal-dialog" role="document">
               <div className="modal-content">

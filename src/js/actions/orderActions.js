@@ -3,7 +3,16 @@ import store from "../store";
 import {apiDomain} from "./variables";
 export function setCompany(o) {
   return (dispatch) => {       
-    dispatch({type: "SET_COMPANY", payload: o});
+    let postDomain = apiDomain + "/api/companyinformation";
+    let sendObj = {
+      "CompanyEmailOrDomain": o.Login,
+      "EventNo": store.getState().event.eventNo
+    };  
+    axios.post(postDomain, sendObj).then(r=>{
+      dispatch({type: "SET_COMPANY", payload: r.data.Companies[0]});
+    });
+
+    // dispatch({type: "SET_COMPANY", payload: o});
   }
 
 }
@@ -26,10 +35,10 @@ export function getCompanyInfo(company) {
     let postDomain = apiDomain + "/api/companyinformation";
     let sendObj = {
       "CompanyEmailOrDomain": company,
-      "EventNo": "EVT_00009"
+      "EventNo": store.getState().event.eventNo
     };  
     axios.post(postDomain, sendObj).then(r=>{
-      console.log(r.data);
+      dispatch({type: "SET_COMPANY", payload: r.data.Companies[0]});
     });
   }
 }

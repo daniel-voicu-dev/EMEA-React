@@ -28,9 +28,8 @@ export default class Layout extends Component {
   render() {    
     return (
       <HashRouter basename="/">
-        <React.Fragment>
-          <Route exact path='/' component={Event} />
-          <Route path='/start' component={Start} />
+        <React.Fragment>         
+          <Route exact path='/' component={Start} />
           <Route path='/login' component={Login} />
           <Route path='/create-user' component={CreateUser} />
           <Route path='/register-others' component={RegisterOthers} />
