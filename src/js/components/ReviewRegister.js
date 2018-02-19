@@ -82,7 +82,7 @@ export default class ReviewRegister extends Component {
                     <Link to="/add-new-member" className="btn btn-dark px-5 mr-3">Add new user</Link>                  
                   }
                  
-                  <Link to="/registration-completed" className="btn btn-primary px-5">Send the registration</Link>
+                  <Link to="/registration-completed" className="btn btn-primary px-5">Confirm registration</Link>
                 </div>
               </div>
             </div>
