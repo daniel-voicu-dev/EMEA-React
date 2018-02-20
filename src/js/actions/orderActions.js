@@ -27,10 +27,10 @@ export function removeUserFromOrder(o) {
     dispatch({type: "REMOVE_USER_FROM_ORDER", payload: o});
   }
 }
-export function addCurrentUserToOrder(history,user) {
+export function addCurrentUserToOrder(history,user, link) {
   return (dispatch) => {  
-    dispatch({type: "ADD_USER_TO_ORDER", payload: {"Name":user.Name, "Login": user.Email}});
-    history.push("/review-register");
+    dispatch({type: "ADD_SELF_TO_ORDER", payload: {"Name":user.Name, "Login": user.Email}});
+    history.push(link);
   }
 }
 

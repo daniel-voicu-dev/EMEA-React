@@ -16,26 +16,27 @@ class AddMoreMembers extends Component {
   //   this.state = {      
       
   //   };
-  // }  
-  handleCheck(e){
-    console.dir(e.target);
-    console.log(e.target.checked);
+  // }    
+  handleCheck(e,name, email){
+   console.log(name, email);
+    
     if(e.target.checked === true ) {
-      this.props.dispatch(removeUserFromOrder(e.target.value));
+      this.props.dispatch(addUserToOrder({Name: name, Login: email}));
+      
     } else {
-      this.props.dispatch(addUserToOrder(e.target.value));
+      this.props.dispatch(removeUserFromOrder({Name: name, Login: email}));
     }
     // e.target.checked = !e.target.checked;
 
   } 
   renderChild(o,i) {
     let id= "check-" + i;
-    let defaultCheck = this.props.order.filter(o=>o.Login === e.target.value).length > 1;
-    console.log(defaultCheck);
+    let defaultCheck = this.props.order.filter(x=> {return x.Login === o.Email}).length > 0;
+    // console.log("CONSOLE",o.Email,defaultCheck, this.props.order);
     if(o.Email === this.props.currentUser) {
       return (
         <div className="form-check" key={i}>
-          <input className="form-check-input" type="checkbox" value={o.Email} id={id} defaultChecked="true" onChange={(e)=>this.handleCheck(e)}/>
+          <input className="form-check-input" type="checkbox" value={o.Email} id={id} defaultChecked={defaultCheck} onChange={(e)=>this.handleCheck(e,o.Name, o.Email)}/>
           <label className="form-check-label text-primary" htmlFor={id}>
             <strong>{o.Name}(Admin)</strong>
           </label>
@@ -44,7 +45,7 @@ class AddMoreMembers extends Component {
     } 
     return (
       <div className="form-check" key={i}>
-        <input className="form-check-input" type="checkbox" value={o.Email} id={id} onChange={(e)=>this.handleCheck(e)} />
+        <input className="form-check-input" type="checkbox" value={o.Email} id={id} onChange={(e)=>this.handleCheck(e,o.Name, o.Email)} />
         <label className="form-check-label" htmlFor={id}>
           {o.Name}
         </label>
@@ -71,7 +72,7 @@ class AddMoreMembers extends Component {
                     </div>
                     <div className="mt-3">
                       <Link to="/add-new-member" className="btn btn-dark mr-3">Add new user</Link>
-                      <Link to="/register-others" className="btn btn-primary">Take me to registration</Link>
+                      <Link to="/review-register" className="btn btn-primary">Take me to registration</Link>
                     </div>
                   </div>
                 </div>

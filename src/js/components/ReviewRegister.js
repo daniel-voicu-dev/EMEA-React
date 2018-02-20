@@ -43,6 +43,9 @@ export default class ReviewRegister extends Component {
   // componentWillMount() {
   //   this.props.dispatch(getCompanyInfo(this.state.user.company.CompanyNo))
   // }
+  componentWillMount() {
+    console.log(this.props.users);
+  }
   render() {    
     let country = this.props.countries.filter(x=> {return x.Code===this.props.company.CountryCode})[0].Name;  
     return (
