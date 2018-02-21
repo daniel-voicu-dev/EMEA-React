@@ -4,7 +4,7 @@ export default function counter(state = {
   eventName:"EMEA AMERICA",
   eventNo:"EVT_00009",
   itemDescription:"EMEA AMERICA ITEM1 DESCRIPTION",
-  itemNo:"EventAMERICAItem1",
+  itemNo:"11_ITEMDEM",
   itemPrice:1000
 
 }, {type,payload}) {   

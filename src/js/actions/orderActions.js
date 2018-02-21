@@ -46,3 +46,35 @@ export function getCompanyInfo(company) {
     });
   }
 }
+
+
+export function registerUsers() {
+  return (dispatch) => {       
+    let postDomain = apiDomain + "/api/createregistration";
+    let sendObj = {
+      "Login": store.getState().order.Company.Email,
+      "CreateOneInvoiceForAllRegistrations": true,
+      "PersonRegistration": [        
+      ]
+    };  
+
+    store.getState().order.Users.map(o=>{
+      sendObj.PersonRegistration = [...sendObj.PersonRegistration, {
+          EventNo: store.getState().event.eventNo,
+          EventItemNo: store.getState().event.itemNo,
+          RegistrationForEmail: o.Login
+        }
+      ]
+    });
+    // axios.post(apiDomain + "/api/eventitems", {"EventNo": store.getState().event.eventNo}).then(r=>{
+    //     console.log(r.data);
+    //   });
+    // console.log(sendObj);
+    axios.post(postDomain, sendObj).then(r=>{
+      console.log(r.data);
+    });
+
+    // dispatch({type: "SET_COMPANY", payload: o});
+  }
+
+}

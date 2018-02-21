@@ -88,7 +88,7 @@ export default class CreateUser extends Component {
               <div>
                 <h2 className="h2 font-weight-light text-primary">Welcome to Directions EMEA registration process.</h2>
                 <p>We could not find a user for your email address. In order to continue please create an account.</p>
-                <p className={alertClass}>Please fill in all the fields to continue.</p>
+                <p className={alertClass}>Please fill in all the fields and accept <strong>terms and conditions</strong> to continue</p>
                 <div>
                   <div className="form-group">
                     <label htmlFor="Email">Email</label>

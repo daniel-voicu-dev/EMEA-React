@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import Header from "./Header";
 
 import axios from 'axios';
-import { getCompanyInfo } from '../actions/orderActions';
+import { getCompanyInfo, registerUsers } from '../actions/orderActions';
 
 @connect ((store) => {
   return {
@@ -46,6 +46,10 @@ export default class ReviewRegister extends Component {
   componentWillMount() {
     console.log(this.props.users);
   }
+  confirmRegistration() {
+    console.log("confirm");
+    this.props.dispatch(registerUsers());
+  }
   render() {    
     let country = this.props.countries.filter(x=> {return x.Code===this.props.company.CountryCode})[0].Name;  
     return (
@@ -85,7 +89,7 @@ export default class ReviewRegister extends Component {
                     <Link to="/add-new-member" className="btn btn-dark px-5 mr-3">Add new user</Link>                  
                   }
                  
-                  <Link to="/registration-completed" className="btn btn-primary px-5">Confirm registration</Link>
+                  <button type="button" onClick={()=>this.confirmRegistration()} className="btn btn-primary px-5">Confirm registration</button>
                 </div>
               </div>
             </div>
