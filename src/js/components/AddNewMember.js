@@ -1,11 +1,63 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 import Header from './Header';
 import Email from './Email';
-
+import CountrySelect from "./CountrySelect";
+@connect ((store) => {
+  return {
+    domain: store.user.Domain,
+    company: store.order.Company,   
+    countries: store.user.CountryList,    
+  }
+})
 class AddNewMember extends Component {
-  getEmail() {
-
+  constructor(props) {
+    super(props);
+    this.state = {       
+      email: "",
+      password: "",
+      name: "",
+      address: "",
+      city: "",
+      zip: "",
+      country: "",
+      company: props.company.No,
+      phone: "",
+      terms: false,
+      alert: false      
+    };
+  }  
+  getEmail(email) {
+    this.setState({email});
+  }
+  getPassword(password) {
+    this.setState({password});
+  }
+  getName(name) {
+    this.setState({name});
+  }
+  getAddress(address){
+    this.setState({address});
+  } 
+  getCity(city) {
+    this.setState({city});
+  }
+  getZip(zip) {
+    this.setState({zip});
+  }
+  getCountry(country) {
+    this.setState({country});
+  }
+  getCompany(company) {
+    this.setState({company});
+  }
+  setTerms(e) {    
+    let terms = !this.state.terms;
+    this.setState({terms});
+  }
+  getPhone(phone) {
+    this.setState({phone});
   }
   render() {
     return (
@@ -25,56 +77,52 @@ class AddNewMember extends Component {
                     <div>
                       <div className="form-group">
                         <label htmlFor="Email">Email</label>
-                        <Email required={true} readonly={false} domain="@test.com" getEmail={(email) => {this.getEmail(email)}} setValue="" />
+                        <Email required={true} readonly={false} domain={this.props.domain} getEmail={(email) => {this.getEmail(email)}} setValue="" />
                       </div>
                       <div className="form-group">
                           <label htmlFor="Password">Password</label>
-                          <input type="email" id="Password" className="form-control" />                      
+                          <input type="email" id="Password" className="form-control" onChange={(e) => this.getPassword(e.currentTarget.value)} />                      
                           <small className="invalid-feedback">
                               Invalid password
                           </small>
                       </div>
                       <div className="form-group">
                           <label htmlFor="FullName">Full Name</label>
-                          <input type="email" id="FullName" className="form-control" /> 
+                          <input type="email" id="FullName" className="form-control" onChange={(e) => this.getName(e.currentTarget.value)} /> 
                       </div>
                       <div className="form-group">
                           <label htmlFor="Address">Address</label>
-                          <input type="email" id="Address" className="form-control" /> 
+                          <input type="email" id="Address" className="form-control" onChange={(e) => this.getAddress(e.currentTarget.value)} /> 
                       </div>
                       <div className="form-row">
                           <div className="form-group col">
                               <label htmlFor="City">City</label>
-                              <input type="email" id="City" className="form-control" /> 
+                              <input type="email" id="City" className="form-control" onChange={(e) => this.getCity(e.currentTarget.value)} /> 
                           </div>
                           <div className="form-group col">
                               <label htmlFor="ZipCode">Zip Code</label>
-                              <input type="email" id="ZipCode" className="form-control" /> 
+                              <input type="email" id="ZipCode" className="form-control" onChange={(e) => this.getZip(e.currentTarget.value)} /> 
                           </div>
                       </div>
                       <div className="form-group">
                           <label htmlFor="Country">Country</label>
-                          <select type="email" id="Country" className="form-control">
-                            <option value="">Select a country</option>
-                            <option value="US">United States of America</option>
-                            <option value="CA">Canada</option>
-                          </select> 
+                          <CountrySelect id="Country" firstOption="Select a country" required="true" getValue={(v) => this.getCountry(v)} options={this.props.countries} />
                       </div>
                       <div className="form-group">                      
                           <label htmlFor="Company">Company</label>
-                          <input type="text" id="Company" className="form-control" defaultValue="Company 1" readOnly />                      
+                          <input type="text" id="Company" className="form-control" defaultValue={this.props.company.Name} readOnly />                      
                       </div>
                       <div className="form-group">
                           <div className="form-check form-check-inline">
                             <input className="form-check-input" type="checkbox" id="inlineCheckbox1" defaultValue="option1" />
-                            <label className="form-check-label" htmlFor="inlineCheckbox1">I have read and agreed with <u>Terms and Conditions</u></label>
+                            <label className="form-check-label" htmlFor="inlineCheckbox1" onChange={(e)=>{this.setTerms(e)}}>I have read and agreed with <u>Terms and Conditions</u></label>
                           </div>
                       </div>
                       
                       <div className="form-group">
                           {/*<button type="button" className="px-5 btn btn-primary">Create user</button>*/}
                           
-                          <Link to='/add-more-members' className="px-5 btn btn-primary">Create user</Link>
+                          <button type="button" className="px-5 btn btn-primary">Create user</button>
                       </div> 
                     </div>
                   </div>
