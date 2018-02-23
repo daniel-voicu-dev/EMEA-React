@@ -32,7 +32,7 @@ class AddMoreMembers extends Component {
   renderChild(o,i) {
     let id= "check-" + i;
     let defaultCheck = this.props.order.filter(x=> {return x.Login === o.Email}).length > 0;
-    // console.log("CONSOLE",o.Email,defaultCheck, this.props.order);
+    // console.log("CONSOLE",o.Email, defaultCheck, this.props.order);
     if(o.Email === this.props.currentUser) {
       return (
         <div className="form-check" key={i}>
@@ -45,7 +45,7 @@ class AddMoreMembers extends Component {
     } 
     return (
       <div className="form-check" key={i}>
-        <input className="form-check-input" type="checkbox" value={o.Email} id={id} onChange={(e)=>this.handleCheck(e,o.Name, o.Email)} />
+        <input className="form-check-input" type="checkbox" value={o.Email} id={id} defaultChecked={defaultCheck} onChange={(e)=>this.handleCheck(e,o.Name, o.Email)} />
         <label className="form-check-label" htmlFor={id}>
           {o.Name}
         </label>

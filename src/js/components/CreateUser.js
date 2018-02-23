@@ -161,7 +161,7 @@ export default class CreateUser extends Component {
                     </div>
                   </div>
                   <div className="form-group">
-                    <p className={alertClass}>Please fill in all the fields to continue.</p>
+                    <p className={alertClass}>Please fill in all the fields and accept <strong>terms and conditions</strong> to continue</p>
                   </div>
                   <div className="form-group">                      
                       <button type="button" onClick={(e) => this.handleSend(e)} className="px-5 btn btn-primary">Continue</button>

@@ -130,7 +130,38 @@ export function createUser(history,data) {
     });
   }
 }
-
+export function addNewMember(history,data) {
+  return (dispatch) => {
+    let postDomain = apiDomain + "/api/signupperson";
+    let sendObj = {
+      "Login": data.email,
+      "Password": data.password,
+      "Name": data.name,
+      "Address": data.address,      
+      "City": data.city,
+      "CountryCode": data.country,
+      "PhoneNo": data.phone,
+      "PostCode": data.zip,
+      "CompanyNo": data.company
+    };  
+    console.log(sendObj);
+    axios.post(postDomain, sendObj).then(r => {      
+      console.log(r.data);    
+      dispatch({type: "ADD_USER_TO_ORDER", payload: {Name: data.name, Login: data.email}});
+      let postDomain2 = apiDomain + "/api/companyinformation";
+      let sendObj2 = {
+        "CompanyEmailOrDomain": store.getState().order.Company.Email,
+        "EventNo": store.getState().event.eventNo
+      };  
+      console.log("sendObjs",sendObj2);
+      axios.post(postDomain2, sendObj2).then(r2=>{
+        dispatch({type: "SET_COMPANY", payload: r2.data.Companies[0]});
+        history.push("/add-more-members");  
+      });
+      
+    });
+  }
+}
 export function setAdmin(arg) {
   return (dispatch) => {
     dispatch({type: "SET_ADMIN", payload: arg});
