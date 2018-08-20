@@ -2,7 +2,7 @@ export default function counter(state = {
 
   eventDescription:"EMEA AMERICA DESCRIPTION",
   eventName:"EMEA AMERICA",
-  eventNo:"EVT_00009",
+  eventNo:"EVT_00006",
   itemDescription:"EMEA AMERICA ITEM1 DESCRIPTION",
   itemNo:"11_ITEMDEM",
   itemPrice:1000

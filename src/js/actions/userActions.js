@@ -9,25 +9,23 @@ export function getStepOne(history, email) {
     let sendObj = {
       "Login": email,      
       "EventNo": store.getState().event.eventNo
-    };  
-    axios.post(postDomain, sendObj).then(r=>{
-      console.log(r.data);
-      if (r.data.No !== null && r.data.No !== "") {
-        let email = r.data.Email;
-        let domain = "@" + email.split("@")[1];
-        dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
-        dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
-        history.push("/login");
+    };     
+    axios.post(postDomain, sendObj).then(r=>{   
+      let domain = "@" + email.split("@")[1];;  
+      if (r.data.CompaniesForDomain.length > 0) {
+        getCompanyInfo(r.data.CompaniesForDomain[0].Login.split("@")[1]);
+        // if (r.data.CompaniesForDomain[0].Login === email) {
+        //   //Login
+        //   dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
+        //   dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
+        //   history.push("/login");
+        // } else {
+        //   //Create user with domain
+        //   dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
+        //   dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
+        // }        
       } else {
-        let domain = "@" + email.split("@")[1];
-        dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
-        dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
-        if (r.data.CompaniesForDomain.length > 0) {
-          let companies = r.data.CompaniesForDomain.reduce((r,v,k)=>{            
-            return [...r,{CompanyName: v.Name, CompanyNo: v.No, Login: v.Login}];
-          },[]);
-          dispatch({type: "GET_COMPANIES", payload: companies})
-        }
+        //Create user without domain
         history.push("/create-user");
       }
     });
@@ -83,6 +81,7 @@ export function getUser(history, email, password) {
 }
 
 export function getCountries() {
+  console.log("getCountries");
   let postDomain = apiDomain + "/api/countries";
   return (dispatch) => {
     axios.post(postDomain, {}).then(r => {      
@@ -165,6 +164,19 @@ export function addNewMember(history,data) {
 export function setAdmin(arg) {
   return (dispatch) => {
     dispatch({type: "SET_ADMIN", payload: arg});
+  }
+}
+
+export function getCompanyInfo(domain) {
+  return (dispatch) => {
+    let postDomain = apiDomain + "/api/companyinformation";
+    let sendObj = {
+      "CompanyEmailOrDomain": domain,
+      "EventNo": store.getState().event.eventNo
+    };  
+    axios.post(postDomain, sendObj).then(r=>{
+      dispatch({type: "SET_COMPANY", payload: r.data.Companies[0]});
+    });
   }
 }
 

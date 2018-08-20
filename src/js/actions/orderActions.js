@@ -34,18 +34,7 @@ export function addCurrentUserToOrder(history,user, link) {
   }
 }
 
-export function getCompanyInfo(company) {
-  return (dispatch) => {
-    let postDomain = apiDomain + "/api/companyinformation";
-    let sendObj = {
-      "CompanyEmailOrDomain": company,
-      "EventNo": store.getState().event.eventNo
-    };  
-    axios.post(postDomain, sendObj).then(r=>{
-      dispatch({type: "SET_COMPANY", payload: r.data.Companies[0]});
-    });
-  }
-}
+
 
 
 export function registerUsers() {
