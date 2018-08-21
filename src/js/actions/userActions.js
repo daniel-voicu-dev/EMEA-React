@@ -11,9 +11,14 @@ export function getStepOne(history, email) {
       "EventNo": store.getState().event.eventNo
     };     
     axios.post(postDomain, sendObj).then(r=>{   
+      console.log("response",r);
       let domain = "@" + email.split("@")[1];;  
-      if (r.data.CompaniesForDomain.length > 0) {
-        getCompanyInfo(r.data.CompaniesForDomain[0].Login.split("@")[1]);
+      if (r.data.No !== null) {
+        // getCompanyInfo(r.data.CompaniesForDomain[0].Login.split("@")[1]);
+        dispatch({type: "SET_COMPANY", payload: r.data.Company})
+        dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
+        dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
+        history.push("/login");
         // if (r.data.CompaniesForDomain[0].Login === email) {
         //   //Login
         //   dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
