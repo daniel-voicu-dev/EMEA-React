@@ -59,27 +59,36 @@ export function getUser(history, email, password) {
     "Password": password,
     "EventNo":  store.getState().event.eventNo
   };  
-  return (dispatch) => {   
-    // axios.get("resources/getUser.json").then(r=>{
-    //   let isUser = r.data.filter(x=>x.Email === email && x.Password === password).length > 0;     
-    //   if (isUser) {       
-    //     dispatch({type: "FETCH_USER_FULFILLED", payload: r.data.filter(x=> {return x.Email === email && x.Password === password})[0]});
-    //     dispatch({type: "ERROR_RESET", payload: ""});
-    //     history.push("/pick-company");
-    //   } else {              
-    //     dispatch({type: "ERROR_CREDENTIALS_UPDATE", payload: "Wrong credentials. Please try again."});
-    //   }
-    // })
-    axios.post(postDomain, sendObj).then(r=>{
-      console.log(r.data);
-      if (r.data.Login !== null && r.data.Login !== "" ) {    
+  return (dispatch) => { 
+    axios.post(postDomain, sendObj).then(r=>{ 
+      
+        console.log(r.data);
+        console.log(r.data.Token);
+      
+        dispatch({type: "SET_USER_COMPANY_NO", payload: r.data.Company.CompanyNo})  
+        dispatch({type: "SET_USER_COMPANY_NAME", payload: r.data.Company.CompanyName})  
         dispatch({type: "GET_TOKEN", payload: r.data.Token});    
         dispatch({type: "ERROR_RESET", payload: ""});
-        history.push("/pick-company");
-      } else {
-        dispatch({type: "ERROR_CREDENTIALS_UPDATE", payload: "Wrong credentials. Please try again."});
-      }
+        dispatch({type: "SET_COMPANY", payload: r.data.Company});
+        dispatch({type: "SET_PERSON", payload: r.data.Person});
+        dispatch({type: "SET_LOGIN_NAME", payload: r.data.Person.Name});
+
+        let domain = store.getState().user.Domain;
+        domain = domain.substr(1);
+        let eventNo = store.getState().event.eventNo;
+
+        // console.log("test");
+
+        // alert("test");
+        // history.push("/register-others");
+        axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": domain, "EventNo": eventNo}).then(r2 => {
+          if (r2.data.Companies[0].PrimaryContact.Email === store.getState().user.Name) {
+            dispatch({type: "SET_ADMIN", payload: true});
+          }
+          history.push("/register-others");
+        }) 
     }).catch((error) => {
+      console.log(error);
       dispatch({type: "ERROR_CREDENTIALS_UPDATE", payload: "Wrong credentials. Please try again."});
     });
   }

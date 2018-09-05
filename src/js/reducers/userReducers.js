@@ -10,8 +10,12 @@ export default function counter(state = {Name: "", Token: "", Domain: "", Email:
     return {...state, isAdmin: payload};   
   case "ADD_COMPANY_FULFILLED":
     return {...state, CompanyList: [...state.CompanyList, payload]};    
-  // case "SET_COMPANY":
-  //   return {...state, CompanyNo: payload};      
+  case "SET_USER_COMPANY_NO":
+    return {...state, CompanyNo: payload}; 
+  case "SET_USER_COMPANY_NAME":
+    return {...state, CompanyName: payload};   
+  case "SET_LOGIN_NAME": 
+    return {...state, Name: payload};       
   case "GET_TOKEN":
     return {...state, Token: payload}
   case "GET_COMPANIES":
