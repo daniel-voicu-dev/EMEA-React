@@ -37,12 +37,12 @@ export default class RegisterOthers extends Component {
                   }  
                   {this.props.admin===true &&  
                     <div className="mb-3">
-                      <button type="button" onClick={()=>this.props.dispatch(addCurrentUserToOrder(this.props.history,this.props.user, "/add-more-members"))} className="btn btn-primary px-5">Register a colleague for Directions EMEA 2018</button>
+                      <button type="button" onClick={()=>this.props.dispatch(addCurrentUserToOrder(this.props.history,this.props.user.Email, "/add-more-members"))} className="btn btn-primary px-5">Register a colleague for Directions EMEA 2018</button>
                     </div>
                   }  
                 
                   <div className="mb-3">
-                    <button type="button" onClick={()=>this.props.dispatch(addCurrentUserToOrder(this.props.history,this.props.user,"/review-register"))} className="btn btn-primary px-5">Register yourself for Directions EMEA 2018</button>
+                    <button type="button" onClick={()=>this.props.dispatch(addCurrentUserToOrder(this.props.history,this.props.user.Email,"/review-register"))} className="btn btn-primary px-5">Register yourself for Directions EMEA 2018</button>
                   </div>
                   {this.props.registeredUsers.length > 0 && 
                     <div>

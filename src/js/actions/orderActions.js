@@ -17,9 +17,27 @@ export function setCompany(o) {
 
 }
 
-export function addUserToOrder(o) {
-  return (dispatch) => {       
-    dispatch({type: "ADD_USER_TO_ORDER", payload: o});
+export function addUserToOrder(history, email, nextStep) {
+  return (dispatch) => {  
+    // dispatch({type: "ADD_USER_TO_ORDER", payload: email});  
+    let data = {
+      "Login": email,
+      "CreateOneInvoiceForAllRegistrations": true,
+      "PersonRegistration": [
+        {
+          "RegistrationForEmail": email,
+          "EventNo": store.getState().event.eventNo,
+          "EventItemNo": store.getState().event.itemNo
+        }
+      ]
+    }
+
+    axios.post(apiDomain + "/api/createregistration", data).then(r=>{
+      history.push(nextStep)
+    }).catch((error) => {
+      console.log(error);
+    })
+    
   }
 }
 export function removeUserFromOrder(o) {
