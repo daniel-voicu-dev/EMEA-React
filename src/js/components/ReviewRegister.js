@@ -23,12 +23,12 @@ export default class ReviewRegister extends Component {
       // company: props.company,
       // quantity: props.users.length,
       // price: props.price,
-      currency: "EURO",
-      CompanyAddress: "Test Address",
-      CompanyState: "Washington",
-      CompanyCity: "Seattle",
-      CompanyCountry: "United States of America",
-      CompanyPostalCode: "98101"
+      currency: "EURO"
+      // CompanyAddress: props.Company.Address,
+      // CompanyState: "Washington",
+      // CompanyCity: props.Company.City,
+      // CompanyCountry: "United States of America",
+      // CompanyPostalCode: props.Company.PostCode
     };
   }  
   // componentWillMount() {
@@ -47,8 +47,8 @@ export default class ReviewRegister extends Component {
     console.log(this.props.users);
   }
   confirmRegistration() {
-    console.log("confirm");
-    this.props.dispatch(registerUsers());
+    // console.log("confirm");
+    this.props.dispatch(registerUsers(this.props.history));
   }
   render() {    
     let country = this.props.countries.filter(x=> {return x.Code===this.props.company.CountryCode})[0].Name;  
@@ -74,8 +74,7 @@ export default class ReviewRegister extends Component {
                   <p className="mb-1 text-primary font-weight-bold">Company details:</p>  
                       <ul className="list-unstyled">                    
                         <li><strong>{this.props.company.Name}</strong></li>
-                        <li>{this.props.company.Address}</li>
-                        <li>{this.state.CompanyState}</li>
+                        <li>{this.props.company.Address}</li>                        
                         <li>{this.props.company.City}, {this.props.company.PostCode}</li>
                         <li>{country}</li>
                       </ul> 

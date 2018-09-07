@@ -84,8 +84,23 @@ export function getUser(history, email, password) {
         axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": domain, "EventNo": eventNo}).then(r2 => {
           if (r2.data.Companies[0].PrimaryContact.Email === store.getState().user.Name) {
             dispatch({type: "SET_ADMIN", payload: true});
+            dispatch({type: "ADD_UNREGISTERED_USERS", payload: r2.data.Companies[0].UnregisteredPerson});
           }
-          history.push("/register-others");
+          axios.post(apiDomain + "/api/getregistrations", {"EventNo": eventNo,"LoginOrDomain": domain}).then(r3 => {
+            let userAlreadyRegistered = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo == "" : null;
+            let userIsAlreadyConfirmed = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo !== "" : false;
+            // console.log("debugUser",userAlreadyRegistered, r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}), email)
+            dispatch({type: "UPDATE_USER_IS_CONFIRMED", payload: userIsAlreadyConfirmed});
+            if (userAlreadyRegistered === true) {
+              dispatch({type: "ADD_USER_TO_ORDER", payload: {"Name": store.getState().user.Name, "Login": store.getState().user.Email}});
+              history.push("/review-register");
+            } else {
+              history.push("/register-others");
+            }
+            // console.log("userAlreadyRegistered",userAlreadyRegistered);
+
+          })
+          // history.push("/register-others");
         }) 
     }).catch((error) => {
       console.log(error);

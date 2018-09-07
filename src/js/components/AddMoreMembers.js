@@ -6,7 +6,7 @@ import { addUserToOrder, removeUserFromOrder } from '../actions/orderActions';
 @connect ((store) => {
   return {
     currentUser: store.user.Email,
-    users: store.order.Company.UnregisteredPerson,
+    users: store.user.UnregisteredUsers,
     order: store.order.Users
   }
 })
