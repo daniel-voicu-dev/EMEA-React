@@ -11,7 +11,7 @@ export default function counter(state = {Name: "", Token: "", Domain: "", Email:
   case "UPDATE_USER_IS_CONFIRMED":
     return {...state, isConfirmed: payload};  
   case "ADD_UNREGISTERED_USERS":
-    return {...state, UnregisteredUsers: [...state.UnregisteredUsers, payload]};  
+    return {...state, UnregisteredUsers: payload};  
   case "ADD_COMPANY_FULFILLED":
     return {...state, CompanyList: [...state.CompanyList, payload]};    
   case "SET_USER_COMPANY_NO":

@@ -16,6 +16,44 @@ export function setCompany(o) {
   }
 
 }
+export function addUsersToBeConfirmedList(array) {
+  return (dispatch) => {
+    dispatch({type: "UPDATE_USERS_TO_BE_CONFIRMED", payload: array});
+  }
+}
+export function addUserListToOrder(history, array, nextStep) {
+  return (dispatch) => {  
+    // dispatch({type: "ADD_USER_TO_ORDER", payload: email});  
+    if (array.length <= 0) {
+      history.push(nextStep);     
+    } else {
+    let data = {
+      "Login": store.getState().user.Email,
+      "CreateOneInvoiceForAllRegistrations": true,
+      "PersonRegistration": []
+    }
+    data.PersonRegistration =  array.reduce((r,v,k)=>{
+      return [...r, {
+        "RegistrationForEmail": v,
+        "EventNo": store.getState().event.eventNo,
+        "EventItemNo": store.getState().event.itemNo
+      }]
+    },[]);
+    // console.log("data",data);
+    axios.post(apiDomain + "/api/createregistration", data).then(r=>{
+      // data.PersonRegistration.map((v) => {
+      //   dispatch({type: "ADD_USER_TO_ORDER", payload: {"Name": v, "Login": v}});
+      // });
+      
+      history.push(nextStep)
+    }).catch((error) => {
+      console.log(error);
+    })
+    }
+    
+  }
+}
+
 
 export function addUserToOrder(history, email, nextStep) {
   return (dispatch) => {  

@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Header from "./Header";
 import store from "../store";
 import { addUserToOrder, getCompanyInfo, addCurrentUserToOrder } from '../actions/orderActions';
+import { goToAddMoreMembers } from '../actions/userActions';
 @connect ((store) => {
   return {    
     user: store.user,
@@ -38,7 +39,7 @@ export default class RegisterOthers extends Component {
                   }  
                   {this.props.admin===true &&  
                     <div className="mb-3">
-                      <button type="button" onClick={()=>this.props.dispatch(addCurrentUserToOrder(this.props.history,this.props.user.Email, "/add-more-members"))} className="btn btn-primary px-5">Register a colleague for Directions EMEA 2018</button>
+                      <button type="button" onClick={()=>this.props.dispatch(goToAddMoreMembers(this.props.history))} className="btn btn-primary px-5">Register a colleague for Directions EMEA 2018</button>
                     </div>
                   }  
                   {this.props.isConfirmed===false &&  

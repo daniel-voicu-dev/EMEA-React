@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import Header from "./Header";
-
+import {apiDomain} from "./../actions/variables";
 import axios from 'axios';
-import { getCompanyInfo, registerUsers } from '../actions/orderActions';
+import { getCompanyInfo, registerUsers, addUsersToBeConfirmedList } from '../actions/orderActions';
 
 @connect ((store) => {
   return {
@@ -12,7 +12,11 @@ import { getCompanyInfo, registerUsers } from '../actions/orderActions';
     company: store.order.Company,
     price: store.event.itemPrice,
     admin: store.user.isAdmin,
-    countries: store.user.CountryList
+    countries: store.user.CountryList,
+    domain: store.user.Domain,
+    event: store.event.eventNo,
+    login: store.user.Email
+
   }
 })
 export default class ReviewRegister extends Component {  
@@ -44,7 +48,22 @@ export default class ReviewRegister extends Component {
   //   this.props.dispatch(getCompanyInfo(this.state.user.company.CompanyNo))
   // }
   componentWillMount() {
-    console.log(this.props.users);
+   
+    
+      let domain = this.props.domain;
+      domain = domain.substr(1);
+      let eventNo = this.props.event;
+      axios.post(apiDomain + "/api/getregistrations", {"EventNo": eventNo,"LoginOrDomain": domain}).then(r => {
+        let userRegisteredButNotConfirmed = r.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(obj => {
+          return obj.RegistrationInvoiceNo === "" && obj.CreatedByContactEmail === this.props.login;
+        })
+        let usersToBeConfirmed = userRegisteredButNotConfirmed.reduce((r,v,k) => {return [...r, {"Name": v.PersonEmail, "Login": v.PersonEmail}]},[]);
+        // console.log(usersToBeConfirmed)
+        this.props.dispatch(addUsersToBeConfirmedList(usersToBeConfirmed));
+        // console.log("userAlreadyRegistered",userAlreadyRegistered);
+
+      })
+    
   }
   confirmRegistration() {
     // console.log("confirm");
@@ -69,7 +88,9 @@ export default class ReviewRegister extends Component {
                 <div className="">
                   <p className="mb-1 text-primary font-weight-bold">These are the participants included in your registration:</p>
                   <ul className="list-unstyled">
-                    {this.props.users.map((o,i) => {return (<li key={i}><strong>{o.Name}</strong></li>)})}                   
+                  { this.props.users.length > 0 &&
+                    this.props.users.map((o,i) => {return (<li key={i}><strong>{o.Name}</strong></li>)})
+                  }  
                   </ul>
                   <p className="mb-1 text-primary font-weight-bold">Company details:</p>  
                       <ul className="list-unstyled">                    

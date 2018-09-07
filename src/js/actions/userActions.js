@@ -51,7 +51,11 @@ export function getStepOne(history, email) {
     // })
   }
 }
-
+export function goToAddMoreMembers(history) {
+  return (dispath) => {
+    history.push("/add-more-members");
+  }
+}
 export function getUser(history, email, password) {
   let postDomain = apiDomain + "/api/login";
   let sendObj = {
