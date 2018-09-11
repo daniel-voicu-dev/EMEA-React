@@ -119,11 +119,15 @@ export function registerUsers(history) {
     // axios.post(postDomain, sendObj).then(r=>{
     //   console.log(r.data);
     // });
-    Promise.all(store.getState().order.Users.map(o => {return axios.post(postDomain, {"EventNo": store.getState().event.eventNo, "Login": o.Login})})).then(() => {
+    // Promise.all(store.getState().order.Users.map(o => {return axios.post(postDomain, {"EventNo": store.getState().event.eventNo, "Login": o.Login})})).then(() => {
+    //   history.push("/registration-completed");
+    // }).catch((error => {
+    //   console.log(error);
+    // }))
+    axios.post(postDomain, {"EventNo": store.getState().event.eventNo, "Login": store.getState().user.Email}).then((r)=>{
+      console.log("success confirming users");
       history.push("/registration-completed");
-    }).catch((error => {
-      console.log(error);
-    }))
+    });
     // dispatch({type: "SET_COMPANY", payload: o});
   }
 
