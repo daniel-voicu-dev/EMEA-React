@@ -10,7 +10,8 @@ import {addNewMember} from "../actions/userActions"
     domain: store.user.Domain,
     company: store.order.Company,   
     countries: store.user.CountryList, 
-    users: store.order.Company.Persons   
+    users: store.order.Company.Persons,
+    error: store.user.error   
   }
 })
 class AddNewMember extends Component {
@@ -24,22 +25,23 @@ class AddNewMember extends Component {
       city: "",
       zip: "",
       country: "",
-      company: props.company.No,
+      company: props.company.Name,
+      companyNo: props.company.CompanyNo,
       phone: "",
       terms: false,
       alert: false,
-      userAlert: false      
+      userAlert: false   
     };
   }  
   getEmail(email) {
     this.setState({alert: false});
     this.setState({email});
-    let userExists = this.props.users.filter(x=>x.Email === email).length > 0;
-    if (userExists) {
-      this.setState({userAlert: true});
-    } else {
-      this.setState({userAlert: false});
-    }
+    // let userExists = this.props.users.filter(x=>x.Email === email).length > 0;
+    // if (userExists) {
+    //   this.setState({userAlert: true});
+    // } else {
+    //   this.setState({userAlert: false});
+    // }
     
   }
   getPassword(password) {
@@ -83,7 +85,21 @@ class AddNewMember extends Component {
   handleSend(e) {
     let canSend = this.state.email !== "" && this.state.password !== "" && this.state.name !== "" && this.state.address !== "" && this.state.city !== "" && this.state.country !== "" && this.state.zip !== "" && this.state.company !== "" && this.state.terms === true && this.state.userAlert === false;   
     if (canSend) {
-      this.props.dispatch(addNewMember(this.props.history, this.state));
+      //this.props.dispatch(addNewMember(this.props.history, this.state));
+      
+      let obj = {
+          "Login": this.state.email,
+          "Password": this.state.password,
+          "Name": this.state.name,
+          "Address": this.state.address,
+          "Address2": "",
+          "City": this.state.city,
+          "CountryCode": this.state.country,
+          "PhoneNo": this.state.phone,
+          "PostCode": this.state.zip,
+          "CompanyNo": this.state.companyNo
+      }      
+      this.props.dispatch(addNewMember(this.props.history, obj));
     } else {
       this.setState({alert: true});      
     }
@@ -91,6 +107,7 @@ class AddNewMember extends Component {
   render() {
     let alertClass = this.state.alert === true ? "alert alert-danger" : "alert alert-danger d-none";
     let userAlertClass = this.state.userAlert === true ? "alert alert-danger" : "alert alert-danger d-none";
+    let dynamicAlertClass = this.props.error !== "" ? "alert alert-danger" : "alert alert-danger d-none";
     return (
       <React.Fragment>
         <Header />
@@ -107,6 +124,7 @@ class AddNewMember extends Component {
                     <p>Add a new user to your company.</p>
                     <p className={alertClass}>Please fill in all the fields and accept <strong>terms and conditions</strong> to continue</p>
                     <p className={userAlertClass}>User already exists.</p>
+                    <p className={dynamicAlertClass}>{this.props.error}</p>
                     <div>
                       <div className="form-group">
                         <label htmlFor="Email">Email</label>

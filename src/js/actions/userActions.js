@@ -165,33 +165,25 @@ export function createUser(history,data) {
 export function addNewMember(history,data) {
   return (dispatch) => {
     let postDomain = apiDomain + "/api/signupperson";
-    let sendObj = {
-      "Login": data.email,
-      "Password": data.password,
-      "Name": data.name,
-      "Address": data.address,      
-      "City": data.city,
-      "CountryCode": data.country,
-      "PhoneNo": data.phone,
-      "PostCode": data.zip,
-      "CompanyNo": data.company
-    };  
-    console.log(sendObj);
-    axios.post(postDomain, sendObj).then(r => {      
-      console.log(r.data);    
-      dispatch({type: "ADD_USER_TO_ORDER", payload: {Name: data.name, Login: data.email}});
-      let postDomain2 = apiDomain + "/api/companyinformation";
-      let sendObj2 = {
-        "CompanyEmailOrDomain": store.getState().order.Company.Email,
-        "EventNo": store.getState().event.eventNo
-      };  
-      console.log("sendObjs",sendObj2);
-      axios.post(postDomain2, sendObj2).then(r2=>{
-        dispatch({type: "SET_COMPANY", payload: r2.data.Companies[0]});
-        history.push("/add-more-members");  
+    axios.post(postDomain, data).then(r => {  
+        let domain = store.getState().user.Domain;
+        domain = domain.substr(1);
+        let eventNo = store.getState().event.eventNo;
+        axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": domain, "EventNo": eventNo}).then(r2 => {  
+          console.log("unregisteredPersons",r2.data.Companies[0].UnregisteredPerson);               
+            dispatch({type: "ADD_UNREGISTERED_USERS", payload: r2.data.Companies[0].UnregisteredPerson});
+            dispatch({type: "ERROR_RESET", payload: ""});
+            history.push("/add-more-members"); 
+        }) 
+        
+      }).catch((error) => {
+        if (error.response) {
+          console.log(error.response.data);
+          dispatch({type: "ERROR_CREDENTIALS_UPDATE", payload: error.response.data.ExceptionMessage});
+        } else {
+          console.log(error);
+        }        
       });
-      
-    });
   }
 }
 export function setAdmin(arg) {
