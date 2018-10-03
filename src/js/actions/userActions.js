@@ -31,6 +31,8 @@ export function getStepOne(history, email) {
         // }        
       } else {
         //Create user without domain
+        console.log("NEW");
+        dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
         history.push("/create-user");
       }
     });
