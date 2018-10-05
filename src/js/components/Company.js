@@ -26,11 +26,15 @@ export default class Company extends Component {
       phone: "",
       country: "",
       alert: false,
-      zip: ""          
+      zip: "",
+      companyVATNo: ""          
     }
   }  
   getZip(zip) {
     this.setState({zip});    
+  }
+  getCompanyVATNo(companyVATNo) {
+    this.setState({companyVATNo});    
   }
   getEmail(email) {
     this.setState({email});    
@@ -67,6 +71,7 @@ export default class Company extends Component {
       this.setState({city: ""});
       this.setState({phone: ""});
       this.setState({zip: ""});
+      this.setState({companyVATNo: ""});
     } else {
       this.setState({alert: true});      
     }
@@ -129,6 +134,10 @@ export default class Company extends Component {
                       <div className="form-group">
                           <label htmlFor="CompanyZip">Zip</label>
                           <input type="text" id="CompanyZip" className="form-control"  onChange={(e) => this.getZip(e.currentTarget.value)} value={this.state.zip} /> 
+                      </div>
+                      <div className="form-group">
+                          <label htmlFor="CompanyVATNo">VAT Registration Number</label>
+                          <input type="text" id="CompanyVATNo" className="form-control"  onChange={(e) => this.getCompanyVATNo(e.currentTarget.value)} value={this.state.companyVATNo} /> 
                       </div>
                   </div>
                 </div>

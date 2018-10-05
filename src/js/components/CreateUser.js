@@ -10,7 +10,8 @@ import {createUser} from "../actions/userActions"
   return {   
     email: store.user.Email, 
     countries: store.user.CountryList,   
-    error: store.user.error
+    error: store.user.error,
+    companies: store.user.CompanyList
   }
 })
 
@@ -65,7 +66,7 @@ export default class CreateUser extends Component {
     this.setState({phone});
   }
   handleSend(e) {
-    let canSend = this.state.email !== "" && this.state.password !== "" && this.state.name !== "" && this.state.address !== "" && this.state.city !== "" && this.state.country !== "" && this.state.zip !== "" && this.state.company !== "";   
+    let canSend = this.state.email !== "" && this.state.password !== "" && this.state.name !== "" && this.state.address !== "" && this.state.city !== "" && this.state.country !== "" && this.state.zip !== "" && this.state.company !== "" && this.state.terms === true;   
     if (canSend) {
       this.props.dispatch(createUser(this.props.history, this.state));
     } else {
@@ -82,7 +83,7 @@ export default class CreateUser extends Component {
         <article className="col-12">
           <div className="row">
             <div className="col-4">
-              <img className="img-fluid" src="http://placehold.it/1600x1600" alt="" />
+              <img className="img-fluid" src="http://registration.dotfusion.ro/RegistrationTest/images/registration2-asia2018.png" alt="" />
             </div>
             <div className="col-8 d-flex align-items-center flex-wrap">
               <div>

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Header from "./Header";
 import Email from "./Email";
 
-import { getStepOne,  getCountries } from '../actions/userActions';
+import { getStepOne,  getCountries, getEventPrice } from '../actions/userActions';
 import store from "../store";
 
 @connect ((store) => {
@@ -25,6 +25,7 @@ export default class Start extends Component {
   }    
   componentWillMount() {    
     this.props.dispatch(getCountries());
+    this.props.dispatch(getEventPrice());
   }
   getEmail(email) {
     this.setState({email});     
@@ -48,7 +49,7 @@ export default class Start extends Component {
             <article className="col-12">
               <div className="row">
                 <div className="col-4">
-                  <img className="img-fluid" src="http://placehold.it/1600x1600" alt="" />
+                  <img className="img-fluid" src="http://registration.dotfusion.ro/RegistrationTest/images/registration2-asia2018.png" alt="" />
                 </div>
                 <div className="col-8 d-flex align-items-center flex-wrap">                  
                   <div>

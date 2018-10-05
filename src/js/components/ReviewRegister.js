@@ -79,7 +79,7 @@ export default class ReviewRegister extends Component {
         <article className="col-12">
           <div className="row">
             <div className="col-4">
-              <img className="img-fluid" src="http://placehold.it/1600x1600" alt="" />
+              <img className="img-fluid" src="http://registration.dotfusion.ro/RegistrationTest/images/registration2-asia2018.png" alt="" />
             </div>
             <div className="col-8 d-flex align-items-center flex-wrap">
               <div>

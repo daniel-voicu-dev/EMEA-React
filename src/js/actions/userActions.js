@@ -30,9 +30,10 @@ export function getStepOne(history, email) {
         //   dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
         // }        
       } else {
-        //Create user without domain
-        console.log("NEW");
+        //Create user without domain        
         dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
+        dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
+        dispatch({type: "GET_COMPANIES", payload: r.data.CompaniesForDomain})
         history.push("/create-user");
       }
     });
@@ -93,13 +94,17 @@ export function getUser(history, email, password) {
             dispatch({type: "ADD_UNREGISTERED_USERS", payload: r2.data.Companies[0].UnregisteredPerson});
           }
           axios.post(apiDomain + "/api/getregistrations", {"EventNo": eventNo,"LoginOrDomain": domain}).then(r3 => {
-            let userAlreadyRegistered = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo == "" : null;
-            let userIsAlreadyConfirmed = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo !== "" : false;
-            // console.log("debugUser",userAlreadyRegistered, r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}), email)
-            dispatch({type: "UPDATE_USER_IS_CONFIRMED", payload: userIsAlreadyConfirmed});
-            if (userAlreadyRegistered === true) {
-              dispatch({type: "ADD_USER_TO_ORDER", payload: {"Name": store.getState().user.Name, "Login": store.getState().user.Email}});
-              history.push("/review-register");
+            if (r3.data.CompanyRegistrations.length > 0) {
+              let userAlreadyRegistered = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo == "" : null;
+              let userIsAlreadyConfirmed = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo !== "" : false;
+              // console.log("debugUser",userAlreadyRegistered, r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}), email)
+              dispatch({type: "UPDATE_USER_IS_CONFIRMED", payload: userIsAlreadyConfirmed});
+              if (userAlreadyRegistered === true) {
+                dispatch({type: "ADD_USER_TO_ORDER", payload: {"Name": store.getState().user.Name, "Login": store.getState().user.Email}});
+                history.push("/review-register");
+              } else {
+                history.push("/register-others");
+              }
             } else {
               history.push("/register-others");
             }
@@ -121,6 +126,17 @@ export function getCountries() {
   return (dispatch) => {
     axios.post(postDomain, {}).then(r => {      
       dispatch({type: "FETCH_COUNTRIES_FULFILLED", payload: r.data.Countries});   
+    });
+  }
+}
+
+export function getEventPrice() {
+  console.log("getEventPrice");
+  let postDomain = apiDomain + "/api/eventItems";
+  return (dispatch) => {
+    axios.post(postDomain, {"EventNo": "EVT_00006"}).then(r => {    
+      console.log(r.data.EventItems[0].UnitPrice)  
+      dispatch({type: "SET_EVENT_PRICE", payload: r.data.EventItems[0].UnitPrice});   
     });
   }
 }
@@ -217,7 +233,8 @@ export function registerCompany(data) {
      "City": data.city,
      "CountryCode": data.country,
      "PhoneNo": data.phone,
-     "PostCode": data.zip
+     "PostCode": data.zip,
+     "VATRegistrationNo": data.companyVATNo
    };  
    let postDomain = apiDomain + "/api/signupcompany";
   
