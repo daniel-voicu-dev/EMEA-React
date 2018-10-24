@@ -6,9 +6,10 @@ import {apiDomain} from "./variables";
 export function getStepOne(history, email) {
   return (dispatch) => {   
     let postDomain = apiDomain + "/api/personinformation";
+    console.log("EVENT",store.getState().event.EventNo);
     let sendObj = {
       "Login": email,      
-      "EventNo": store.getState().event.eventNo
+      "EventNo": store.getState().event.EventNo
     };     
     axios.post(postDomain, sendObj).then(r=>{   
       console.log("response",r);
@@ -64,7 +65,7 @@ export function getUser(history, email, password) {
   let sendObj = {
     "Login": email,
     "Password": password,
-    "EventNo":  store.getState().event.eventNo
+    "EventNo":  store.getState().event.EventNo
   };  
   return (dispatch) => { 
     axios.post(postDomain, sendObj).then(r=>{ 
@@ -82,7 +83,7 @@ export function getUser(history, email, password) {
 
         let domain = store.getState().user.Domain;
         domain = domain.substr(1);
-        let eventNo = store.getState().event.eventNo;
+        let eventNo = store.getState().event.EventNo;
 
         // console.log("test");
 
@@ -94,7 +95,7 @@ export function getUser(history, email, password) {
             dispatch({type: "ADD_UNREGISTERED_USERS", payload: r2.data.Companies[0].UnregisteredPerson});
           }
           axios.post(apiDomain + "/api/getregistrations", {"EventNo": eventNo,"LoginOrDomain": domain}).then(r3 => {
-            if (r3.data.CompanyRegistrations.length > 0) {
+            if (r3.data.CompanyRegistrations[0].length > 0) {
               let userAlreadyRegistered = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo == "" : null;
               let userIsAlreadyConfirmed = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo !== "" : false;
               // console.log("debugUser",userAlreadyRegistered, r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}), email)
@@ -130,22 +131,22 @@ export function getCountries() {
   }
 }
 
-export function getEventPrice() {
-  console.log("getEventPrice");
-  let postDomain = apiDomain + "/api/eventItems";
-  return (dispatch) => {
-    axios.post(postDomain, {"EventNo": "EVT_00006"}).then(r => {    
-      console.log(r.data.EventItems[0].UnitPrice)  
-      dispatch({type: "SET_EVENT_PRICE", payload: r.data.EventItems[0].UnitPrice});   
-    });
-  }
-}
+// export function getEventPrice() {
+//   console.log("getEventPrice");
+//   let postDomain = apiDomain + "/api/eventItems";
+//   return (dispatch) => {
+//     axios.post(postDomain, {"EventNo": "EVT_00006"}).then(r => {    
+//       console.log(r.data.EventItems[0].UnitPrice)  
+//       dispatch({type: "SET_EVENT_PRICE", payload: r.data.EventItems[0].UnitPrice});   
+//     });
+//   }
+// }
 
 export function getUserInfo() {
   let postDomain = apiDomain + "/api/personinformation";  
   let sendObj = {
     "Login": store.getState().user.Email,      
-    "EventNo": store.getState().event.eventNo
+    "EventNo": store.getState().event.EventNo
     // "Token": store.getState().user.Token
   }
   return (dispatch) => {
@@ -186,7 +187,7 @@ export function addNewMember(history,data) {
     axios.post(postDomain, data).then(r => {  
         let domain = store.getState().user.Domain;
         domain = domain.substr(1);
-        let eventNo = store.getState().event.eventNo;
+        let eventNo = store.getState().event.EventNo;
         axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": domain, "EventNo": eventNo}).then(r2 => {  
           console.log("unregisteredPersons",r2.data.Companies[0].UnregisteredPerson);               
             dispatch({type: "ADD_UNREGISTERED_USERS", payload: r2.data.Companies[0].UnregisteredPerson});
@@ -215,7 +216,7 @@ export function getCompanyInfo(domain) {
     let postDomain = apiDomain + "/api/companyinformation";
     let sendObj = {
       "CompanyEmailOrDomain": domain,
-      "EventNo": store.getState().event.eventNo
+      "EventNo": store.getState().event.EventNo
     };  
     axios.post(postDomain, sendObj).then(r=>{
       dispatch({type: "SET_COMPANY", payload: r.data.Companies[0]});

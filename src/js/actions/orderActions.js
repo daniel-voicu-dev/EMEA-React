@@ -6,7 +6,7 @@ export function setCompany(o) {
     let postDomain = apiDomain + "/api/companyinformation";
     let sendObj = {
       "CompanyEmailOrDomain": o.Login,
-      "EventNo": store.getState().event.eventNo
+      "EventNo": store.getState().event.EventNo
     };  
     axios.post(postDomain, sendObj).then(r=>{
       dispatch({type: "SET_COMPANY", payload: r.data.Companies[0]});
@@ -35,8 +35,8 @@ export function addUserListToOrder(history, array, nextStep) {
     data.PersonRegistration =  array.reduce((r,v,k)=>{
       return [...r, {
         "RegistrationForEmail": v,
-        "EventNo": store.getState().event.eventNo,
-        "EventItemNo": store.getState().event.itemNo
+        "EventNo": store.getState().event.EventNo,
+        "EventItemNo": store.getState().event.ItemNo
       }]
     },[]);
     // console.log("data",data);
@@ -64,8 +64,8 @@ export function addUserToOrder(history, email, nextStep) {
       "PersonRegistration": [
         {
           "RegistrationForEmail": email,
-          "EventNo": store.getState().event.eventNo,
-          "EventItemNo": store.getState().event.itemNo
+          "EventNo": store.getState().event.EventNo,
+          "EventItemNo": store.getState().event.ItemNo
         }
       ]
     }
@@ -106,25 +106,25 @@ export function registerUsers(history) {
 
     // store.getState().order.Users.map(o=>{
     //   sendObj.PersonRegistration = [...sendObj.PersonRegistration, {
-    //       EventNo: store.getState().event.eventNo,
-    //       EventItemNo: store.getState().event.itemNo,
+    //       EventNo: store.getState().event.EventNo,
+    //       EventItemNo: store.getState().event.ItemNo,
     //       RegistrationForEmail: o.Login
     //     }
     //   ]
     // });
-    // // axios.post(apiDomain + "/api/eventitems", {"EventNo": store.getState().event.eventNo}).then(r=>{
+    // // axios.post(apiDomain + "/api/eventitems", {"EventNo": store.getState().event.EventNo}).then(r=>{
     // //     console.log(r.data);
     // //   });
     // // console.log(sendObj);
     // axios.post(postDomain, sendObj).then(r=>{
     //   console.log(r.data);
     // });
-    // Promise.all(store.getState().order.Users.map(o => {return axios.post(postDomain, {"EventNo": store.getState().event.eventNo, "Login": o.Login})})).then(() => {
+    // Promise.all(store.getState().order.Users.map(o => {return axios.post(postDomain, {"EventNo": store.getState().event.EventNo, "Login": o.Login})})).then(() => {
     //   history.push("/registration-completed");
     // }).catch((error => {
     //   console.log(error);
     // }))
-    axios.post(postDomain, {"EventNo": store.getState().event.eventNo, "Login": store.getState().user.Email}).then((r)=>{
+    axios.post(postDomain, {"EventNo": store.getState().event.EventNo, "Login": store.getState().user.Email}).then((r)=>{
       console.log("success confirming users");
       history.push("/registration-completed");
     });

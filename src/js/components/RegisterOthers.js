@@ -32,7 +32,7 @@ export default class RegisterOthers extends Component {
               </div>
               <div className="col-8 d-flex align-items-center flex-wrap">
                 <div>
-                  <h2 className="h2 font-weight-light text-primary">Welcome to Directions EMEA registration process.</h2>
+                  <h2 className="h2 font-weight-light text-dark">Welcome to {this.props.eventName} Registration</h2>
 
                   {this.props.admin===true &&                   
                     <p>Would you like to add further participants to this registration ?</p>

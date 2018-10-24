@@ -4,13 +4,14 @@ import {connect} from 'react-redux';
 import Header from "./Header";
 import Email from "./Email";
 
-import { getStepOne,  getCountries, getEventPrice } from '../actions/userActions';
+import { getStepOne,  getCountries } from '../actions/userActions';
+import { getEvent} from "../actions/eventActions";
 import store from "../store";
 
 @connect ((store) => {
   return {
     user: store.user,
-    event: store.event
+    eventName: store.event.EventName
   }
 })
 
@@ -25,7 +26,7 @@ export default class Start extends Component {
   }    
   componentWillMount() {    
     this.props.dispatch(getCountries());
-    this.props.dispatch(getEventPrice());
+    this.props.dispatch(getEvent());
   }
   getEmail(email) {
     this.setState({email});     
@@ -53,7 +54,7 @@ export default class Start extends Component {
                 </div>
                 <div className="col-8 d-flex align-items-center flex-wrap">                  
                   <div>
-                    <h2 className="h2 font-weight-light text-primary">Welcome to Directions EMEA Community</h2>
+                    <h2 className="h2 font-weight-light text-dark">Welcome to {this.props.eventName} Registration</h2>
                     <p className="">Enter you business email to login and register</p>
                     <p className={alertClass}>Please fill in all the fields to continue.</p>
                     <div id="form">

@@ -1,16 +1,13 @@
 export default function counter(state = {
-
-  eventDescription:"EMEA AMERICA DESCRIPTION",
-  eventName:"EMEA AMERICA",
-  eventNo:"EVT_00006",
-  itemDescription:"EMEA AMERICA ITEM1 DESCRIPTION",
-  itemNo:"22_ITEMDEM",
-  itemPrice: 124.3
-
+  "EventNo": "",
+  "EventName": "",
+  "ItemNo": "",
+  "ItemDescription": "",
+  "UnitPrice": null
 }, {type,payload}) {   
   switch (type) {   
   case "SET_EVENT_FULFILLED":
-    return payload;
+    return {...payload};
   case "SET_EVENT_PRICE":
     return {...state, itemPrice: payload}  
   // case 'FETCH_EVENT_REJECTED':

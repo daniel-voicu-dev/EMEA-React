@@ -56,7 +56,7 @@ export default class Login extends Component {
               </div>
               <div className="col-8 d-flex align-items-center flex-wrap">
                 <div>
-                  <h2 className="h2 font-weight-light text-primary">Welcome to Directions EMEA registration process.</h2>
+                  <h2 className="h2 font-weight-light text-dark">Welcome to {this.props.eventName} Registration</h2>
                   <p>Your email address is <strong><u>already registered</u></strong>. Please use your credentials to login.</p>
                   <p className={alertClass}>Please fill in all the fields to continue.</p>
                   <p className={alertGeneralClass}>{this.props.error}</p>
