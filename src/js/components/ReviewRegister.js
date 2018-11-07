@@ -53,6 +53,7 @@ export default class ReviewRegister extends Component {
       let domain = this.props.domain;
       domain = domain.substr(1);
       let eventNo = this.props.event;
+      console.log("ENTER", eventNo);
       axios.post(apiDomain + "/api/getregistrations", {"EventNo": eventNo,"LoginOrDomain": domain}).then(r => {
         let userRegisteredButNotConfirmed = r.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(obj => {
           return obj.RegistrationInvoiceNo === "" && obj.CreatedByContactEmail === this.props.login;

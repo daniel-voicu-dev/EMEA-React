@@ -3,37 +3,37 @@ import store from "../store";
 import jquery from "jquery";
 import bootstrap from "bootstrap";
 import {apiDomain} from "./variables";
-export function getStepOne(history, email) {
+export function goToLogin(history, email) {
   return (dispatch) => {   
-    let postDomain = apiDomain + "/api/personinformation";
-    console.log("EVENT",store.getState().event.EventNo);
+    let postDomain = apiDomain + "/api/personinformation";    
     let sendObj = {
       "Login": email,      
       "EventNo": store.getState().event.EventNo
     };     
     axios.post(postDomain, sendObj).then(r=>{   
       console.log("response",r);
+      console.log("IF: r.data.No !== null", r.data.No);
       let domain = "@" + email.split("@")[1];;  
       if (r.data.No !== null) {
         // getCompanyInfo(r.data.CompaniesForDomain[0].Login.split("@")[1]);
         dispatch({type: "SET_COMPANY", payload: r.data.Company})
-        dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
-        dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
+        dispatch({type: "SET_USER_EMAIL", payload: email});
+        dispatch({type: "SET_USER_DOMAIN", payload: domain});
         history.push("/login");
         // if (r.data.CompaniesForDomain[0].Login === email) {
         //   //Login
-        //   dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
-        //   dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
+        //   dispatch({type: "SET_USER_EMAIL", payload: email});
+        //   dispatch({type: "SET_USER_DOMAIN", payload: domain});
         //   history.push("/login");
         // } else {
         //   //Create user with domain
-        //   dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
-        //   dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
+        //   dispatch({type: "SET_USER_EMAIL", payload: email});
+        //   dispatch({type: "SET_USER_DOMAIN", payload: domain});
         // }        
       } else {
         //Create user without domain        
-        dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
-        dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
+        dispatch({type: "SET_USER_EMAIL", payload: email});
+        dispatch({type: "SET_USER_DOMAIN", payload: domain});
         dispatch({type: "GET_COMPANIES", payload: r.data.CompaniesForDomain})
         history.push("/create-user");
       }
@@ -43,13 +43,13 @@ export function getStepOne(history, email) {
     //   if (isUser) {
     //     let email = r.data.Login;
     //     let domain = "@" + email.split("@")[1];
-    //     dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
-    //     dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
+    //     dispatch({type: "SET_USER_EMAIL", payload: email});
+    //     dispatch({type: "SET_USER_DOMAIN", payload: domain});
     //     history.push("/login");
     //   } else {
     //     let domain = "@" + email.split("@")[1];
-    //     dispatch({type: "FETCH_EMAIL_FULFILLED", payload: email});
-    //     dispatch({type: "FETCH_DOMAIN_FULFILLED", payload: domain});
+    //     dispatch({type: "SET_USER_EMAIL", payload: email});
+    //     dispatch({type: "SET_USER_DOMAIN", payload: domain});
     //     history.push("/create-user");
     //   }
     // })
@@ -70,8 +70,8 @@ export function getUser(history, email, password) {
   return (dispatch) => { 
     axios.post(postDomain, sendObj).then(r=>{ 
       
-        console.log(r.data);
-        console.log(r.data.Token);
+        // console.log(r.data);
+        // console.log(r.data.Token);
       
         dispatch({type: "SET_USER_COMPANY_NO", payload: r.data.Company.CompanyNo})  
         dispatch({type: "SET_USER_COMPANY_NAME", payload: r.data.Company.CompanyName})  
@@ -83,19 +83,22 @@ export function getUser(history, email, password) {
 
         let domain = store.getState().user.Domain;
         domain = domain.substr(1);
-        let eventNo = store.getState().event.EventNo;
-
-        // console.log("test");
-
-        // alert("test");
-        // history.push("/register-others");
+        let eventNo = store.getState().event.EventNo;        
         axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": domain, "EventNo": eventNo}).then(r2 => {
+          var companyFilteredByLogin = r2.data.Companies.filter((o) => {return o.No === store.getState.user.CompanyNo}).length > 0 !== r2.data.Companies.filter((o) => {return o.No === store.getState.user.CompanyNo})[0] ? undefined;
+          if(companyFilteredByLogin !== undefined) {
+            console.log(companyFilteredByLogin);
+          } else {
+            throw new Error("There is no company that matches the login company number");
+          }
+
           if (r2.data.Companies[0].PrimaryContact.Email === store.getState().user.Name) {
             dispatch({type: "SET_ADMIN", payload: true});
             dispatch({type: "ADD_UNREGISTERED_USERS", payload: r2.data.Companies[0].UnregisteredPerson});
           }
+          console.log("ENTER 2", eventNo);
           axios.post(apiDomain + "/api/getregistrations", {"EventNo": eventNo,"LoginOrDomain": domain}).then(r3 => {
-            if (r3.data.CompanyRegistrations[0].length > 0) {
+            if (r3.data.CompanyRegistrations.length > 0) {
               let userAlreadyRegistered = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo == "" : null;
               let userIsAlreadyConfirmed = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo !== "" : false;
               // console.log("debugUser",userAlreadyRegistered, r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}), email)

@@ -1,8 +1,8 @@
 export default function counter(state = {Name: "", Token: "", Domain: "", Email: "", CompanyNo: "",CompanyName: "", error: "", CompanyList: [], CountryList: [], isAdmin: false, isConfirmed: false, UnregisteredUsers: []}, {type,payload}) {   
   switch (type) {   
-  case "FETCH_EMAIL_FULFILLED":
+  case "SET_USER_EMAIL":
     return {...state, Email: payload};
-  case "FETCH_DOMAIN_FULFILLED":
+  case "SET_USER_DOMAIN":
     return {...state, Domain: payload};
   case "FETCH_COUNTRIES_FULFILLED":
     return {...state, CountryList: payload}; 

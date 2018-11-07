@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Header from "./Header";
 import Email from "./Email";
 
-import { getStepOne,  getCountries } from '../actions/userActions';
+import { goToLogin,  getCountries } from '../actions/userActions';
 import { getEvent} from "../actions/eventActions";
 import store from "../store";
 
@@ -14,7 +14,6 @@ import store from "../store";
     eventName: store.event.EventName
   }
 })
-
 
 export default class Start extends Component {
   constructor(props) {
@@ -34,7 +33,7 @@ export default class Start extends Component {
   handleSend(e) {
     let canSend = this.state.email !== "";
     if (canSend) {
-      this.props.dispatch(getStepOne(this.props.history, this.state.email));
+      this.props.dispatch(goToLogin(this.props.history, this.state.email));
     } else {
       this.setState({alert: true});      
     }
