@@ -4,7 +4,7 @@ export default function counter(state = {Name: "", Token: "", Domain: "", Email:
     return {...state, Email: payload};
   case "SET_USER_DOMAIN":
     return {...state, Domain: payload};
-  case "FETCH_COUNTRIES_FULFILLED":
+  case "FETCH_COUNTRIES":
     return {...state, CountryList: payload}; 
   case "SET_ADMIN":
     return {...state, isAdmin: payload};   

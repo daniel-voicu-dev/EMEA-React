@@ -5,7 +5,7 @@ import Header from "./Header";
 import Email from "./Email";
 import Password from "./Password";
 
-import { getUser } from '../actions/userActions';
+import { verifyUserAndGoToNextStep } from '../actions/userActions';
 import store from "../store";
 
 @connect ((store) => {
@@ -36,7 +36,7 @@ export default class Login extends Component {
   handleSend(e) {
     let canSend = this.state.email !== "" && this.state.password !== "";   
     if (canSend) {
-      this.props.dispatch(getUser(this.props.history, this.state.email, this.state.password));
+      this.props.dispatch(verifyUserAndGoToNextStep(this.props.history, this.state.email, this.state.password));
     } else {
       this.setState({alert: true});      
     }
