@@ -4,49 +4,31 @@ import {Link} from 'react-router-dom';
 import Header from "./Header";
 import {apiDomain} from "./../actions/variables";
 import axios from 'axios';
-import { getCompanyInfo, registerUsers, addUsersToBeConfirmedList } from '../actions/orderActions';
+import { registerUsers, addUsersToBeConfirmedList, updateOrderTotal } from '../actions/orderActions';
 
 @connect ((store) => {
   return {
     users: store.order.Users,
     company: store.order.Company,
-    price: store.event.itemPrice,
+    price: store.event.UnitPrice,
     admin: store.user.isAdmin,
     countries: store.user.CountryList,
     domain: store.user.Domain,
-    event: store.event.eventNo,
-    login: store.user.Email
+    event: store.event.EventNo,
+    login: store.user.Email,
+    currency: store.event.Currency,
+    culture: store.event.Culture
 
   }
 })
 export default class ReviewRegister extends Component {  
   constructor(props) {
     super(props);
-    this.state = {      
-      // users: props.users,      
-      // company: props.company,
-      // quantity: props.users.length,
-      // price: props.price,
-      currency: "EURO"
-      // CompanyAddress: props.Company.Address,
-      // CompanyState: "Washington",
-      // CompanyCity: props.Company.City,
-      // CompanyCountry: "United States of America",
-      // CompanyPostalCode: props.Company.PostCode
+    this.state = {            
+      total: 0      
     };
   }  
-  // componentWillMount() {
-  //   axios.get("resources/getReview.json").then((r)=> {
-  //     this.setState({users: r.data.users});
-  //     this.setState({company: r.data.company});
-  //     this.setState({quantity: r.data.quantity});
-  //     this.setState({price: r.data.price});
-  //     this.setState({currency: r.data.currency});
-  //   });
-  // }
-  // componentWillMount() {
-  //   this.props.dispatch(getCompanyInfo(this.state.user.company.CompanyNo))
-  // }
+  
   componentWillMount() {
    
     
@@ -61,18 +43,28 @@ export default class ReviewRegister extends Component {
         })
         let usersToBeConfirmed = userRegisteredButNotConfirmed.reduce((r,v,k) => {return [...r, {"Name": v.PersonEmail, "Login": v.PersonEmail}]},[]);
         // console.log(usersToBeConfirmed)
-        this.props.dispatch(addUsersToBeConfirmedList(usersToBeConfirmed));
+        var order = r.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(obj => {
+          return obj.RegistrationInvoiceNo === "" && obj.CreatedByContactEmail === this.props.login;
+        })[0];  
+        if (order !== undefined) {
+          console.log(order);
+          this.setState({total: order.Amount});
+        } else {
+          throw new Error("There was no registration available for this user");
+        }
+        
         // console.log("userAlreadyRegistered",userAlreadyRegistered);
 
       })
     
   }
-  confirmRegistration() {
-    // console.log("confirm");
+  confirmRegistration() {  
     this.props.dispatch(registerUsers(this.props.history));
   }
   render() {    
-    let country = this.props.countries.filter(x=> {return x.Code===this.props.company.CountryCode})[0].Name;  
+    let country = this.props.countries.filter(x=> {return x.Code===this.props.company.CountryCode})[0].Name; 
+    console.log(this.props.culture, this.props.currency, this.state.total); 
+    let total = new Intl.NumberFormat(this.props.culture, { style: 'currency', currency: this.props.currency }).format(parseFloat(this.state.total));
     return (
       <React.Fragment>
       <Header />
@@ -102,7 +94,7 @@ export default class ReviewRegister extends Component {
                         <li>{country}</li>
                       </ul> 
                     <p className="mb-0 text-primary font-weight-bold">
-                      Order total: {this.props.users.length} x {this.props.price} {this.props.currency} = {this.props.users.length*this.props.price} {this.state.currency}*
+                      Order total: {total}*
                     </p>
                     <small>* prices do not include VAT or other applicable taxes</small>
                 </div>
