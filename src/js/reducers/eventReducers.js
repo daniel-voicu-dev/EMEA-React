@@ -1,15 +1,17 @@
+import {eventConfiguration , validationErrors} from "../actions/variables.js"
 export default function counter(state = {
   "EventNo": "",
   "EventName": "",
   "ItemNo": "",
   "ItemDescription": "",
   "UnitPrice": null,
-  "Currency": "USD",
-  "Culture": "en-US"
+  "Currency": eventConfiguration.Currency,
+  "Culture": eventConfiguration.Culture,
+  "FillInFields": validationErrors.FillInFields
 }, {type,payload}) {   
   switch (type) {   
   case "SET_EVENT":
-    return {...payload, "Currency": "USD", "Culture": "en-US"};
+    return {...state, ...payload};
   case "SET_EVENT_PRICE":
     return {...state, itemPrice: payload} 
   default:

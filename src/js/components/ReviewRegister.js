@@ -25,7 +25,8 @@ export default class ReviewRegister extends Component {
   constructor(props) {
     super(props);
     this.state = {            
-      total: 0      
+      total: 0,
+      orderlines: []      
     };
   }  
   
@@ -43,12 +44,19 @@ export default class ReviewRegister extends Component {
         })
         let usersToBeConfirmed = userRegisteredButNotConfirmed.reduce((r,v,k) => {return [...r, {"Name": v.PersonEmail, "Login": v.PersonEmail}]},[]);
         // console.log(usersToBeConfirmed)
-        var order = r.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(obj => {
+        // var order = r.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(obj => {
+        //   return obj.RegistrationInvoiceNo === "" && obj.CreatedByContactEmail === this.props.login;
+        // })[0];  
+        var orderForCurrentLogin = r.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(obj => {
           return obj.RegistrationInvoiceNo === "" && obj.CreatedByContactEmail === this.props.login;
-        })[0];  
-        if (order !== undefined) {
-          console.log(order);
-          this.setState({total: order.Amount});
+        });
+        console.log(orderForCurrentLogin);
+        if (orderForCurrentLogin.length > 0) {         
+          let total = orderForCurrentLogin.reduce((r,v,k) => {return r = r + v.Amount}, 0);
+          console.log(orderForCurrentLogin, total);
+          let users = orderForCurrentLogin.reduce((r,v,k) => {return [...r,{"Name": v.PersonName, "Login": v.PersonEmail}]},[]);
+          this.setState({orderlines: users});
+          this.setState({total: total});          
         } else {
           throw new Error("There was no registration available for this user");
         }
@@ -82,8 +90,8 @@ export default class ReviewRegister extends Component {
                 <div className="">
                   <p className="mb-1 text-primary font-weight-bold">These are the participants included in your registration:</p>
                   <ul className="list-unstyled">
-                  { this.props.users.length > 0 &&
-                    this.props.users.map((o,i) => {return (<li key={i}><strong>{o.Name}</strong></li>)})
+                  { this.state.orderlines.length > 0 &&
+                    this.state.orderlines.map((o,i) => {return (<li key={i}><strong>{o.Name}</strong></li>)})
                   }  
                   </ul>
                   <p className="mb-1 text-primary font-weight-bold">Company details:</p>  

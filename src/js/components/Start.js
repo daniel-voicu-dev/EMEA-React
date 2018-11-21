@@ -11,7 +11,8 @@ import store from "../store";
 @connect ((store) => {
   return {
     user: store.user,
-    eventName: store.event.EventName
+    eventName: store.event.EventName,
+    fillInFields: store.event.FillInFields
   }
 })
 
@@ -53,9 +54,9 @@ export default class Start extends Component {
                 </div>
                 <div className="col-8 d-flex align-items-center flex-wrap">                  
                   <div>
-                    <h2 className="h2 font-weight-light text-dark">Welcome to {this.props.eventName} Registration</h2>
+                    <h2 className="h2 font-weight-light text-dark">{this.props.eventName} Registration</h2>
                     <p className="">Enter you business email to login and register</p>
-                    <p className={alertClass}>Please fill in all the fields to continue.</p>
+                    <p className={alertClass}>{this.props.fillInFields}</p>
                     <div id="form">
                       <div className="form-group">                        
                         <Email required={true} readonly={false} getEmail={(email) => {this.getEmail(email)}}/>

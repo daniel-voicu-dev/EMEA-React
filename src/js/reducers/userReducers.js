@@ -1,9 +1,11 @@
 export default function counter(state = {Name: "", Token: "", Domain: "", Email: "", CompanyNo: "",CompanyName: "", error: "", CompanyList: [], CountryList: [], isAdmin: false, isConfirmed: false, UnregisteredUsers: []}, {type,payload}) {   
   switch (type) {   
-  case "SET_USER_EMAIL":
-    return {...state, Email: payload};
-  case "SET_USER_DOMAIN":
-    return {...state, Domain: payload};
+  case "UPDATE_USER_INFORMATION":
+    return {...state, ...payload};  
+  // case "SET_USER_EMAIL":
+  //   return {...state, Email: payload};
+  // case "SET_USER_DOMAIN":
+  //   return {...state, Domain: payload};
   case "FETCH_COUNTRIES":
     return {...state, CountryList: payload}; 
   case "SET_ADMIN":
@@ -22,8 +24,8 @@ export default function counter(state = {Name: "", Token: "", Domain: "", Email:
     return {...state, Name: payload};       
   case "GET_TOKEN":
     return {...state, Token: payload}
-  case "GET_COMPANIES":
-    return {...state, CompanyList: payload}  
+  // case "GET_COMPANIES":
+  //   return {...state, CompanyList: payload}  
   case "FETCH_USER_FULFILLED": 
     return {...state, Name: payload.Name, CompanyName: payload.Company.CompanyName, CompanyNo: payload.Company.CompanyNo};
   case "ERROR_CREDENTIALS_UPDATE":

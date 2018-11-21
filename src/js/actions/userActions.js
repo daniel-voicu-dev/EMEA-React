@@ -24,15 +24,17 @@ export function goToLogin(history, email) {
       let domain = "@" + email.split("@")[1];;  
       if (r.data.No !== null) {   
         //Go to login step   
+        //TO DO update user dispatch
         dispatch({type: "SET_COMPANY", payload: r.data.Company})
         dispatch({type: "SET_USER_EMAIL", payload: email});
         dispatch({type: "SET_USER_DOMAIN", payload: domain});
         history.push("/login");
       } else {
         //Go to create user step with domain already filled in
-        dispatch({type: "SET_USER_EMAIL", payload: email});
-        dispatch({type: "SET_USER_DOMAIN", payload: domain});
-        dispatch({type: "GET_COMPANIES", payload: r.data.CompaniesForDomain})
+        dispatch({type: "UPDATE_USER_INFORMATION", payload: {"Email": email, "Domain": domain}});
+        // dispatch({type: "SET_USER_EMAIL", payload: email});
+        // dispatch({type: "SET_USER_DOMAIN", payload: domain});
+        // dispatch({type: "GET_COMPANIES", payload: r.data.CompaniesForDomain})
         history.push("/create-user");
       }
     });    
@@ -197,23 +199,39 @@ export function getCompanyInfo(domain) {
 export function registerCompany(data) {
   return (dispatch) => {
    let sendObj = {
-     "Login": data.email,
-     "Name": data.name,
-     "Address": data.address,
-     "Address2": data.address2,
-     "City": data.city,
-     "CountryCode": data.country,
-     "PhoneNo": data.phone,
-     "PostCode": data.zip,
-     "VATRegistrationNo": data.companyVATNo
+      "Login": data.email,
+      "Name": data.name,
+      "Address": data.address,
+      "Address2": data.address2,
+      "City": data.city,
+      "CountryCode": data.country,
+      "PhoneNo": data.phone,
+      "PostCode": data.zip,
+      "VATRegistrationNo": data.companyVATNo,
+      "Email2": null,
+      "FFConsulting": false,
+      "FFDevelopment": false,
+      "FFManagement": false,
+      "FFSalesMarketing": false,
+      "JobTitle": null,
+      "OptOut": false,
+      "PartnerType": null,
+      "PIBusinessCentral": false,
+      "PICustomerEngagement": false,
+      "PIOther": false,
+      "PIPowerPlatform": false
    };  
    let postDomain = apiDomain + "/api/signupcompany";
   
    axios.post(postDomain, sendObj).then(r => {
-    $("#AddCompanyModal").modal("hide");   
-    console.log(r);
-    dispatch({type: "ADD_COMPANY_FULFILLED", payload: r.data})
-    dispatch({type: "SET_COMPANY", payload: r.data})
+    $("#AddCompanyModal").modal("hide");       
+    axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": store.getState().user.Domain.split("@")[1], "EventNo": store.getState().event.EventNo}).then(r=>{
+      dispatch({type: "GET_COMPANIES", payload: r.data.Companies});
+      dispatch({type: "SET_USER_COMPANY_NO", payload: r.data.Companies[0].No});  
+      dispatch({type: "SET_USER_COMPANY_NAME", payload: r.data.Companies[0].Name}); 
+    });
+    //dispatch({type: "ADD_COMPANY_FULFILLED", payload: r.data})
+    //dispatch({type: "SET_COMPANY", payload: r.data})
    });
   //  axios.get("resources/getCompany.json").then(r=>{ ///changed to post
   //   $("#AddCompanyModal").modal("hide");    
@@ -222,4 +240,10 @@ export function registerCompany(data) {
   //   });
   //  });   
   }
+}
+
+export function updateUserCompanyNo(no) {
+  return (dispatch) => {
+    dispatch({type: "SET_USER_COMPANY_NO", payload: no}); 
+  }  
 }

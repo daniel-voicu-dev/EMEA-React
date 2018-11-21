@@ -11,7 +11,8 @@ import {createUser} from "../actions/userActions"
     email: store.user.Email, 
     countries: store.user.CountryList,   
     error: store.user.error,
-    companies: store.user.CompanyList
+    companies: store.user.CompanyList,
+    eventName: store.event.EventName
   }
 })
 
@@ -87,7 +88,7 @@ export default class CreateUser extends Component {
             </div>
             <div className="col-8 d-flex align-items-center flex-wrap">
               <div>
-                <h2 className="h2 font-weight-light text-primary">Welcome to Directions EMEA registration process.</h2>
+                <h2 className="h2 font-weight-light text-primary">{this.props.eventName} Registration</h2>
                 <p>We could not find a user for your email address. In order to continue please create an account.</p>
                 <p className={alertClass}>Please fill in all the fields and accept <strong>terms and conditions</strong> to continue</p>
                 <div>

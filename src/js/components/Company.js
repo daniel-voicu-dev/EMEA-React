@@ -3,12 +3,12 @@ import {connect} from 'react-redux'
 import CompanySelect from "./CompanySelect"
 import CountrySelect from "./CountrySelect"
 import Email from "./Email"
-import {registerCompany} from "../actions/userActions";
+import {registerCompany, updateUserCompanyNo} from "../actions/userActions";
 
 @connect ((store) => {
   return { 
     companyList: store.user.CompanyList,
-    companySelected: store.order.Company.CompanyNo !== undefined ? store.order.Company.CompanyNo : "",
+    companySelected: store.user.CompanyNo !== undefined ? store.user.CompanyNo : "",
     domain: store.user.Domain,
     countries: store.user.CountryList,
     admin: store.user.isAdmin   
@@ -59,6 +59,7 @@ export default class Company extends Component {
   }
   getCompany(company) {
     this.props.getValue(company);
+    this.props.dispatch(updateUserCompanyNo(company));
   }
   handleSendAddress(e) {
     let canSend = this.state.name !== "" && this.state.address !== "" && this.state.city !== "" && this.state.phone !== "";   
