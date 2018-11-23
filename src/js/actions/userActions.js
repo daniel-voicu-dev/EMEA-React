@@ -25,17 +25,28 @@ export function goToLogin(history, email) {
       if (r.data.No !== null) {   
         //Go to login step   
         //TO DO update user dispatch
-        dispatch({type: "SET_COMPANY", payload: r.data.Company})
-        dispatch({type: "SET_USER_EMAIL", payload: email});
-        dispatch({type: "SET_USER_DOMAIN", payload: domain});
-        history.push("/login");
+        //dispatch({type: "UPDATE_USER_INFORMATION", payload: {"Email": email, "Domain": domain}});
+        // dispatch({type: "SET_COMPANY", payload: r.data.Company})
+        // dispatch({type: "SET_USER_EMAIL", payload: email});
+        // dispatch({type: "SET_USER_DOMAIN", payload: domain});
+        dispatch({type: "UPDATE_USER_INFORMATION", payload: {"Email": email, "Domain": domain}});
+        axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": store.getState().user.Domain.split("@")[1], "EventNo": store.getState().event.EventNo}).then(r=>{
+          dispatch({type: "UPDATE_USER_INFORMATION", payload: {"CompanyList": r.data.Companies}});
+          //dispatch({type: "UPDATE_USER_INFORMATION", payload: {"CompanyList": r.data.Companies}});     
+          history.push("/login");
+        });   
+        
       } else {
         //Go to create user step with domain already filled in
         dispatch({type: "UPDATE_USER_INFORMATION", payload: {"Email": email, "Domain": domain}});
+        axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": store.getState().user.Domain.split("@")[1], "EventNo": store.getState().event.EventNo}).then(r=>{
+          dispatch({type: "UPDATE_USER_INFORMATION", payload: {"CompanyList": r.data.Companies}});     
+          history.push("/create-user");  
+        });   
         // dispatch({type: "SET_USER_EMAIL", payload: email});
         // dispatch({type: "SET_USER_DOMAIN", payload: domain});
         // dispatch({type: "GET_COMPANIES", payload: r.data.CompaniesForDomain})
-        history.push("/create-user");
+        
       }
     });    
   }
@@ -126,7 +137,9 @@ export function getUserInfo() {
       console.log(r.data); 
       dispatch({type: "FETCH_USER_FULFILLED", payload: r.data});
       dispatch({type: "SET_COMPANY", payload: r.data.Company});
-      dispatch({type: "GET_COMPANIES", payload: r.data.CompaniesForDomain});
+      axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": store.getState().user.Domain.split("@")[1], "EventNo": store.getState().event.EventNo}).then(r=>{
+        dispatch({type: "UPDATE_USER_INFORMATION", payload: {"CompanyList": r.data.Companies}});        
+      });      
     });
   }
  
@@ -226,9 +239,11 @@ export function registerCompany(data) {
    axios.post(postDomain, sendObj).then(r => {
     $("#AddCompanyModal").modal("hide");       
     axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": store.getState().user.Domain.split("@")[1], "EventNo": store.getState().event.EventNo}).then(r=>{
-      dispatch({type: "GET_COMPANIES", payload: r.data.Companies});
-      dispatch({type: "SET_USER_COMPANY_NO", payload: r.data.Companies[0].No});  
-      dispatch({type: "SET_USER_COMPANY_NAME", payload: r.data.Companies[0].Name}); 
+
+      dispatch({type: "UPDATE_USER_INFORMATION", payload: {"CompanyList": r.data.Companies, "CompanyNo": r.data.Companies[0].No,"CompanyName":r.data.Companies[0].Name}});
+      // dispatch({type: "GET_COMPANIES", payload: r.data.Companies});
+      // dispatch({type: "SET_USER_COMPANY_NO", payload: r.data.Companies[0].No});  
+      // dispatch({type: "SET_USER_COMPANY_NAME", payload: r.data.Companies[0].Name}); 
     });
     //dispatch({type: "ADD_COMPANY_FULFILLED", payload: r.data})
     //dispatch({type: "SET_COMPANY", payload: r.data})

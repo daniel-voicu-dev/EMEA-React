@@ -5,9 +5,20 @@ export default class CountrySelect extends Component {
   constructor(props) {
     super(props);  
     this.state = {
-      selected: this.props.setValue !== undefined ? this.props.setValue : ""
+      selected: ""
     }  
   }  
+  componentDidMount() {
+    console.log(this.props);
+    if (this.props.setValue !== undefined) {
+      this.setState({selected: this.props.setValue});
+    }
+  }
+  componentDidUpdate() {    
+    if ((this.props.setValue !== undefined && this.props.setValue !== "") && this.state.selected === "") {
+      this.setState({selected: this.props.setValue});
+    }
+  }
   handleChange(e) {
     this.setState({selected: e.currentTarget.value});
     this.props.getValue(e.currentTarget.value);   

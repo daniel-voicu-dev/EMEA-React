@@ -11,7 +11,9 @@ import { goToAddMoreMembers } from '../actions/userActions';
     company: store.order.Company.Login,
     admin: store.user.isAdmin,
     isConfirmed: store.user.isConfirmed,
-    registeredUsers: store.order.Company.CompanyRegistrations
+    registeredUsers: store.order.Company.CompanyRegistrations,
+    eventName: store.event.EventName,
+    unregisteredUsers: store.user.UnregisteredUsers
   }
 })
 
@@ -32,12 +34,12 @@ export default class RegisterOthers extends Component {
               </div>
               <div className="col-8 d-flex align-items-center flex-wrap">
                 <div>
-                  <h2 className="h2 font-weight-light text-dark">Welcome to {this.props.eventName} Registration</h2>
+                  <h2 className="h2 font-weight-light text-dark">{this.props.eventName} Registration</h2>
 
-                  {this.props.admin===true &&                   
+                  {(this.props.admin===true && this.props.unregisteredUsers.length > 0) &&                  
                     <p>Would you like to add further participants to this registration ?</p>
                   }  
-                  {this.props.admin===true &&  
+                  {(this.props.admin===true && this.props.unregisteredUsers.length > 0) &&  
                     <div className="mb-3">
                       <button type="button" onClick={()=>this.props.dispatch(goToAddMoreMembers(this.props.history))} className="btn btn-primary px-5">Register a colleague for Directions EMEA 2018</button>
                     </div>

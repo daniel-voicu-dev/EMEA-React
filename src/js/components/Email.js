@@ -58,7 +58,7 @@ export default class Email extends Component {
       return (
         <div className="form-group">    
         <div className="input-group">
-          <input type="text" className={inputClass} placeholder="Email address..." onChange={(e) => this.handleChangeWithDomain(e)} value={this.state.inputValue} required={this.props.required} readOnly={this.props.readonly} onBlur={(e) => this.handleBlurWithDomain(e)} />
+          <input type="text" className={inputClass} placeholder="Email address..." onChange={(e) => this.handleChangeWithDomain(e)} value={this.state.inputValue} required={this.props.required} disabled={this.props.readonly} onBlur={(e) => this.handleBlurWithDomain(e)} />
           <div className="input-group-append">
             <span className="input-group-text" id="basic-addon2">{this.state.domain}</span>
           </div>
@@ -72,7 +72,7 @@ export default class Email extends Component {
     }
     return (
       <div className="form-group">   
-        <input type="text" className={inputClass} placeholder="Email address..." onChange={(e) => this.handleChange(e)} value={this.state.inputValue} required={this.props.required} readOnly={this.props.readonly} onBlur={(e) => this.handleBlur(e)} />
+        <input type="text" className={inputClass} placeholder="Email address..." onChange={(e) => this.handleChange(e)} value={this.state.inputValue} required={this.props.required} disabled={this.props.readonly} onBlur={(e) => this.handleBlur(e)} />
         <small className="invalid-feedback">
           Invalid email
         </small>

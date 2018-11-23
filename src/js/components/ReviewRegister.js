@@ -17,7 +17,8 @@ import { registerUsers, addUsersToBeConfirmedList, updateOrderTotal } from '../a
     event: store.event.EventNo,
     login: store.user.Email,
     currency: store.event.Currency,
-    culture: store.event.Culture
+    culture: store.event.Culture,
+    eventName: store.event.EventName
 
   }
 })
@@ -85,7 +86,7 @@ export default class ReviewRegister extends Component {
             </div>
             <div className="col-8 d-flex align-items-center flex-wrap">
               <div>
-              <h2 className="h2 font-weight-light text-dark">Welcome to {this.props.eventName} Registration</h2>
+              <h2 className="h2 font-weight-light text-dark">{this.props.eventName} Registration</h2>
                 <p>Please review your registration before confirming it. After confirmation we will send you an invoice and a link for credit card payment.</p>
                 <div className="">
                   <p className="mb-1 text-primary font-weight-bold">These are the participants included in your registration:</p>
