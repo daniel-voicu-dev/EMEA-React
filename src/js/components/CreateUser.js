@@ -109,7 +109,7 @@ export default class CreateUser extends Component {
     this.props.dispatch(updateUserCompanyNo(company));
     this.setState({company});
     console.log("company",company);
-    let selectedCompany = this.state.companyList.filter(v => {return v.No === company})[0];
+    let selectedCompany = this.props.companyList.filter(v => {return v.No === company})[0];
     console.log("selectedCompany",selectedCompany);
     let address = selectedCompany.Address;
     let city = selectedCompany.City;

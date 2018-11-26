@@ -57,21 +57,27 @@ export default class Company extends Component {
   getCountry(country) {
     this.setState({country});
   }
-  getCompany(company) {
-    this.props.getValue(company);    
+  getCompany(company) {    
+    if (company !== "") {
+      if(company !== "newCompany") {
+        this.props.getValue(company);    
+      } else {
+        $("#AddCompanyModal").modal("show");
+      }
+    }
   }
   handleSendAddress(e) {
     let canSend = this.state.name !== "" && this.state.address !== "" && this.state.city !== "" && this.state.phone !== "";   
     if (canSend) {
       // this.props.dispatch(createUser(this.props.history, this.state));           
       this.props.dispatch(registerCompany(this.state));
-      this.setState({name: ""});
-      this.setState({address: ""});
-      this.setState({address2: ""});
-      this.setState({city: ""});
-      this.setState({phone: ""});
-      this.setState({zip: ""});
-      this.setState({companyVATNo: ""});
+      // this.setState({name: ""});
+      // this.setState({address: ""});
+      // this.setState({address2: ""});
+      // this.setState({city: ""});
+      // this.setState({phone: ""});
+      // this.setState({zip: ""});
+      // this.setState({companyVATNo: ""});
     } else {
       this.setState({alert: true});      
     }
@@ -85,11 +91,8 @@ export default class Company extends Component {
         { this.props.companyList.length === 0 &&
         <p className="alert alert-primary">There is no company assosciated with this email. You need to <a href="#" data-toggle="modal" data-target="#AddCompanyModal"><u><strong>create a Company</strong></u></a> to continue.</p> 
         }
-        <label htmlFor="Company">Company*</label>
-        {this.props.companyList.length === 1 &&        
-          <CompanySelect id="Company" firstOption="Select a company" required="true" getValue={(v) => this.getCompany(v)} options={this.props.companyList} setValue={this.props.companyList[0].No} readOnly="true" />
-        }
-        {this.props.companyList.length > 1 && 
+        <label htmlFor="Company">Company*</label>        
+        {this.props.companyList.length >= 1 && 
           <CompanySelect id="Company" firstOption="Select a company" required="true" getValue={(v) => this.getCompany(v)} options={this.props.companyList} setValue={this.props.companySelected} />
         }
         {this.props.companyList.length === 0 &&

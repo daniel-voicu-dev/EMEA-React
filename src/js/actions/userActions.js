@@ -3,6 +3,7 @@ import store from "../store";
 import jquery from "jquery";
 import bootstrap from "bootstrap";
 import {apiDomain} from "./variables";
+import Noty from 'noty';
 
 export function getCountries() {  
   let postDomain = apiDomain + "/api/countries";
@@ -247,6 +248,14 @@ export function registerCompany(data) {
     });
     //dispatch({type: "ADD_COMPANY_FULFILLED", payload: r.data})
     //dispatch({type: "SET_COMPANY", payload: r.data})
+   }).catch(function(error){
+    new Noty({
+      text: error.response.dataExceptionMessage,
+      layout: "center",
+      type: "error"
+    }).show();
+     console.log(error.response.data);
+     console.log(error.response.data.ExceptionMessage);
    });
   //  axios.get("resources/getCompany.json").then(r=>{ ///changed to post
   //   $("#AddCompanyModal").modal("hide");    
