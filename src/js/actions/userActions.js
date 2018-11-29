@@ -4,6 +4,7 @@ import jquery from "jquery";
 import bootstrap from "bootstrap";
 import {apiDomain} from "./variables";
 import Noty from 'noty';
+import 'noty/src/noty.scss';
 
 export function getCountries() {  
   let postDomain = apiDomain + "/api/countries";
@@ -254,6 +255,7 @@ export function registerCompany(data) {
       layout: "center",
       type: "error"
     }).show();
+    alert(error.response.data.ExceptionMessage);
      console.log(error.response.data);
      console.log(error.response.data.ExceptionMessage);
    });

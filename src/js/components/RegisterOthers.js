@@ -51,7 +51,7 @@ export default class RegisterOthers extends Component {
                   }
                   {this.props.registeredUsers.length > 0 && 
                     <div>
-                      <Link to="/already-registered" className="btn btn-primary px-5">See existing registrations</Link>
+                      <Link to="/review-register" className="btn btn-primary px-5">See existing registrations</Link>
                     </div>
                   }
                   

@@ -93,7 +93,7 @@ export default class Company extends Component {
         }
         <label htmlFor="Company">Company*</label>        
         {this.props.companyList.length >= 1 && 
-          <CompanySelect id="Company" firstOption="Select a company" required="true" getValue={(v) => this.getCompany(v)} options={this.props.companyList} setValue={this.props.companySelected} />
+          <CompanySelect id="Company" firstOption="Select a company" required="true" getValue={(v) => this.getCompany(v)} options={this.props.companyList} setValue={this.props.companySelected} readOnly={this.props.readOnly} />
         }
         {this.props.companyList.length === 0 &&
           <div>

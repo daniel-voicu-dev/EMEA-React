@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import Header from './Header';
 import Email from './Email';
+import Company from "./Company"
 import CountrySelect from "./CountrySelect";
 import {addNewMember} from "../actions/userActions"
 @connect ((store) => {
   return {
     domain: store.user.Domain,
-    company: store.order.Company,   
+    company: store.user.CompanyList,   
     countries: store.user.CountryList, 
     users: store.order.Company.Persons,
-    error: store.user.error   
+    error: store.user.error,
+    companyList: store.user.CompanyList   
   }
 })
 class AddNewMember extends Component {
@@ -21,13 +22,13 @@ class AddNewMember extends Component {
       email: "",
       password: "",
       name: "",
-      address: "",
-      city: "",
-      zip: "",
-      country: "",
-      company: props.company.Name,
-      companyNo: props.company.CompanyNo,
-      phone: "",
+      address: props.company[0].Address,
+      city: props.company[0].City,
+      zip: props.company[0].PostCode,
+      country: props.company[0].CountryCode,
+      //company: "",
+      // companyNo: props.company.CompanyNo,
+      phone: props.company[0].PhoneNo,
       terms: false,
       alert: false,
       userAlert: false   
@@ -70,6 +71,19 @@ class AddNewMember extends Component {
   }
   getCompany(company) {
     this.setState({company});
+    console.log("company",company);
+    let selectedCompany = this.props.companyList.filter(v => {return v.No === company})[0];
+    console.log("selectedCompany",selectedCompany);
+    let address = selectedCompany.Address;
+    let city = selectedCompany.City;
+    let zip = selectedCompany.PostCode;
+    let country = selectedCompany.CountryCode;
+    let phone = selectedCompany.PhoneNo;
+    this.setState({address});
+    this.setState({city});
+    this.setState({zip});
+    this.setState({country});
+    this.setState({phone});
     this.setState({alert: false});
   }
   setTerms(e) {    
@@ -97,7 +111,20 @@ class AddNewMember extends Component {
           "CountryCode": this.state.country,
           "PhoneNo": this.state.phone,
           "PostCode": this.state.zip,
-          "CompanyNo": this.state.companyNo
+          "CompanyNo": this.props.company[0].No,
+          "VATRegistrationNo": null,
+          "Email2": null,
+          "FFConsulting": false,
+          "FFDevelopment": false,
+          "FFManagement": false,
+          "FFSalesMarketing": false,
+          "JobTitle": null,
+          "OptOut": false,
+          "PartnerType": null,
+          "PIBusinessCentral": false,
+          "PICustomerEngagement": false,
+          "PIOther": false,
+          "PIPowerPlatform": false
       }      
       this.props.dispatch(addNewMember(this.props.history, obj));
     } else {
@@ -126,6 +153,7 @@ class AddNewMember extends Component {
                     <p className={userAlertClass}>User already exists.</p>
                     <p className={dynamicAlertClass}>{this.props.error}</p>
                     <div>
+                      <Company getValue={(company) => this.getCompany(company)} readOnly="true"/>
                       <div className="form-group">
                         <label htmlFor="Email">Email</label>
                         <Email required={true} readonly={false} domain={this.props.domain} getEmail={(email) => {this.getEmail(email)}} setValue="" />
@@ -138,35 +166,31 @@ class AddNewMember extends Component {
                           </small>
                       </div>
                       <div className="form-group">
-                          <label htmlFor="FullName">Full Name</label>
+                          <label htmlFor="FullName">Full Name*</label>
                           <input type="email" id="FullName" className="form-control" onChange={(e) => this.getName(e.currentTarget.value)} /> 
                       </div>
                       <div className="form-group">
-                          <label htmlFor="Address">Address</label>
-                          <input type="email" id="Address" className="form-control" onChange={(e) => this.getAddress(e.currentTarget.value)} /> 
+                          <label htmlFor="Address">Address*</label>
+                          <input type="email" id="Address" className="form-control" onChange={(e) => this.getAddress(e.currentTarget.value)} defaultValue={this.state.address} /> 
                       </div>
                       <div className="form-row">
                           <div className="form-group col">
-                              <label htmlFor="City">City</label>
-                              <input type="email" id="City" className="form-control" onChange={(e) => this.getCity(e.currentTarget.value)} /> 
+                              <label htmlFor="City">City*</label>
+                              <input type="email" id="City" className="form-control" onChange={(e) => this.getCity(e.currentTarget.value)} defaultValue={this.state.city} /> 
                           </div>
                           <div className="form-group col">
-                              <label htmlFor="ZipCode">Zip Code</label>
-                              <input type="email" id="ZipCode" className="form-control" onChange={(e) => this.getZip(e.currentTarget.value)} /> 
+                              <label htmlFor="ZipCode">Zip Code*</label>
+                              <input type="email" id="ZipCode" className="form-control" onChange={(e) => this.getZip(e.currentTarget.value)} defaultValue={this.state.zip} /> 
                           </div>
                       </div>
                       <div className="form-group">
-                          <label htmlFor="Phone">Phone</label>
-                          <input type="text" id="Phone" className="form-control" onChange={(e) => this.getPhone(e.currentTarget.value)}  /> 
+                          <label htmlFor="Phone">Phone*</label>
+                          <input type="text" id="Phone" className="form-control" onChange={(e) => this.getPhone(e.currentTarget.value)} defaultValue={this.state.phone} /> 
                       </div>
                       <div className="form-group">
-                          <label htmlFor="Country">Country</label>
-                          <CountrySelect id="Country" firstOption="Select a country" required="true" getValue={(v) => this.getCountry(v)} options={this.props.countries} />
-                      </div>
-                      <div className="form-group">                      
-                          <label htmlFor="Company">Company</label>
-                          <input type="text" id="Company" className="form-control" defaultValue={this.props.company.Name} readOnly />                      
-                      </div>
+                          <label htmlFor="Country">Country*</label>                      
+                          <CountrySelect id="Country" firstOption="Select a country" required="true" getValue={(v) => this.getCountry(v)} setValue={this.state.country} options={this.props.countries} />
+                      </div>                      
                       <div className="form-group">
                         <div className="form-check form-check-inline">
                           <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" onChange={(e)=>{this.setTerms(e)}}/>
