@@ -159,11 +159,19 @@ export function createUser(history,data) {
       "CountryCode": data.country,
       "PhoneNo": data.phone,
       "PostCode": data.zip,
-      "CompanyNo": data.company
-    };  
-    console.log(sendObj);
-    axios.post(postDomain, sendObj).then(r => {      
-      console.log(r.data);    
+      "CompanyNo": data.company,
+      "Email2" :data.Email2,
+      "PIBusinessCentral": data.PIBusinessCentral,
+      "PICustomerEngagement": data.PICustomerEngagement,
+      "PIOther": data.PIOther,
+      "PIPowerPlatform": data.PIPowerPlatform,
+      "FFConsulting": data.FFConsulting,
+      "FFDevelopment": data.FFDevelopment,
+      "FFManagement": data.FFManagement,
+      "FFSalesMarketing": data.FFSalesMarketing,
+      "JobTitle": data.JobTitle
+    };     
+    axios.post(postDomain, sendObj).then(r => {  
       history.push("/login");  
     });
   }
@@ -175,16 +183,14 @@ export function addNewMember(history,data) {
         let domain = store.getState().user.Domain;
         domain = domain.substr(1);
         let eventNo = store.getState().event.EventNo;
-        axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": domain, "EventNo": eventNo}).then(r2 => {  
-          console.log("unregisteredPersons",r2.data.Companies[0].UnregisteredPerson);               
+        axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": domain, "EventNo": eventNo}).then(r2 => {              
             dispatch({type: "ADD_UNREGISTERED_USERS", payload: r2.data.Companies[0].UnregisteredPerson});
             dispatch({type: "ERROR_RESET", payload: ""});
             history.push("/add-more-members"); 
         }) 
         
       }).catch((error) => {
-        if (error.response) {
-          console.log(error.response.data);
+        if (error.response) {         
           dispatch({type: "ERROR_CREDENTIALS_UPDATE", payload: error.response.data.ExceptionMessage});
         } else {
           console.log(error);
@@ -234,7 +240,12 @@ export function registerCompany(data) {
       "PIBusinessCentral": false,
       "PICustomerEngagement": false,
       "PIOther": false,
-      "PIPowerPlatform": false
+      "PIPowerPlatform": false,
+      "PTVAR": data.PTVAR,
+      "PTISV": data.PTISV,
+      "PTVARandISV": data.PTVARandISV,
+      "PTMicrosoftEmployee": data.PTMicrosoftEmployee    
+
    };  
    let postDomain = apiDomain + "/api/signupcompany";
   
@@ -256,8 +267,6 @@ export function registerCompany(data) {
       type: "error"
     }).show();
     alert(error.response.data.ExceptionMessage);
-     console.log(error.response.data);
-     console.log(error.response.data.ExceptionMessage);
    });
   //  axios.get("resources/getCompany.json").then(r=>{ ///changed to post
   //   $("#AddCompanyModal").modal("hide");    

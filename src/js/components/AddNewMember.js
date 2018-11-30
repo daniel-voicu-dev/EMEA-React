@@ -31,7 +31,17 @@ class AddNewMember extends Component {
       phone: props.company[0].PhoneNo,
       terms: false,
       alert: false,
-      userAlert: false   
+      userAlert: false,
+      Email2 :"",
+      PIBusinessCentral: false,
+      PICustomerEngagement: false,
+      PIOther: false,
+      PIPowerPlatform: false,
+      FFConsulting: false,
+      FFDevelopment: false,
+      FFManagement: false,
+      FFSalesMarketing: false,
+      JobTitle: null   
     };
   }  
   getEmail(email) {
@@ -44,6 +54,9 @@ class AddNewMember extends Component {
     //   this.setState({userAlert: false});
     // }
     
+  }
+  getEmail2(email) {
+    this.setState({Email2: email});
   }
   getPassword(password) {
     this.setState({password});
@@ -96,6 +109,12 @@ class AddNewMember extends Component {
     this.setState({phone});
     this.setState({alert: false});
   }
+  changeCheckboxState(e) {       
+    this.setState({...this.state, [e.currentTarget.attributes.name.value]: !this.state[e.currentTarget.attributes.name.value] });
+  }
+  changeInputTextState(e){
+    this.setState({...this.state, [e.currentTarget.attributes.name.value]: [e.currentTarget.value] });
+  }
   handleSend(e) {
     let canSend = this.state.email !== "" && this.state.password !== "" && this.state.name !== "" && this.state.address !== "" && this.state.city !== "" && this.state.country !== "" && this.state.zip !== "" && this.state.company !== "" && this.state.terms === true && this.state.userAlert === false;   
     if (canSend) {
@@ -113,18 +132,16 @@ class AddNewMember extends Component {
           "PostCode": this.state.zip,
           "CompanyNo": this.props.company[0].No,
           "VATRegistrationNo": null,
-          "Email2": null,
-          "FFConsulting": false,
-          "FFDevelopment": false,
-          "FFManagement": false,
-          "FFSalesMarketing": false,
-          "JobTitle": null,
-          "OptOut": false,
-          "PartnerType": null,
-          "PIBusinessCentral": false,
-          "PICustomerEngagement": false,
-          "PIOther": false,
-          "PIPowerPlatform": false
+          "Email2": this.state.Email2,
+          "PIBusinessCentral": this.state.PIBusinessCentral,
+          "PICustomerEngagement": this.state.PICustomerEngagement,
+          "PIOther": this.state.PIOther,
+          "PIPowerPlatform": this.state.PIPowerPlatform,
+          "FFConsulting": this.state.FFConsulting,
+          "FFDevelopment": this.state.FFDevelopment,
+          "FFManagement": this.state.FFManagement,
+          "FFSalesMarketing": this.state.FFSalesMarketing,
+          "JobTitle": this.state.JobTitle
       }      
       this.props.dispatch(addNewMember(this.props.history, obj));
     } else {
@@ -190,7 +207,53 @@ class AddNewMember extends Component {
                       <div className="form-group">
                           <label htmlFor="Country">Country*</label>                      
                           <CountrySelect id="Country" firstOption="Select a country" required="true" getValue={(v) => this.getCountry(v)} setValue={this.state.country} options={this.props.countries} />
-                      </div>                      
+                      </div>  
+                      <div className="form-group">
+                        <label htmlFor="Email2">Email 2</label>
+                        <Email required={false} readonly={false} getEmail={(email) => {this.getEmail2(email)}}  />
+                      </div>
+                      <div className="form-group">
+                          <label htmlFor="JobTitle">Job Title</label>
+                          <input type="text" id="JobTitle" className="form-control" name="JobTitle" onChange={(e) => this.changeInputTextState(e)} /> 
+                      </div>
+                      <div className="form-group">
+                          <label>You Product Interest</label>
+                          <div className="form-check">
+                            <input className="form-check-input" type="checkbox" name="PIBusinessCentral" id="PIBusinessCentral" onChange={(e) => this.changeCheckboxState(e)} />
+                            <label className="form-check-label" htmlFor="PIBusinessCentral">Business Central</label>
+                          </div> 
+                          <div className="form-check">
+                            <input className="form-check-input" type="checkbox" name="PIPowerPlatform" id="PIPowerPlatform" onChange={(e) => this.changeCheckboxState(e)} />
+                            <label className="form-check-label" htmlFor="PIPowerPlatform">Power Platform</label>
+                          </div>    
+                          <div className="form-check">
+                            <input className="form-check-input" type="checkbox" name="PICustomerEngagement" id="PICustomerEngagement" onChange={(e) => this.changeCheckboxState(e)} />
+                            <label className="form-check-label" htmlFor="PICustomerEngagement">Customer Engagement</label>
+                          </div>  
+                          <div className="form-check">
+                            <input className="form-check-input" type="checkbox" name="PIOther" id="PIOther" onChange={(e) => this.changeCheckboxState(e)} />
+                            <label className="form-check-label" htmlFor="PIOther">Other</label>
+                          </div>
+                      </div>
+                      <div className="form-group">
+                          <label>You Functional Focus</label>
+                          <div className="form-check">
+                            <input className="form-check-input" type="checkbox" name="FFManagement" id="FFManagement" onChange={(e) => this.changeCheckboxState(e)} />
+                            <label className="form-check-label" htmlFor="FFManagement">Management</label>
+                          </div> 
+                          <div className="form-check">
+                            <input className="form-check-input" type="checkbox" name="FFSalesMarketing" id="FFSalesMarketing" onChange={(e) => this.changeCheckboxState(e)} />
+                            <label className="form-check-label" htmlFor="FFSalesMarketing">Sales Marketing</label>
+                          </div>    
+                          <div className="form-check">
+                            <input className="form-check-input" type="checkbox" name="FFDevelopment" id="FFDevelopment" onChange={(e) => this.changeCheckboxState(e)} />
+                            <label className="form-check-label" htmlFor="FFDevelopment">Development</label>
+                          </div>  
+                          <div className="form-check">
+                            <input className="form-check-input" type="checkbox" name="FFConsulting" id="FFConsulting" onChange={(e) => this.changeCheckboxState(e)} />
+                            <label className="form-check-label" htmlFor="FFConsulting">Consulting</label>
+                          </div>
+                      </div>                    
                       <div className="form-group">
                         <div className="form-check form-check-inline">
                           <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" onChange={(e)=>{this.setTerms(e)}}/>

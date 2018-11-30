@@ -27,9 +27,16 @@ export default class Company extends Component {
       country: "",
       alert: false,
       zip: "",
-      companyVATNo: ""          
+      companyVATNo: "",
+      PTVAR: false,
+      PTISV: false,
+      PTVARandISV: false,
+      PTMicrosoftEmployee: false          
     }
   }  
+  changeCheckboxState(e) {       
+    this.setState({...this.state, [e.currentTarget.attributes.name.value]: !this.state[e.currentTarget.attributes.name.value] });
+  }
   getZip(zip) {
     this.setState({zip});    
   }
@@ -95,12 +102,7 @@ export default class Company extends Component {
         {this.props.companyList.length >= 1 && 
           <CompanySelect id="Company" firstOption="Select a company" required="true" getValue={(v) => this.getCompany(v)} options={this.props.companyList} setValue={this.props.companySelected} readOnly={this.props.readOnly} />
         }
-        {this.props.companyList.length === 0 &&
-          <div>
-            <button type="button" className="btn btn-dark mt-2" data-toggle="modal" data-target="#AddCompanyModal">Add a company</button> 
-          </div>
-        }
-        
+
         <div id="AddCompanyModal" className="modal" tabIndex="-1" role="dialog">
             <div className="modal-dialog" role="document">
               <div className="modal-content">
@@ -149,6 +151,25 @@ export default class Company extends Component {
                           <label htmlFor="CompanyVATNo">VAT Registration Number*</label>
                           <input type="text" id="CompanyVATNo" className="form-control"  onChange={(e) => this.getCompanyVATNo(e.currentTarget.value)} value={this.state.companyVATNo} /> 
                       </div>
+                      <div className="form-group">
+                        <label>Partner Type</label>
+                        <div className="form-check">
+                          <input className="form-check-input" type="checkbox" name="PTVAR" id="PTVAR" onChange={(e) => this.changeCheckboxState(e)} />
+                          <label className="form-check-label" htmlFor="PTVAR">VAR</label>
+                        </div> 
+                        <div className="form-check">
+                          <input className="form-check-input" type="checkbox" name="PTISV" id="PTISV" onChange={(e) => this.changeCheckboxState(e)} />
+                          <label className="form-check-label" htmlFor="PTISV">ISV</label>
+                        </div>    
+                        <div className="form-check">
+                          <input className="form-check-input" type="checkbox" name="PTVARandISV" id="PTVARandISV" onChange={(e) => this.changeCheckboxState(e)} />
+                          <label className="form-check-label" htmlFor="PTVARandISV">VAR and ISV</label>
+                        </div>  
+                        <div className="form-check">
+                          <input className="form-check-input" type="checkbox" name="PTMicrosoftEmployee" id="PTMicrosoftEmployee" onChange={(e) => this.changeCheckboxState(e)} />
+                          <label className="form-check-label" htmlFor="PTMicrosoftEmployee">Microsoft Employee</label>
+                        </div>
+                    </div>
                   </div>
                 </div>
                 <div className="modal-footer">

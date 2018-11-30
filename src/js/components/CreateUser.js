@@ -30,8 +30,16 @@ export default class CreateUser extends Component {
       country: "",
       company: "",
       phone: "",
-      terms: false,
-      alert: false
+      Email2 :"",
+      PIBusinessCentral: false,
+      PICustomerEngagement: false,
+      PIOther: false,
+      PIPowerPlatform: false,
+      FFConsulting: false,
+      FFDevelopment: false,
+      FFManagement: false,
+      FFSalesMarketing: false,
+      JobTitle: null
     };
   }
   componentDidMount() {
@@ -52,9 +60,7 @@ export default class CreateUser extends Component {
       this.setState({phone});
     }
   }
-  componentDidUpdate() {
-    console.log(this.props.companyList.length);
-    console.log(this.props.companyList);
+  componentDidUpdate() {   
     if (this.props.companyList.length === 1) {
       var selectedCompany = this.props.companyList[0];
       let address = selectedCompany.Address;
@@ -86,6 +92,9 @@ export default class CreateUser extends Component {
   getEmail(email) {
     this.setState({email});
   }
+  getEmail2(email) {
+    this.setState({Email2: email});
+  }
   getPassword(password) {
     this.setState({password});
   }
@@ -106,10 +115,8 @@ export default class CreateUser extends Component {
   }
   getCompany(company) {
     this.props.dispatch(updateUserCompanyNo(company));
-    this.setState({company});
-    console.log("company",company);
+    this.setState({company});    
     let selectedCompany = this.props.companyList.filter(v => {return v.No === company})[0];
-    console.log("selectedCompany",selectedCompany);
     let address = selectedCompany.Address;
     let city = selectedCompany.City;
     let zip = selectedCompany.PostCode;
@@ -127,6 +134,12 @@ export default class CreateUser extends Component {
   }
   getPhone(phone) {
     this.setState({phone});
+  }
+  changeCheckboxState(e) {       
+    this.setState({...this.state, [e.currentTarget.attributes.name.value]: !this.state[e.currentTarget.attributes.name.value] });
+  }
+  changeInputTextState(e){
+    this.setState({...this.state, [e.currentTarget.attributes.name.value]: [e.currentTarget.value] });
   }
   handleSend(e) {
     let canSend = this.state.email !== "" && this.state.password !== "" && this.state.name !== "" && this.state.address !== "" && this.state.city !== "" && this.state.country !== "" && this.state.zip !== "" && this.state.company !== "" && this.state.terms === true;   
@@ -169,20 +182,20 @@ export default class CreateUser extends Component {
                   </div>
                   <div className="form-group">
                       <label htmlFor="FullName">Full Name*</label>
-                      <input type="email" id="FullName" className="form-control" onChange={(e) => this.getName(e.currentTarget.value)} /> 
+                      <input type="text" id="FullName" className="form-control" onChange={(e) => this.getName(e.currentTarget.value)} /> 
                   </div>
                   <div className="form-group">
                       <label htmlFor="Address">Address*</label>
-                      <input type="email" id="Address" className="form-control" onChange={(e) => this.getAddress(e.currentTarget.value)} defaultValue={this.state.address} /> 
+                      <input type="text" id="Address" className="form-control" onChange={(e) => this.getAddress(e.currentTarget.value)} defaultValue={this.state.address} /> 
                   </div>
                   <div className="form-row">
                       <div className="form-group col">
                           <label htmlFor="City">City*</label>
-                          <input type="email" id="City" className="form-control" onChange={(e) => this.getCity(e.currentTarget.value)} defaultValue={this.state.city}/> 
+                          <input type="text" id="City" className="form-control" onChange={(e) => this.getCity(e.currentTarget.value)} defaultValue={this.state.city}/> 
                       </div>
                       <div className="form-group col">
                           <label htmlFor="ZipCode">Zip Code*</label>
-                          <input type="email" id="ZipCode" className="form-control" onChange={(e) => this.getZip(e.currentTarget.value)} defaultValue={this.state.zip}/> 
+                          <input type="text" id="ZipCode" className="form-control" onChange={(e) => this.getZip(e.currentTarget.value)} defaultValue={this.state.zip}/> 
                       </div>
                   </div>
                   <div className="form-group">
@@ -194,7 +207,52 @@ export default class CreateUser extends Component {
                       <CountrySelect id="Country" firstOption="Select a country" required="true" getValue={(v) => this.getCountry(v)} setValue={this.state.country} options={this.props.countries} />
                       
                   </div>
-                  
+                  <div className="form-group">
+                    <label htmlFor="Email2">Email 2</label>
+                    <Email required={false} readonly={false} getEmail={(email) => {this.getEmail2(email)}}  />
+                  </div>
+                  <div className="form-group">
+                      <label htmlFor="JobTitle">Job Title</label>
+                      <input type="text" id="JobTitle" className="form-control" name="JobTitle" onChange={(e) => this.changeInputTextState(e)} /> 
+                  </div>
+                  <div className="form-group">
+                      <label>You Product Interest</label>
+                      <div className="form-check">
+                        <input className="form-check-input" type="checkbox" name="PIBusinessCentral" id="PIBusinessCentral" onChange={(e) => this.changeCheckboxState(e)} />
+                        <label className="form-check-label" htmlFor="PIBusinessCentral">Business Central</label>
+                      </div> 
+                      <div className="form-check">
+                        <input className="form-check-input" type="checkbox" name="PIPowerPlatform" id="PIPowerPlatform" onChange={(e) => this.changeCheckboxState(e)} />
+                        <label className="form-check-label" htmlFor="PIPowerPlatform">Power Platform</label>
+                      </div>    
+                      <div className="form-check">
+                        <input className="form-check-input" type="checkbox" name="PICustomerEngagement" id="PICustomerEngagement" onChange={(e) => this.changeCheckboxState(e)} />
+                        <label className="form-check-label" htmlFor="PICustomerEngagement">Customer Engagement</label>
+                      </div>  
+                      <div className="form-check">
+                        <input className="form-check-input" type="checkbox" name="PIOther" id="PIOther" onChange={(e) => this.changeCheckboxState(e)} />
+                        <label className="form-check-label" htmlFor="PIOther">Other</label>
+                      </div>
+                  </div>
+                  <div className="form-group">
+                      <label>You Functional Focus</label>
+                      <div className="form-check">
+                        <input className="form-check-input" type="checkbox" name="FFManagement" id="FFManagement" onChange={(e) => this.changeCheckboxState(e)} />
+                        <label className="form-check-label" htmlFor="FFManagement">Management</label>
+                      </div> 
+                      <div className="form-check">
+                        <input className="form-check-input" type="checkbox" name="FFSalesMarketing" id="FFSalesMarketing" onChange={(e) => this.changeCheckboxState(e)} />
+                        <label className="form-check-label" htmlFor="FFSalesMarketing">Sales Marketing</label>
+                      </div>    
+                      <div className="form-check">
+                        <input className="form-check-input" type="checkbox" name="FFDevelopment" id="FFDevelopment" onChange={(e) => this.changeCheckboxState(e)} />
+                        <label className="form-check-label" htmlFor="FFDevelopment">Development</label>
+                      </div>  
+                      <div className="form-check">
+                        <input className="form-check-input" type="checkbox" name="FFConsulting" id="FFConsulting" onChange={(e) => this.changeCheckboxState(e)} />
+                        <label className="form-check-label" htmlFor="FFConsulting">Consulting</label>
+                      </div>
+                  </div>
                   <div className="form-group">
                       <div className="form-check form-check-inline">
                        <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" onChange={(e)=>{this.setTerms(e)}}/>
