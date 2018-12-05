@@ -14,6 +14,7 @@ import AddMoreMembers from "./AddMoreMembers";
 import AddNewMember from "./AddNewMember";
 import PickCompany from "./PickCompany";
 import "../../sass/main.sass";
+import SeeExistingRegistrations from './SeeExistingRegistrations';
 
 
 
@@ -38,6 +39,7 @@ export default class Layout extends Component {
           <Route path='/add-more-members' component={AddMoreMembers} />
           <Route path='/add-new-member' component={AddNewMember} />
           <Route path='/pick-company' component={PickCompany} />
+          <Route path='/see-registrations' component={SeeExistingRegistrations} />
         </React.Fragment>
       </HashRouter>
     );

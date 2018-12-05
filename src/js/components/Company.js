@@ -31,11 +31,25 @@ export default class Company extends Component {
       PTVAR: false,
       PTISV: false,
       PTVARandISV: false,
-      PTMicrosoftEmployee: false          
+      PTMicrosoftEmployee: false,
+      PartnerType: null          
     }
   }  
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):    
+    if (this.props.companySelected !== prevProps.companySelected) {
+      this.props.getValue(this.props.companySelected);    
+    }
+  }
   changeCheckboxState(e) {       
-    this.setState({...this.state, [e.currentTarget.attributes.name.value]: !this.state[e.currentTarget.attributes.name.value] });
+    // e.target.checked = !this.state[e.currentTarget.attributes.name.value];
+    // console.log("e",e.target.checked, this.state[e.currentTarget.attributes.name.value]);
+    this.setState({PTVAR: false});
+    this.setState({PTISV: false});
+    this.setState({PTVARandISV: false});
+    this.setState({PTMicrosoftEmployee: false});
+    this.setState({[e.currentTarget.attributes.name.value]: !this.state[e.currentTarget.attributes.name.value] });
+    this.setState({PartnerType: e.currentTarget.attributes["data-option"].value})
   }
   getZip(zip) {
     this.setState({zip});    
@@ -99,9 +113,9 @@ export default class Company extends Component {
         <p className="alert alert-primary">There is no company assosciated with this email. You need to <a href="#" data-toggle="modal" data-target="#AddCompanyModal"><u><strong>create a Company</strong></u></a> to continue.</p> 
         }
         <label htmlFor="Company">Company*</label>        
-        {this.props.companyList.length >= 1 && 
+       
           <CompanySelect id="Company" firstOption="Select a company" required="true" getValue={(v) => this.getCompany(v)} options={this.props.companyList} setValue={this.props.companySelected} readOnly={this.props.readOnly} />
-        }
+        
 
         <div id="AddCompanyModal" className="modal" tabIndex="-1" role="dialog">
             <div className="modal-dialog" role="document">
@@ -154,19 +168,19 @@ export default class Company extends Component {
                       <div className="form-group">
                         <label>Partner Type</label>
                         <div className="form-check">
-                          <input className="form-check-input" type="checkbox" name="PTVAR" id="PTVAR" onChange={(e) => this.changeCheckboxState(e)} />
+                          <input className="form-check-input" type="radio" name="PTVAR" id="PTVAR" data-option="VAR" checked={this.state.PTVAR} onClick={(e) => this.changeCheckboxState(e)} />
                           <label className="form-check-label" htmlFor="PTVAR">VAR</label>
                         </div> 
                         <div className="form-check">
-                          <input className="form-check-input" type="checkbox" name="PTISV" id="PTISV" onChange={(e) => this.changeCheckboxState(e)} />
+                          <input className="form-check-input" type="radio" name="PTISV" id="PTISV" data-option="ISV" checked={this.state.PTISV} onClick={(e) => this.changeCheckboxState(e)} />
                           <label className="form-check-label" htmlFor="PTISV">ISV</label>
                         </div>    
                         <div className="form-check">
-                          <input className="form-check-input" type="checkbox" name="PTVARandISV" id="PTVARandISV" onChange={(e) => this.changeCheckboxState(e)} />
+                          <input className="form-check-input" type="radio" name="PTVARandISV" id="PTVARandISV" data-option="VAR and ISV" checked={this.state.PTVARandISV} onClick={(e) => this.changeCheckboxState(e)} />
                           <label className="form-check-label" htmlFor="PTVARandISV">VAR and ISV</label>
                         </div>  
                         <div className="form-check">
-                          <input className="form-check-input" type="checkbox" name="PTMicrosoftEmployee" id="PTMicrosoftEmployee" onChange={(e) => this.changeCheckboxState(e)} />
+                          <input className="form-check-input" type="radio" name="PTMicrosoftEmployee" id="PTMicrosoftEmployee" checked={this.state.PTMicrosoftEmployee} data-option="Microsoft Employee" onClick={(e) => this.changeCheckboxState(e)} />
                           <label className="form-check-label" htmlFor="PTMicrosoftEmployee">Microsoft Employee</label>
                         </div>
                     </div>

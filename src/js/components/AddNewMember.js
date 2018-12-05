@@ -12,7 +12,8 @@ import {addNewMember} from "../actions/userActions"
     countries: store.user.CountryList, 
     users: store.order.Company.Persons,
     error: store.user.error,
-    companyList: store.user.CompanyList   
+    companyList: store.user.CompanyList,
+    eventName: store.event.EventName   
   }
 })
 class AddNewMember extends Component {
@@ -41,7 +42,8 @@ class AddNewMember extends Component {
       FFDevelopment: false,
       FFManagement: false,
       FFSalesMarketing: false,
-      JobTitle: null   
+      JobTitle: null,
+      OptOut: false   
     };
   }  
   getEmail(email) {
@@ -141,7 +143,8 @@ class AddNewMember extends Component {
           "FFDevelopment": this.state.FFDevelopment,
           "FFManagement": this.state.FFManagement,
           "FFSalesMarketing": this.state.FFSalesMarketing,
-          "JobTitle": this.state.JobTitle
+          "JobTitle": this.state.JobTitle,
+          "OptOut": this.state.OptOut
       }      
       this.props.dispatch(addNewMember(this.props.history, obj));
     } else {
@@ -164,7 +167,7 @@ class AddNewMember extends Component {
                 </div>
                 <div className="col-8 d-flex align-items-center flex-wrap">
                   <div>
-                    <h2 className="h2 font-weight-light text-primary">Welcome to Directions EMEA registration process.</h2>
+                    <h2 className="h2 font-weight-light text-primary">{this.props.eventName} Registration</h2>
                     <p>Add a new user to your company.</p>
                     <p className={alertClass}>Please fill in all the fields and accept <strong>terms and conditions</strong> to continue</p>
                     <p className={userAlertClass}>User already exists.</p>
@@ -253,8 +256,12 @@ class AddNewMember extends Component {
                             <input className="form-check-input" type="checkbox" name="FFConsulting" id="FFConsulting" onChange={(e) => this.changeCheckboxState(e)} />
                             <label className="form-check-label" htmlFor="FFConsulting">Consulting</label>
                           </div>
-                      </div>                    
+                      </div>        
                       <div className="form-group">
+                        <div className="form-check">
+                          <input className="form-check-input" type="checkbox" name="OptOut" id="OptOut" onChange={(e) => this.changeCheckboxState(e)} />
+                          <label className="form-check-label" htmlFor="OptOut">Opt out</label>
+                        </div>
                         <div className="form-check form-check-inline">
                           <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" onChange={(e)=>{this.setTerms(e)}}/>
                             

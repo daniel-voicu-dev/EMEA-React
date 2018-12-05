@@ -7,7 +7,8 @@ import { addUserToOrder, removeUserFromOrder, addUserListToOrder } from '../acti
   return {
     currentUser: store.user.Email,
     users: store.user.UnregisteredUsers,
-    order: store.order.Users
+    order: store.order.Users,
+    eventName: store.event.EventName
   }
 })
 class AddMoreMembers extends Component {
@@ -17,43 +18,62 @@ class AddMoreMembers extends Component {
       "usersToRegister": []
     };
   }    
-  handleCheck(e,name, email){
-   console.log(name, email);
+  handleCheck(e,name, email){   
     if(e.target.checked === true ) {
       //add
-      this.setState({usersToRegister: [...this.state.usersToRegister, email]}); 
+      this.setState({usersToRegister: [...this.state.usersToRegister, {"email": email,"promo":""}]}); 
       // dispatch({type: "ADD_USER_TO_ORDER", payload: {"Name": email, "Login": email}});
     } else {
       //remove
-      this.setState({usersToRegister: [...this.state.usersToRegister.filter(v=>{return v !== email})]});
+      this.setState({usersToRegister: [...this.state.usersToRegister.filter(v=>{return v.email !== email})]});
       // dispatch({type: "REMOVE_USER_FROM_ORDER", payload: {"Name": email, "Login": email}});
     }
   } 
-  
+  handlePromoCode(e, email) {    
+    if (this.state.usersToRegister.filter(o => o.email == email).length > 0) {
+      let userArray = this.state.usersToRegister.reduce((r,v,k)=>{
+        return v.email === email ? [...r,{...v,"promo": e.currentTarget.value}] : [...r]
+      },[]);
+      this.setState({usersToRegister: userArray});
+    } 
+  }
   renderChild(o,i) {
     let id= "check-" + i;
     // let defaultCheck = this.props.order.filter(x=> {return x.Login === o.Email}).length > 0;
-    let defaultCheck = false;
-    console.log("CONSOLE",o.Email, defaultCheck, this.props.order);
-    console.log(o);
-    console.log(this.props.users);
+    let defaultCheck = false;    
     if(o.Email === this.props.currentUser) {
       return (
-        <div className="form-check" key={i}>
-          <input className="form-check-input" type="checkbox" value={o.Email} id={id} defaultChecked={defaultCheck} onChange={(e)=>this.handleCheck(e,o.Name, o.Email)}/>
-          <label className="form-check-label text-primary" htmlFor={id}>
-            <strong>{o.Name}(Admin)</strong>
-          </label>
+        <div className="form-group" key={i}>
+          <div className="col mb-2">
+            <div className="form-check">
+              <input className="form-check-input" type="checkbox" value={o.Email} id={id} defaultChecked={defaultCheck} onChange={(e)=>this.handleCheck(e,o.Name, o.Email)}/>
+              <label className="form-check-label text-primary" htmlFor={id}>
+                <strong>{o.Name}(Admin)</strong>
+              </label>
+            </div>
+          </div>
+          <div className="col-4">
+            <input type="text" className="form-control" onChange={(e) => this.handlePromoCode(e, o.Email)} data-email={o.Email} placeholder="Enter a promo code" />
+          </div>
         </div>
+        
       );
     } 
     return (
-      <div className="form-check" key={i}>
-        <input className="form-check-input" type="checkbox" value={o.Email} id={id} defaultChecked={defaultCheck} onChange={(e)=>this.handleCheck(e,o.Name, o.Email)} />
-        <label className="form-check-label" htmlFor={id}>
-          {o.Name} ({o.Email})
-        </label>
-      </div>
+      <div className="form-group" key={i}>
+        <div className="col mb-2">
+          <div className="form-check">
+            <input className="form-check-input" type="checkbox" value={o.Email} id={id} defaultChecked={defaultCheck} onChange={(e)=>this.handleCheck(e,o.Name, o.Email)} />
+            <label className="form-check-label" htmlFor={id}>
+              {o.Name} ({o.Email})
+            </label>
+          </div>
+        </div>
+        <div className="col-4">
+          <input type="text" className="form-control" onChange={(e) => this.handlePromoCode(e, o.Email)} data-email={o.Email} placeholder="Enter a promo code" />
+        </div>
+      </div>  
+      
     )
   }
   render() {
@@ -69,7 +89,7 @@ class AddMoreMembers extends Component {
                 </div>
                 <div className="col-8 d-flex align-items-center flex-wrap">
                   <div>
-                    <h2 className="h2 font-weight-light text-primary">Welcome to Directions EMEA registration process.</h2>
+                    <h2 className="h2 font-weight-light text-primary">{this.props.eventName} Registration</h2>
                     <p>We have found the following list of users assigned to your company. Please select the users you want to add to registration or <Link to="/add-new-user">add new user</Link> for your company.</p>
                     <div action="">
                       {this.props.users.map((o,i)=> {return this.renderChild(o,i)})}                      

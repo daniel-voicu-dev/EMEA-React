@@ -86,7 +86,7 @@ export function verifyUserAndGoToNextStep(history, email, password) {
                 let userAlreadyRegistered = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo == "" : false;
                 let userIsAlreadyConfirmed = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo !== "" : false;               
                 dispatch({type: "UPDATE_USER_IS_CONFIRMED", payload: userIsAlreadyConfirmed});
-
+                dispatch({type: "ADD_EXISTING_REGISTRATIONS_BY_USER", payload: r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.CreatedByContactEmail === email})})
                 if (userAlreadyRegistered === true) {
                   dispatch({type: "ADD_USER_TO_ORDER", payload: {"Name": store.getState().user.Name, "Login": store.getState().user.Email}});
                   history.push("/review-register");
@@ -169,7 +169,8 @@ export function createUser(history,data) {
       "FFDevelopment": data.FFDevelopment,
       "FFManagement": data.FFManagement,
       "FFSalesMarketing": data.FFSalesMarketing,
-      "JobTitle": data.JobTitle
+      "JobTitle": data.JobTitle,
+      "OptOut": data.OptOut
     };     
     axios.post(postDomain, sendObj).then(r => {  
       history.push("/login");  
@@ -250,10 +251,15 @@ export function registerCompany(data) {
    let postDomain = apiDomain + "/api/signupcompany";
   
    axios.post(postDomain, sendObj).then(r => {
-    $("#AddCompanyModal").modal("hide");       
+    $("#AddCompanyModal").modal("hide");     
+   
+    let companyNo = r.data.CompanyNo;
+    let companyName = r.data.CompanyName; 
+    
     axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": store.getState().user.Domain.split("@")[1], "EventNo": store.getState().event.EventNo}).then(r=>{
-
-      dispatch({type: "UPDATE_USER_INFORMATION", payload: {"CompanyList": r.data.Companies, "CompanyNo": r.data.Companies[0].No,"CompanyName":r.data.Companies[0].Name}});
+      console.log("Company registration data",r.data);
+      dispatch({type: "UPDATE_USER_INFORMATION", payload: {"CompanyList": r.data.Companies}});
+      dispatch({type: "UPDATE_USER_INFORMATION", payload: {"CompanyNo": companyNo, "CompanyName": companyName}});
       // dispatch({type: "GET_COMPANIES", payload: r.data.Companies});
       // dispatch({type: "SET_USER_COMPANY_NO", payload: r.data.Companies[0].No});  
       // dispatch({type: "SET_USER_COMPANY_NAME", payload: r.data.Companies[0].Name}); 

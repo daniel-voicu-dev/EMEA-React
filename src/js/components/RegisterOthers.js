@@ -41,17 +41,17 @@ export default class RegisterOthers extends Component {
                   }  
                   {(this.props.admin===true && this.props.unregisteredUsers.length > 0) &&  
                     <div className="mb-3">
-                      <button type="button" onClick={()=>this.props.dispatch(goToAddMoreMembers(this.props.history))} className="btn btn-primary px-5">Register a colleague for Directions EMEA 2018</button>
+                      <button type="button" onClick={()=>this.props.dispatch(goToAddMoreMembers(this.props.history))} className="btn btn-primary px-5">Register a colleague for {this.props.eventName}</button>
                     </div>
                   }  
                   {this.props.isConfirmed===false &&  
                     <div className="mb-3">
-                      <button type="button" onClick={()=>this.props.dispatch(addUserToOrder(this.props.history,this.props.user.Email,"/review-register"))} className="btn btn-primary px-5">Register yourself for Directions EMEA 2018</button>
+                      <button type="button" onClick={()=>this.props.dispatch(addUserToOrder(this.props.history,this.props.user.Email,"/review-register"))} className="btn btn-primary px-5">Register yourself for {this.props.eventName}</button>
                     </div>
                   }
                   {this.props.registeredUsers.length > 0 && 
                     <div>
-                      <Link to="/review-register" className="btn btn-primary px-5">See existing registrations</Link>
+                      <button type="button" onClick={() => this.props.history.push("/see-registrations")} className="btn btn-primary px-5">See existing registrations</button>
                     </div>
                   }
                   

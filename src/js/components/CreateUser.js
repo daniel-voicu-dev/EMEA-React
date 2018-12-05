@@ -39,7 +39,8 @@ export default class CreateUser extends Component {
       FFDevelopment: false,
       FFManagement: false,
       FFSalesMarketing: false,
-      JobTitle: null
+      JobTitle: null,
+      "OptOut": false,
     };
   }
   componentDidMount() {
@@ -254,6 +255,10 @@ export default class CreateUser extends Component {
                       </div>
                   </div>
                   <div className="form-group">
+                      <div className="form-check">
+                        <input className="form-check-input" type="checkbox" name="OptOut" id="OptOut" onChange={(e) => this.changeCheckboxState(e)} />
+                        <label className="form-check-label" htmlFor="OptOut">Opt out</label>
+                      </div>
                       <div className="form-check form-check-inline">
                        <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" onChange={(e)=>{this.setTerms(e)}}/>
                         

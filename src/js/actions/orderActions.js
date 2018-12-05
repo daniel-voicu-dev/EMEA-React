@@ -36,7 +36,8 @@ export function addUserListToOrder(history, array, nextStep) {
       return [...r, {
         "RegistrationForEmail": v,
         "EventNo": store.getState().event.EventNo,
-        "EventItemNo": store.getState().event.ItemNo
+        "EventItemNo": store.getState().event.ItemNo,
+        "PromoCode": ""
       }]
     },[]);
     // console.log("data",data);
@@ -65,7 +66,8 @@ export function addUserToOrder(history, email, nextStep) {
         {
           "RegistrationForEmail": email,
           "EventNo": store.getState().event.EventNo,
-          "EventItemNo": store.getState().event.ItemNo
+          "EventItemNo": store.getState().event.ItemNo,
+          "PromoCode": ""
         }
       ]
     }
