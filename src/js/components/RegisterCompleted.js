@@ -17,8 +17,8 @@ export default class RegisterFinished extends Component {
               <div className="col-8 d-flex align-items-center flex-wrap">
                 <div>
                   <h2 className="h2 font-weight-light text-primary mb-3">Thank you for your registration.</h2>
-                  <p className="mb-1">We will send you an invoice and a link for payment with Stripe.</p>
-                  <p>We are looking forward to seeing you at EMEA 2018.</p> 
+                  <p className="mb-1">You will receive an email shortly with Invoice and Payment link.</p>
+                  <p>We look forward to seeing you at Directions ASIA 2019.</p> 
                 </div>
               </div>
             </div>

@@ -32,7 +32,7 @@ class AddMoreMembers extends Component {
   handlePromoCode(e, email) {    
     if (this.state.usersToRegister.filter(o => o.email == email).length > 0) {
       let userArray = this.state.usersToRegister.reduce((r,v,k)=>{
-        return v.email === email ? [...r,{...v,"promo": e.currentTarget.value}] : [...r]
+        return v.email === email ? [...r,{...v,"promo": e.currentTarget.value}] : [...r,v]
       },[]);
       this.setState({usersToRegister: userArray});
     } 
@@ -41,6 +41,13 @@ class AddMoreMembers extends Component {
     let id= "check-" + i;
     // let defaultCheck = this.props.order.filter(x=> {return x.Login === o.Email}).length > 0;
     let defaultCheck = false;    
+    let isChecked = this.state.usersToRegister.filter(obj => obj.email === o.Email).length > 0;
+    console.log(isChecked);
+    let promoCodeInput = isChecked ? 
+      (<div className="col-4">
+        <input type="text" className="form-control" onChange={(e) => this.handlePromoCode(e, o.Email)} data-email={o.Email} placeholder="Enter a promo code" />
+      </div>) : 
+      ""
     if(o.Email === this.props.currentUser) {
       return (
         <div className="form-group" key={i}>
@@ -52,9 +59,7 @@ class AddMoreMembers extends Component {
               </label>
             </div>
           </div>
-          <div className="col-4">
-            <input type="text" className="form-control" onChange={(e) => this.handlePromoCode(e, o.Email)} data-email={o.Email} placeholder="Enter a promo code" />
-          </div>
+          {promoCodeInput}          
         </div>
         
       );
@@ -69,9 +74,7 @@ class AddMoreMembers extends Component {
             </label>
           </div>
         </div>
-        <div className="col-4">
-          <input type="text" className="form-control" onChange={(e) => this.handlePromoCode(e, o.Email)} data-email={o.Email} placeholder="Enter a promo code" />
-        </div>
+        {promoCodeInput}
       </div>  
       
     )

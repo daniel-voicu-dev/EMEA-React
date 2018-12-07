@@ -34,10 +34,10 @@ export function addUserListToOrder(history, array, nextStep) {
     }
     data.PersonRegistration =  array.reduce((r,v,k)=>{
       return [...r, {
-        "RegistrationForEmail": v,
+        "RegistrationForEmail": v.email,
         "EventNo": store.getState().event.EventNo,
         "EventItemNo": store.getState().event.ItemNo,
-        "PromoCode": ""
+        "PromoCode": v.promo
       }]
     },[]);
     // console.log("data",data);

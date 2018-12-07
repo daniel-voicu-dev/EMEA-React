@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom'
 import Header from './Header';
 
 @connect ((store) => {
@@ -13,7 +14,7 @@ class SeeExistingRegistrations extends Component {
     return (
       <div className="item" key={i}>
         <p className="name">{o.PersonName} ({o.PersonEmail})</p>
-        <p className="priceWithVat">Price with VAT: {o.AmountInclVAT}</p>
+        <p className="priceWithVat">Price with VAT: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(o.AmountInclVAT)}</p>
       </div>
     )
   }
@@ -36,7 +37,7 @@ class SeeExistingRegistrations extends Component {
                       {this.props.users.map((o,i)=> {return this.renderChild(o,i)})}
                       </div>
                       <div className="form-group"> 
-                          <button type="button" onClick={(e) => this.handleSend(e)} className="px-5 btn btn-primary">Back</button>
+                          <Link to="/register-others" className="px-5 btn btn-primary">Back</Link>
                       </div> 
                     </div>
                   
