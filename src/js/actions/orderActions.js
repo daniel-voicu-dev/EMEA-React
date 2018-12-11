@@ -56,15 +56,16 @@ export function addUserListToOrder(history, array, nextStep) {
 }
 
 
-export function addUserToOrder(history, email, nextStep) {
+export function addUserToOrder(history, obj, nextStep) {
   return (dispatch) => {  
     // dispatch({type: "ADD_USER_TO_ORDER", payload: email});  
+    
     let data = {
-      "Login": email,
+      "Login": obj.RegistrationForEmail,
       "CreateOneInvoiceForAllRegistrations": true,
       "PersonRegistration": [
         {
-          "RegistrationForEmail": email,
+          "RegistrationForEmail": obj.RegistrationForEmail,
           "EventNo": store.getState().event.EventNo,
           "EventItemNo": store.getState().event.ItemNo,
           "PromoCode": ""
@@ -73,7 +74,10 @@ export function addUserToOrder(history, email, nextStep) {
     }
 
     axios.post(apiDomain + "/api/createregistration", data).then(r=>{
-      dispatch({type: "ADD_USER_TO_ORDER", payload: {"Name": email, "Login": email}});
+      dispatch({type: "ADD_USER_TO_ORDER", payload: {"Name": obj.RegistrationForEmail, "Login": obj.RegistrationForEmail}});
+      if (document.querySelector(".modal-backdrop") !== null) {
+        document.querySelector(".modal-backdrop").remove();
+      }
       history.push(nextStep)
     }).catch((error) => {
       console.log(error);

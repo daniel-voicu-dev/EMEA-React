@@ -180,27 +180,27 @@ class AddNewMember extends Component {
                       </div>
                       <div className="form-group">
                           <label htmlFor="Password">Password</label>
-                          <input type="email" id="Password" className="form-control" onChange={(e) => this.getPassword(e.currentTarget.value)} />                      
+                          <input type="password" id="Password" className="form-control" onChange={(e) => this.getPassword(e.currentTarget.value)} />                      
                           <small className="invalid-feedback">
                               Invalid password
                           </small>
                       </div>
                       <div className="form-group">
                           <label htmlFor="FullName">Full Name*</label>
-                          <input type="email" id="FullName" className="form-control" onChange={(e) => this.getName(e.currentTarget.value)} /> 
+                          <input type="text" id="FullName" className="form-control" onChange={(e) => this.getName(e.currentTarget.value)} /> 
                       </div>
                       <div className="form-group">
                           <label htmlFor="Address">Address*</label>
-                          <input type="email" id="Address" className="form-control" onChange={(e) => this.getAddress(e.currentTarget.value)} defaultValue={this.state.address} /> 
+                          <input type="text" id="Address" className="form-control" onChange={(e) => this.getAddress(e.currentTarget.value)} defaultValue={this.state.address} /> 
                       </div>
                       <div className="form-row">
                           <div className="form-group col">
                               <label htmlFor="City">City*</label>
-                              <input type="email" id="City" className="form-control" onChange={(e) => this.getCity(e.currentTarget.value)} defaultValue={this.state.city} /> 
+                              <input type="text" id="City" className="form-control" onChange={(e) => this.getCity(e.currentTarget.value)} defaultValue={this.state.city} /> 
                           </div>
                           <div className="form-group col">
                               <label htmlFor="ZipCode">Zip Code*</label>
-                              <input type="email" id="ZipCode" className="form-control" onChange={(e) => this.getZip(e.currentTarget.value)} defaultValue={this.state.zip} /> 
+                              <input type="text" id="ZipCode" className="form-control" onChange={(e) => this.getZip(e.currentTarget.value)} defaultValue={this.state.zip} /> 
                           </div>
                       </div>
                       <div className="form-group">

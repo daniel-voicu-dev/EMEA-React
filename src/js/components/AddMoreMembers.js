@@ -98,8 +98,8 @@ class AddMoreMembers extends Component {
                       {this.props.users.map((o,i)=> {return this.renderChild(o,i)})}                      
                     </div>
                     <div className="mt-3">
-                      <Link to="/add-new-member" className="btn btn-dark mr-3">Add new user</Link>
-                      <button type="button" onClick={() => this.props.dispatch(addUserListToOrder(this.props.history,this.state.usersToRegister,"/review-register"))} className="btn btn-primary">Take me to registration</button>
+                      <Link to="/add-new-member" className="btn btn-dark mr-3">Add a new member</Link>
+                      <button type="button" onClick={() => this.props.dispatch(addUserListToOrder(this.props.history,this.state.usersToRegister,"/review-register"))} className="btn btn-primary">Next Step: Confirm registrations</button>
                     </div>
                   </div>
                 </div>

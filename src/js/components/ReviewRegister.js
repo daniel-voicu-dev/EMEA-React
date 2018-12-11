@@ -109,7 +109,7 @@ export default class ReviewRegister extends Component {
                 </div>
                 <div className="mt-3">
                   { this.props.admin===true &&
-                    <Link to="/add-more-members" className="btn btn-dark px-5 mr-3">Add new user</Link>                  
+                    <Link to="/add-more-members" className="btn btn-dark px-5 mr-3">Add new user to the registration</Link>                  
                   }
                  
                   <button type="button" onClick={()=>this.confirmRegistration()} className="btn btn-primary px-5">Confirm registration</button>
