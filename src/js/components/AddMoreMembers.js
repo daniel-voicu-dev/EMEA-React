@@ -92,14 +92,14 @@ class AddMoreMembers extends Component {
                 </div>
                 <div className="col-8 d-flex align-items-center flex-wrap">
                   <div>
-                    <h2 className="h2 font-weight-light text-primary">{this.props.eventName} Registration</h2>
+                    <h2 className="h2 font-weight-light text-primary">{this.props.eventName} Registrations</h2>
                     <p>We have found the following list of users assigned to your company. Please select the users you want to add to registration or <Link to="/add-new-user">add new user</Link> for your company.</p>
                     <div action="">
                       {this.props.users.map((o,i)=> {return this.renderChild(o,i)})}                      
                     </div>
                     <div className="mt-3">
-                      <Link to="/add-new-member" className="btn btn-dark mr-3">Add a new member</Link>
-                      <button type="button" onClick={() => this.props.dispatch(addUserListToOrder(this.props.history,this.state.usersToRegister,"/review-register"))} className="btn btn-primary">Next Step: Confirm registrations</button>
+                      <Link to="/add-new-member" className="btn btn-dark mr-3">Add User</Link>
+                      <button type="button" onClick={() => this.props.dispatch(addUserListToOrder(this.props.history,this.state.usersToRegister,"/review-register"))} className="btn btn-primary">Next Step: Registration</button>
                     </div>
                   </div>
                 </div>

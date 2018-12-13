@@ -31,7 +31,7 @@ class SeeExistingRegistrations extends Component {
                 </div>
                 <div className="col-8 d-flex align-items-center flex-wrap">
                   <div>
-                    <h2 className="h2 font-weight-light text-primary">{this.props.eventName} Registration</h2>
+                    <h2 className="h2 font-weight-light text-primary">{this.props.eventName} Registrations</h2>
                     <p>Current registrations:</p>
                       <div className="form-group list">
                       {this.props.users.map((o,i)=> {return this.renderChild(o,i)})}

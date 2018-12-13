@@ -167,7 +167,7 @@ class AddNewMember extends Component {
                 </div>
                 <div className="col-8 d-flex align-items-center flex-wrap">
                   <div>
-                    <h2 className="h2 font-weight-light text-primary">{this.props.eventName} Registration</h2>
+                    <h2 className="h2 font-weight-light text-primary">{this.props.eventName} Registrations</h2>
                     <p>Add a new user to your company.</p>
                     <p className={alertClass}>Please fill in all the fields and accept <strong>terms and conditions</strong> to continue</p>
                     <p className={userAlertClass}>User already exists.</p>

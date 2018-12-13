@@ -164,8 +164,8 @@ export default class CreateUser extends Component {
             </div>
             <div className="col-8 d-flex align-items-center flex-wrap">
               <div>
-                <h2 className="h2 font-weight-light text-primary">{this.props.eventName} Registration</h2>
-                <p>We could not find a user for your email address. In order to continue please create an account.</p>
+                <h2 className="h2 font-weight-light text-primary">{this.props.eventName} Registrations</h2>
+                <p>We could not find a user for your email address. To continue please check your associated company and create a new user</p>
                 <p className={alertClass}>Please fill in <strong>all the fields</strong> and accept <strong>terms and conditions</strong> to continue</p>
                 <div>
 
@@ -209,7 +209,7 @@ export default class CreateUser extends Component {
                       
                   </div>
                   <div className="form-group">
-                    <label htmlFor="Email2">Email 2</label>
+                    <label htmlFor="Email2">CC email</label>
                     <Email required={false} readonly={false} getEmail={(email) => {this.getEmail2(email)}}  />
                   </div>
                   <div className="form-group">
@@ -257,7 +257,7 @@ export default class CreateUser extends Component {
                   <div className="form-group">
                       <div className="form-check">
                         <input className="form-check-input" type="checkbox" name="OptOut" id="OptOut" onChange={(e) => this.changeCheckboxState(e)} />
-                        <label className="form-check-label" htmlFor="OptOut">Opt out</label>
+                        <label className="form-check-label" htmlFor="OptOut">Opt out from Directions Community Network</label>
                       </div>
                       <div className="form-check form-check-inline">
                        <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" onChange={(e)=>{this.setTerms(e)}}/>

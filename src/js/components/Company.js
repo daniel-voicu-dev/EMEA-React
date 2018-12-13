@@ -110,7 +110,7 @@ export default class Company extends Component {
     return (
       <div className="form-group">
         { this.props.companyList.length === 0 &&
-        <p className="alert alert-primary">There is no company assosciated with this email. You need to <a href="#" data-toggle="modal" data-target="#AddCompanyModal"><u><strong>create a Company</strong></u></a> to continue.</p> 
+        <p className="alert alert-primary">We could not find a company for that email domain, please <a href="#" data-toggle="modal" data-target="#AddCompanyModal"><u><strong>create one</strong></u></a></p> 
         }
         <label htmlFor="Company">Company*</label>        
        
@@ -134,7 +134,7 @@ export default class Company extends Component {
                           <input type="text" id="CompanyName" className="form-control"  onChange={(e) => this.getName(e.currentTarget.value)} value={this.state.name} /> 
                       </div>
                       <div className="form-group">
-                        <label htmlFor="CompanyEmail">Email*</label>
+                        <label htmlFor="CompanyEmail">Email* (Admin User – invoice send to)</label>
                         <Email required={true} readonly={false} domain={this.props.domain} getEmail={(email) => {this.getEmail(email)}} setValue={this.props.email} />
                       </div>
                       <div className="form-group">
@@ -162,7 +162,7 @@ export default class Company extends Component {
                           <input type="text" id="CompanyZip" className="form-control"  onChange={(e) => this.getZip(e.currentTarget.value)} value={this.state.zip} /> 
                       </div>
                       <div className="form-group">
-                          <label htmlFor="CompanyVATNo">VAT Registration Number*</label>
+                          <label htmlFor="CompanyVATNo">VAT/Company Registration Number*</label>
                           <input type="text" id="CompanyVATNo" className="form-control"  onChange={(e) => this.getCompanyVATNo(e.currentTarget.value)} value={this.state.companyVATNo} /> 
                       </div>
                       <div className="form-group">
