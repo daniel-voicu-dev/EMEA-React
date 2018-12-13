@@ -1,6 +1,8 @@
 import axios from 'axios';
 import store from "../store";
 import {apiDomain} from "./variables";
+import Noty from 'noty';
+
 export function setCompany(o) {
   return (dispatch) => {       
     let postDomain = apiDomain + "/api/companyinformation";
@@ -44,11 +46,21 @@ export function addUserListToOrder(history, array, nextStep) {
     axios.post(apiDomain + "/api/createregistration", data).then(r=>{
       // data.PersonRegistration.map((v) => {
       //   dispatch({type: "ADD_USER_TO_ORDER", payload: {"Name": v, "Login": v}});
-      // });
-      
+      // });      
       history.push(nextStep)
     }).catch((error) => {
-      console.log(error);
+
+      let errorPromoCodeMessage = error.response.data.ExceptionMessage;
+      let invalidPromoCodes = array.filter((o)=> { return errorPromoCodeMessage.includes(o.promo)});
+      let errorMessage = `These promo codes are invalid: ${invalidPromoCodes.map(o=>{return o.promo}).join(", ")}.`;
+      new Noty({
+        text: errorMessage,
+        theme: 'mint',
+        timeout: 3000,
+        layout: "center",
+        modal: true,
+        type: "error"
+      }).show();      
     })
     }
     
@@ -68,7 +80,7 @@ export function addUserToOrder(history, obj, nextStep) {
           "RegistrationForEmail": obj.RegistrationForEmail,
           "EventNo": store.getState().event.EventNo,
           "EventItemNo": store.getState().event.ItemNo,
-          "PromoCode": ""
+          "PromoCode": obj.PromoCode
         }
       ]
     }
@@ -80,7 +92,15 @@ export function addUserToOrder(history, obj, nextStep) {
       }
       history.push(nextStep)
     }).catch((error) => {
-      console.log(error);
+      let errorPromoCodeMessage = `The Promo Code ${obj.PromoCode} is invalid.`
+      new Noty({
+        text: errorPromoCodeMessage,
+        theme: 'mint',
+        timeout: 3000,
+        layout: "center",
+        modal: true,
+        type: "error"
+      }).show();
     })
     
   }

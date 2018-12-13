@@ -28,7 +28,9 @@ export default class RegisterOthers extends Component {
     }
   }
   changeInputTextState(e){
-    this.setState({...this.state, [e.currentTarget.attributes.name.value]: [e.currentTarget.value] });
+    console.log("state", this.state);
+    console.log(e.currentTarget.attributes.name.value, e.currentTarget.value);
+    this.setState({...this.state, [e.currentTarget.attributes.name.value]: e.currentTarget.value });
   }
   render() {    
     return (
@@ -51,32 +53,13 @@ export default class RegisterOthers extends Component {
                   }  
                   {this.props.isConfirmed===false && this.props.admin === false &&
                     <div>
+                      <div className="mb-3 form-group">
+                        <label htmlFor="PromoCode">If you have a Promo Code please fill it before continuing with registration.</label>
+                        <input type="text" id="PromoCode" className="form-control col-4" name="PromoCode" onChange={(e) => this.changeInputTextState(e)} /> 
+                      </div>
                       <div className="mb-3">
-                        <button type="button" data-toggle="modal" data-target="#RegisterYourselfModal" className="btn btn-primary px-5">Next Step: Register yourself for {this.props.eventName}</button>
-                      </div>
-                      <div id="RegisterYourselfModal" className="modal" tabIndex="-1" role="dialog">
-                        <div className="modal-dialog" role="document">
-                          <div className="modal-content">
-                            <div className="modal-header">
-                              <h5 className="modal-title">Add a promo code</h5>
-                              <button type="button" type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div className="modal-body">
-                              <div>                               
-                                  <div className="form-group">
-                                      <label htmlFor="PromoCode">Promo Code</label>
-                                      <input type="text" id="PromoCode" className="form-control" name="PromoCode" onChange={(e) => this.changeInputTextState(e)} /> 
-                                  </div>
-                              </div>
-                            </div>
-                            <div className="modal-footer">
-                              <button type="button" type="button" className="btn btn-primary" onClick={()=>this.props.dispatch(addUserToOrder(this.props.history,{"RegistrationForEmail": this.props.user.Email, "PromoCode": this.state.PromoCode},"/review-register"))}>Register</button>                              
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                        <button type="button" onClick={()=>this.props.dispatch(addUserToOrder(this.props.history,{"RegistrationForEmail": this.props.user.Email, "PromoCode": this.state.PromoCode},"/review-register"))} className="btn btn-primary px-5">Next Step: Register yourself for {this.props.eventName}</button>
+                      </div>                      
                     </div>
                   }
                   {this.props.registeredUsers.length > 0 && 

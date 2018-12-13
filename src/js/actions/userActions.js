@@ -4,7 +4,6 @@ import jquery from "jquery";
 import bootstrap from "bootstrap";
 import {apiDomain} from "./variables";
 import Noty from 'noty';
-import 'noty/src/noty.scss';
 
 export function getCountries() {  
   let postDomain = apiDomain + "/api/countries";
@@ -81,12 +80,12 @@ export function verifyUserAndGoToNextStep(history, email, password) {
             }
             //goes to next step based on login and registration
             axios.post(apiDomain + "/api/getregistrations", {"EventNo": eventNo,"LoginOrDomain": domain}).then(r3 => {
-              console.log("r3.data.CompanyRegistrations",r3.data.CompanyRegistrations);
               if (r3.data.CompanyRegistrations.length > 0) {
-                let userAlreadyRegistered = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo == "" : false;
-                let userIsAlreadyConfirmed = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo !== "" : false;               
+                let getAllRegistrations = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo}).reduce((r,v,k) => {return [...r, ...v.PersonRegistrations]});
+                let userAlreadyRegistered = getAllRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? getAllRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo == "" : false;
+                let userIsAlreadyConfirmed = getAllRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? getAllRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo !== "" : false;               
                 dispatch({type: "UPDATE_USER_IS_CONFIRMED", payload: userIsAlreadyConfirmed});
-                dispatch({type: "ADD_EXISTING_REGISTRATIONS_BY_USER", payload: r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo})[0].PersonRegistrations.filter(o=>{return o.CreatedByContactEmail === email && o.RegistrationInvoiceNo !== ""})})
+                dispatch({type: "ADD_EXISTING_REGISTRATIONS_BY_USER", payload: getAllRegistrations.filter(o=>{return o.CreatedByContactEmail === email && o.RegistrationInvoiceNo !== ""})})
                 if (userAlreadyRegistered === true) {
                   dispatch({type: "ADD_USER_TO_ORDER", payload: {"Name": store.getState().user.Name, "Login": store.getState().user.Email}});
                   history.push("/review-register");
@@ -185,7 +184,7 @@ export function addNewMember(history,data) {
         domain = domain.substr(1);
         let eventNo = store.getState().event.EventNo;
         axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": domain, "EventNo": eventNo}).then(r2 => {              
-            dispatch({type: "ADD_UNREGISTERED_USERS", payload: r2.data.Companies[0].UnregisteredPerson});
+            dispatch({type: "ADD_UNREGISTERED_USERS", payload: r2.data.Companies.filter(o=> o.No === store.getState().user.CompanyNo)[0].UnregisteredPerson});
             dispatch({type: "ERROR_RESET", payload: ""});
             history.push("/add-more-members"); 
         }) 
@@ -269,10 +268,13 @@ export function registerCompany(data) {
    }).catch(function(error){
     new Noty({
       text: error.response.dataExceptionMessage,
+      theme: 'mint',
+      timeout: 3000,
+      modal: true,
       layout: "center",
       type: "error"
     }).show();
-    alert(error.response.data.ExceptionMessage);
+    // alert(error.response.data.ExceptionMessage);
    });
   //  axios.get("resources/getCompany.json").then(r=>{ ///changed to post
   //   $("#AddCompanyModal").modal("hide");    
