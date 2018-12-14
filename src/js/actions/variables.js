@@ -1,4 +1,4 @@
-export const apiDomain = "http://registration.dotfusion.ro";
+export const apiDomain = "";
 export const eventConfiguration = {
   "Id": "ASIA2019",
   "Currency": "USD",

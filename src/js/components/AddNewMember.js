@@ -13,7 +13,8 @@ import {addNewMember} from "../actions/userActions"
     users: store.order.Company.Persons,
     error: store.user.error,
     companyList: store.user.CompanyList,
-    eventName: store.event.EventName   
+    eventName: store.event.EventName,
+    companyNo: store.user.CompanyNo   
   }
 })
 class AddNewMember extends Component {
@@ -118,7 +119,8 @@ class AddNewMember extends Component {
     this.setState({...this.state, [e.currentTarget.attributes.name.value]: [e.currentTarget.value] });
   }
   handleSend(e) {
-    let canSend = this.state.email !== "" && this.state.password !== "" && this.state.name !== "" && this.state.address !== "" && this.state.city !== "" && this.state.country !== "" && this.state.zip !== "" && this.state.company !== "" && this.state.terms === true && this.state.userAlert === false;   
+    let canSend = this.state.email !== "" && this.state.password !== "" && this.state.name !== "" && this.state.address !== "" && this.state.city !== "" && this.state.country !== "" && this.state.zip !== "" && this.state.company !== "" && this.state.terms === true && this.state.userAlert === false;  
+    var companyNo = this.props.companyNo; 
     if (canSend) {
       //this.props.dispatch(addNewMember(this.props.history, this.state));
       
@@ -132,7 +134,7 @@ class AddNewMember extends Component {
           "CountryCode": this.state.country,
           "PhoneNo": this.state.phone,
           "PostCode": this.state.zip,
-          "CompanyNo": this.props.company[0].No,
+          "CompanyNo": companyNo,
           "VATRegistrationNo": null,
           "Email2": this.state.Email2,
           "PIBusinessCentral": this.state.PIBusinessCentral,

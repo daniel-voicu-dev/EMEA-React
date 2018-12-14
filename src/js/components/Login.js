@@ -7,6 +7,8 @@ import Password from "./Password";
 
 import { verifyUserAndGoToNextStep } from '../actions/userActions';
 import store from "../store";
+import axios from 'axios';
+import Noty from 'noty';
 
 @connect ((store) => {
   return {
@@ -14,7 +16,8 @@ import store from "../store";
     domain: store.user.Domain,
     token: store.user.Token,
     error: store.user.error,
-    eventName: store.event.EventName
+    eventName: store.event.EventName,
+    loginMessage: store.user.LoginMessage
   }
 })
 
@@ -34,6 +37,28 @@ export default class Login extends Component {
   getPassword(password) {
     this.setState({password});
   }
+  resendPassword(e) {
+    e.preventDefault();
+    axios.post("/api/requestpassword",{"Login": this.props.email}).then((r) => {
+      new Noty({
+        text: "The password has been sent. Please check your email.",
+        theme: 'mint',
+        timeout: 3000,
+        modal: true,
+        layout: "center",
+        type: "success"
+      }).show();
+    }).catch((error)=>{
+      new Noty({
+        text: "Something has gone wrong. Failed to send the password.",
+        theme: 'mint',
+        timeout: 1000,
+        modal: true,
+        layout: "center",
+        type: "error"
+      }).show();
+    })
+  }
   handleSend(e) {
     let canSend = this.state.email !== "" && this.state.password !== "";   
     if (canSend) {
@@ -45,6 +70,7 @@ export default class Login extends Component {
   render() {   
     let alertClass = this.state.alert === true ? "alert alert-danger" : "alert alert-danger d-none";
     let alertGeneralClass = this.props.error !== "" ? "alert alert-danger" : "alert alert-danger d-none";
+    let message = this.props.loginMessage ? (<p>Your email is already registered. Please use your credentials to login.</p>) : (<p>Your email address is <strong><u>already registered</u></strong>. Please use your credentials to login.</p>)
     return (
       <React.Fragment>
       <Header />
@@ -58,7 +84,7 @@ export default class Login extends Component {
               <div className="col-8 d-flex align-items-center flex-wrap">
                 <div>
                   <h2 className="h2 font-weight-light text-dark">{this.props.eventName} Registrations</h2>
-                  <p>Your email address is <strong><u>already registered</u></strong>. Please use your credentials to login.</p>
+                  {message}
                   <p className={alertClass}>Please fill in all the fields to continue.</p>
                   <p className={alertGeneralClass}>{this.props.error}</p>
                   <div>
@@ -71,7 +97,7 @@ export default class Login extends Component {
                          <Password required={true} readonly={false} getPassword={(p) => {this.getPassword(p)}} />
                     </div>
                     <button type="button" onClick={(e) => this.handleSend(e)} className="px-5 btn btn-primary">Login</button>
-                    <small className="w-100 d-block mt-2"><a href="/reset-password">Forgot your password ?</a></small>
+                    <small className="w-100 d-block mt-2 resetPassword"><a href="#" onClick={(e) => this.resendPassword(e)}>Forgot your password ?</a></small>
                   </div>
                 </div>
               </div>

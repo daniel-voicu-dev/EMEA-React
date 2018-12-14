@@ -172,6 +172,7 @@ export function createUser(history,data) {
       "OptOut": data.OptOut
     };     
     axios.post(postDomain, sendObj).then(r => {  
+      dispatch({type: "UPDATE_LOGIN_MESSAGE", payload: true}); 
       history.push("/login");  
     });
   }

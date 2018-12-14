@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-<body>
+import React from 'react';
 
+const Terms = () => {
+  return (
+    <React.Fragment>
     <h3>A. Registration Process and Payment Methods</h3>
     <ol>
       <li>Conference registrations will not be approved until the correct payment is received and processed. </li>
@@ -67,7 +62,8 @@
       <li>Sponsorships are official once we received the registration. Our payment term is 14 days from the date of registration. </li>
       <li>As an event sponsor it is your own responsibility to deliver the correct and required formats and meet the due dates / deadlines. When failing these you will not benefit from all sponsor opportunities and you are not entitled to any refund. The Directions Organizing Committee will use any alternative to fill the gap. </li>
     </ol>
-    
-  
-</body>
-</html>
+    </React.Fragment>
+  );
+};
+
+export default Terms;

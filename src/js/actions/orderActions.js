@@ -46,13 +46,14 @@ export function addUserListToOrder(history, array, nextStep) {
     axios.post(apiDomain + "/api/createregistration", data).then(r=>{
       // data.PersonRegistration.map((v) => {
       //   dispatch({type: "ADD_USER_TO_ORDER", payload: {"Name": v, "Login": v}});
-      // });      
+      // });     
+     
       history.push(nextStep)
     }).catch((error) => {
 
       let errorPromoCodeMessage = error.response.data.ExceptionMessage;
-      let invalidPromoCodes = array.filter((o)=> { return errorPromoCodeMessage.includes(o.promo)});
-      let errorMessage = `These promo codes are invalid: ${invalidPromoCodes.map(o=>{return o.promo}).join(", ")}.`;
+      let invalidPromoCodes = array.filter((o)=> { return errorPromoCodeMessage.includes(o.promo.toUpperCase())});
+      let errorMessage = `These promo codes are invalid: ${invalidPromoCodes.map(o=>{return o.promo}).join(", ")}`;
       new Noty({
         text: errorMessage,
         theme: 'mint',
