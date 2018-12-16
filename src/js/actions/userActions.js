@@ -73,7 +73,8 @@ export function verifyUserAndGoToNextStep(history, email, password) {
         axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": domain, "EventNo": eventNo}).then(r2 => {         
           var companyFilteredByLogin = r2.data.Companies.filter((o) => {return o.No === store.getState().user.CompanyNo}).length > 0 ? r2.data.Companies.filter((o) => {return o.No === store.getState().user.CompanyNo})[0] : undefined;
          
-          if(companyFilteredByLogin !== undefined) {             
+          if(companyFilteredByLogin !== undefined) {    
+            let userIsAdmin = companyFilteredByLogin.PrimaryContact.Email === store.getState().user.Name;         
             if (companyFilteredByLogin.PrimaryContact.Email === store.getState().user.Name) {
               dispatch({type: "SET_ADMIN", payload: true});
               dispatch({type: "ADD_UNREGISTERED_USERS", payload: companyFilteredByLogin.UnregisteredPerson});
@@ -86,7 +87,7 @@ export function verifyUserAndGoToNextStep(history, email, password) {
                 let userIsAlreadyConfirmed = getAllRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? getAllRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo !== "" : false;               
                 dispatch({type: "UPDATE_USER_IS_CONFIRMED", payload: userIsAlreadyConfirmed});
                 dispatch({type: "ADD_EXISTING_REGISTRATIONS_BY_USER", payload: getAllRegistrations.filter(o=>{return o.CreatedByContactEmail === email && o.RegistrationInvoiceNo !== ""})})
-                if (userAlreadyRegistered === true) {
+                if (userAlreadyRegistered === true && !userIsAdmin) {
                   dispatch({type: "ADD_USER_TO_ORDER", payload: {"Name": store.getState().user.Name, "Login": store.getState().user.Email}});
                   history.push("/review-register");
                 } else {

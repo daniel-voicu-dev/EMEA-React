@@ -36,7 +36,7 @@ export default class ReviewRegister extends Component {
       domain = domain.substr(1);
       let eventNo = this.props.event;      
       axios.post(apiDomain + "/api/getregistrations", {"EventNo": eventNo,"LoginOrDomain": domain}).then(r => {        
-        var getAllRegistrations = r.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo}).reduce((r,v,k) => {return [...r, ...v.PersonRegistrations]});
+        var getAllRegistrations = r.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo}).reduce((r,v,k) => {return [...r, ...v.PersonRegistrations]},[]);
         var orderForCurrentLogin = getAllRegistrations.filter(obj => {
           return obj.RegistrationInvoiceNo === "" && obj.CreatedByContactEmail === this.props.login;
         });        
