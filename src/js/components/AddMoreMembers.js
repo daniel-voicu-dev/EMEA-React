@@ -8,7 +8,8 @@ import { addUserToOrder, removeUserFromOrder, addUserListToOrder } from '../acti
     currentUser: store.user.Email,
     users: store.user.UnregisteredUsers,
     order: store.order.Users,
-    eventName: store.event.EventName
+    eventName: store.event.EventName,
+    usersToBeConfirmed : store.user.UsersToBeConfirmed
   }
 })
 class AddMoreMembers extends Component {
@@ -42,10 +43,10 @@ class AddMoreMembers extends Component {
     // let defaultCheck = this.props.order.filter(x=> {return x.Login === o.Email}).length > 0;
     let defaultCheck = false;    
     let isChecked = this.state.usersToRegister.filter(obj => obj.email === o.Email).length > 0;
-    console.log(isChecked);
+    //console.log(isChecked);
     let promoCodeInput = isChecked ? 
       (<div className="col-4">
-        <input type="text" className="form-control" onChange={(e) => this.handlePromoCode(e, o.Email)} data-email={o.Email} placeholder="Enter a promo code" />
+        <input type="text" className="form-control rounded-0" onChange={(e) => this.handlePromoCode(e, o.Email)} data-email={o.Email} placeholder="Enter a promo code" />
       </div>) : 
       ""
     if(o.Email === this.props.currentUser) {
@@ -80,6 +81,11 @@ class AddMoreMembers extends Component {
     )
   }
   render() {
+    let message = this.props.users.length > 0 ? (<p>We have found the following list of users assigned to your company. Please select the users you want to add to registration or <Link to="/add-new-member">add new user</Link> for your company.</p>) : (<p>We have not found any unregistered users assigned to your company. Please use <Link to="/add-new-member">add new user</Link> to assign users to your company and then register them.</p>)   
+    // let actionButtonWithAction = this.props.users.length > 0 ? (<button type="button" onClick={() => this.props.dispatch(addUserListToOrder(this.props.history,this.state.usersToRegister,"/review-register"))} className="btn btn-primary">Next Step: Registration</button>) : ("");
+    // let actionButtonWithNoRegistration = this.props.usersToBeConfirmed || this.state.usersToRegister.length === 0 ? (<Link className="btn btn-primary mr-3" to="/review-register"></Link>) : ("");
+    let actionButton = this.state.usersToRegister.length === 0 ? this.props.usersToBeConfirmed ? (<Link className="btn btn-primary mr-3" to="/review-register">Next Step: Registration</Link>) : ("") : (<button type="button" onClick={() => this.props.dispatch(addUserListToOrder(this.props.history,this.state.usersToRegister,"/review-register"))} className="btn btn-primary">Next Step: Registration</button>);
+    
     return (
       <React.Fragment>
         <Header />
@@ -93,13 +99,14 @@ class AddMoreMembers extends Component {
                 <div className="col-8 d-flex align-items-center flex-wrap">
                   <div>
                     <h2 className="h2 font-weight-light text-primary">{this.props.eventName} Registrations</h2>
-                    <p>We have found the following list of users assigned to your company. Please select the users you want to add to registration or <Link to="/add-new-member">add new user</Link> for your company.</p>
+                    {message}
                     <div action="">
                       {this.props.users.map((o,i)=> {return this.renderChild(o,i)})}                      
                     </div>
                     <div className="mt-3">
+                      <Link className="btn btn-dark mr-3" to="/register-others">Back</Link>                      
                       <Link to="/add-new-member" className="btn btn-dark mr-3">Add User</Link>
-                      <button type="button" onClick={() => this.props.dispatch(addUserListToOrder(this.props.history,this.state.usersToRegister,"/review-register"))} className="btn btn-primary">Next Step: Registration</button>
+                      {actionButton}
                     </div>
                   </div>
                 </div>

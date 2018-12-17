@@ -62,7 +62,7 @@ export default class Event extends Component {
                     <h2 className="h2 font-weight-light text-primary">Welcome to Directions EMEA registration process.</h2>
                     <p className="">In order to continue please select an event.</p>
                     <p className={alertClass}>Please select an event to continue</p>                 
-                    <select onChange={(e)=>this.setEvent(e)} className="form-control mb-3">
+                    <select onChange={(e)=>this.setEvent(e)} className="form-control rounded-0 mb-3">
                       <option value="">Please select an event</option>
                       {this.state.events.map((o,i)=> {return( <option key={i} value={o.eventNo}>{o.eventName}</option>)})}
                     </select>

@@ -56,7 +56,7 @@ export default class Email extends Component {
     }
   }
   render() {
-    let inputClass = this.state.valid === false ? "is-invalid form-control" : "form-control";
+    let inputClass = this.state.valid === false ? "is-invalid form-control rounded-0" : "form-control rounded-0";
     if (this.state.domain !== "") {
       return (
         <div className="form-group">    

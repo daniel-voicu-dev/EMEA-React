@@ -28,8 +28,8 @@ export default class RegisterOthers extends Component {
     }
   }
   changeInputTextState(e){
-    console.log("state", this.state);
-    console.log(e.currentTarget.attributes.name.value, e.currentTarget.value);
+    // console.log("state", this.state);
+    // console.log(e.currentTarget.attributes.name.value, e.currentTarget.value);
     this.setState({...this.state, [e.currentTarget.attributes.name.value]: e.currentTarget.value });
   }
   render() {    
@@ -55,7 +55,7 @@ export default class RegisterOthers extends Component {
                     <div>
                       <div className="mb-3 form-group">
                         <label htmlFor="PromoCode">If you have a Promo Code please fill it before continuing with registration.</label>
-                        <input type="text" id="PromoCode" className="form-control col-4" name="PromoCode" onChange={(e) => this.changeInputTextState(e)} /> 
+                        <input type="text" id="PromoCode" className="form-control rounded-0 col-4" name="PromoCode" onChange={(e) => this.changeInputTextState(e)} /> 
                       </div>
                       <div className="mb-3">
                         <button type="button" onClick={()=>this.props.dispatch(addUserToOrder(this.props.history,{"RegistrationForEmail": this.props.user.Email, "PromoCode": this.state.PromoCode},"/review-register"))} className="btn btn-primary px-5">Next Step: Register yourself for {this.props.eventName}</button>

@@ -22,7 +22,7 @@ export default class Password extends Component {
     }
   }
   render() {
-    let inputClass = this.state.valid === false ? "is-invalid form-control" : "form-control";    
+    let inputClass = this.state.valid === false ? "is-invalid form-control rounded-0" : "form-control rounded-0";    
     return (
       <div className="form-group">   
         <input type="password" className={inputClass} onChange={(e) => this.handleChange(e)} value={this.state.value} required={this.props.required} readOnly={this.props.readonly} onBlur={(e) => this.handleBlur(e)} />

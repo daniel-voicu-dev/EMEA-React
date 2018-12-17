@@ -16,6 +16,6 @@ import getCountries from "../resources/getCountries.json";
 const app = document.getElementById("app");
 ReactDOM.render(<Provider store={store}><Layout /></Provider>, app);
 
-store.subscribe(() => {
-    console.log("NEWSTATE",store.getState())
-})
+// store.subscribe(() => {
+//     console.log("NEWSTATE",store.getState())
+// })

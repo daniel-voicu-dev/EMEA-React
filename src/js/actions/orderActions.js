@@ -151,8 +151,18 @@ export function registerUsers(history) {
     // }).catch((error => {
     //   console.log(error);
     // }))
+    var nRegisteringUsers = new Noty({
+      text: "Registering users. Please wait...",
+      theme: 'mint',      
+      layout: "center",
+      modal: true,
+      type: "information"
+    });
+    
+    nRegisteringUsers.show();   
     axios.post(postDomain, {"EventNo": store.getState().event.EventNo, "Login": store.getState().user.Email}).then((r)=>{
-      console.log("success confirming users");
+      // console.log("success confirming users");         
+      nRegisteringUsers.close();
       history.push("/registration-completed");
     });
     // dispatch({type: "SET_COMPANY", payload: o});

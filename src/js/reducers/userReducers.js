@@ -1,4 +1,4 @@
-export default function counter(state = {Name: "", Token: "", Domain: "", Email: "", CompanyNo: "",CompanyName: "", error: "", CompanyList: [], CountryList: [], isAdmin: false, isConfirmed: false, UnregisteredUsers: [], ExistingRegistrations: [], LoginMessage: false}, {type,payload}) {   
+export default function counter(state = {Name: "", Token: "", Domain: "", Email: "", CompanyNo: "",CompanyName: "", error: "", CompanyList: [], CountryList: [], isAdmin: false, isConfirmed: false, UnregisteredUsers: [], ExistingRegistrations: [], LoginMessage: false, UsersToBeConfirmed: false}, {type,payload}) {   
   switch (type) {   
   case "UPDATE_USER_INFORMATION":
     return {...state, ...payload};  
@@ -28,6 +28,8 @@ export default function counter(state = {Name: "", Token: "", Domain: "", Email:
     return {...state, Token: payload}
   case "UPDATE_LOGIN_MESSAGE":
     return {...state, LoginMessage: payload}  
+  case "USERS_TO_BE_CONFIRMED":
+    return {...state, UsersToBeConfirmed: payload}  
   // case "GET_COMPANIES":
   //   return {...state, CompanyList: payload}  
   case "FETCH_USER_FULFILLED": 
@@ -37,7 +39,7 @@ export default function counter(state = {Name: "", Token: "", Domain: "", Email:
   case "ERROR_RESET":
     return {...state, error: payload }    
   case 'FETCH_EMAIL_REJECTED':
-    console.log("Loading user failed:");
+    //console.log("Loading user failed:");
     throw new Error(payload);    
   default:
     return state

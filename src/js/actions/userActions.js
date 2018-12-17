@@ -75,7 +75,10 @@ export function verifyUserAndGoToNextStep(history, email, password) {
          
           if(companyFilteredByLogin !== undefined) {    
             let userIsAdmin = companyFilteredByLogin.PrimaryContact.Email === store.getState().user.Name;         
-            if (companyFilteredByLogin.PrimaryContact.Email === store.getState().user.Name) {
+            if (userIsAdmin) {
+              // console.log("companyFilteredByLogin",companyFilteredByLogin);
+              // let adminHasUsersToRegister = companyFilteredByLogin.CompanyRegistrations[0].IndividualRegistrations.filter(o => {return o.RegistrationCreatedByEmail === store.getState().user.Name && o.RegistrationInvoiceNo !== ""}).length;
+              // console.log(adminHasUsersToRegister);
               dispatch({type: "SET_ADMIN", payload: true});
               dispatch({type: "ADD_UNREGISTERED_USERS", payload: companyFilteredByLogin.UnregisteredPerson});
             }
@@ -84,7 +87,11 @@ export function verifyUserAndGoToNextStep(history, email, password) {
               if (r3.data.CompanyRegistrations.length > 0) {
                 let getAllRegistrations = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo}).reduce((r,v,k) => {return [...r, ...v.PersonRegistrations]},[]);
                 let userAlreadyRegistered = getAllRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? getAllRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo == "" : false;
-                let userIsAlreadyConfirmed = getAllRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? getAllRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo !== "" : false;               
+                let userIsAlreadyConfirmed = getAllRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? getAllRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo !== "" : false;       
+                //console.log(getAllRegistrations);
+                let usersToBeConfirmed = userIsAdmin && getAllRegistrations.filter(o=>{return o.CreatedByContactEmail === store.getState().user.Name && o.RegistrationInvoiceNo === ""}).length > 0;       
+                //console.log("usersToBeConfirmed",usersToBeConfirmed);
+                dispatch({type: "USERS_TO_BE_CONFIRMED", payload: usersToBeConfirmed});
                 dispatch({type: "UPDATE_USER_IS_CONFIRMED", payload: userIsAlreadyConfirmed});
                 dispatch({type: "ADD_EXISTING_REGISTRATIONS_BY_USER", payload: getAllRegistrations.filter(o=>{return o.CreatedByContactEmail === email && o.RegistrationInvoiceNo !== ""})})
                 if (userAlreadyRegistered === true && !userIsAdmin) {
@@ -136,7 +143,7 @@ export function getUserInfo() {
   }
   return (dispatch) => {
     axios.post(postDomain, sendObj).then(r=>{  
-      console.log(r.data); 
+      // console.log(r.data); 
       dispatch({type: "FETCH_USER_FULFILLED", payload: r.data});
       dispatch({type: "SET_COMPANY", payload: r.data.Company});
       axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": store.getState().user.Domain.split("@")[1], "EventNo": store.getState().event.EventNo}).then(r=>{
@@ -258,7 +265,7 @@ export function registerCompany(data) {
     let companyName = r.data.CompanyName; 
     
     axios.post(apiDomain + "/api/companyinformation", {"CompanyEmailOrDomain": store.getState().user.Domain.split("@")[1], "EventNo": store.getState().event.EventNo}).then(r=>{
-      console.log("Company registration data",r.data);
+      //console.log("Company registration data",r.data);
       dispatch({type: "UPDATE_USER_INFORMATION", payload: {"CompanyList": r.data.Companies}});
       dispatch({type: "UPDATE_USER_INFORMATION", payload: {"CompanyNo": companyNo, "CompanyName": companyName}});
       // dispatch({type: "GET_COMPANIES", payload: r.data.Companies});

@@ -88,9 +88,9 @@ class AddNewMember extends Component {
   }
   getCompany(company) {
     this.setState({company});
-    console.log("company",company);
+    //console.log("company",company);
     let selectedCompany = this.props.companyList.filter(v => {return v.No === company})[0];
-    console.log("selectedCompany",selectedCompany);
+    //console.log("selectedCompany",selectedCompany);
     let address = selectedCompany.Address;
     let city = selectedCompany.City;
     let zip = selectedCompany.PostCode;
@@ -183,32 +183,32 @@ class AddNewMember extends Component {
                       </div>
                       <div className="form-group">
                           <label htmlFor="Password">Password</label>
-                          <input type="password" id="Password" className="form-control" onChange={(e) => this.getPassword(e.currentTarget.value)} />                      
+                          <input type="password" id="Password" className="form-control rounded-0" onChange={(e) => this.getPassword(e.currentTarget.value)} />                      
                           <small className="invalid-feedback">
                               Invalid password
                           </small>
                       </div>
                       <div className="form-group">
                           <label htmlFor="FullName">Full Name*</label>
-                          <input type="text" id="FullName" className="form-control" onChange={(e) => this.getName(e.currentTarget.value)} /> 
+                          <input type="text" id="FullName" className="form-control rounded-0" onChange={(e) => this.getName(e.currentTarget.value)} /> 
                       </div>
                       <div className="form-group">
                           <label htmlFor="Address">Address*</label>
-                          <input type="text" id="Address" className="form-control" onChange={(e) => this.getAddress(e.currentTarget.value)} defaultValue={this.state.address} /> 
+                          <input type="text" id="Address" className="form-control rounded-0" onChange={(e) => this.getAddress(e.currentTarget.value)} defaultValue={this.state.address} /> 
                       </div>
                       <div className="form-row">
                           <div className="form-group col">
                               <label htmlFor="City">City*</label>
-                              <input type="text" id="City" className="form-control" onChange={(e) => this.getCity(e.currentTarget.value)} defaultValue={this.state.city} /> 
+                              <input type="text" id="City" className="form-control rounded-0" onChange={(e) => this.getCity(e.currentTarget.value)} defaultValue={this.state.city} /> 
                           </div>
                           <div className="form-group col">
                               <label htmlFor="ZipCode">Zip Code*</label>
-                              <input type="text" id="ZipCode" className="form-control" onChange={(e) => this.getZip(e.currentTarget.value)} defaultValue={this.state.zip} /> 
+                              <input type="text" id="ZipCode" className="form-control rounded-0" onChange={(e) => this.getZip(e.currentTarget.value)} defaultValue={this.state.zip} /> 
                           </div>
                       </div>
                       <div className="form-group">
                           <label htmlFor="Phone">Phone*</label>
-                          <input type="text" id="Phone" className="form-control" onChange={(e) => this.getPhone(e.currentTarget.value)} defaultValue={this.state.phone} /> 
+                          <input type="text" id="Phone" className="form-control rounded-0" onChange={(e) => this.getPhone(e.currentTarget.value)} defaultValue={this.state.phone} /> 
                       </div>
                       <div className="form-group">
                           <label htmlFor="Country">Country*</label>                      
@@ -220,7 +220,7 @@ class AddNewMember extends Component {
                       </div>
                       <div className="form-group">
                           <label htmlFor="JobTitle">Job Title</label>
-                          <input type="text" id="JobTitle" className="form-control" name="JobTitle" onChange={(e) => this.changeInputTextState(e)} /> 
+                          <input type="text" id="JobTitle" className="form-control rounded-0" name="JobTitle" onChange={(e) => this.changeInputTextState(e)} /> 
                       </div>
                       <div className="form-group">
                           <label>You Product Interest</label>
@@ -268,7 +268,7 @@ class AddNewMember extends Component {
                         <div className="form-check form-check-inline">
                           <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" onChange={(e)=>{this.setTerms(e)}}/>
                             
-                            <p className="form-check-label" htmlFor="inlineCheckbox1" >I have read and agreed with <u data-toggle="modal" data-target="#TermsModal">Terms and Conditions</u></p>
+                            <p className="form-check-label" htmlFor="inlineCheckbox1" >I have read and agreed with <u data-toggle="modal" data-target="#TermsModal" className="pointer">Terms and Conditions</u></p>
                           </div>
                       </div>
                       <div id="TermsModal" className="modal" tabIndex="-1" role="dialog">

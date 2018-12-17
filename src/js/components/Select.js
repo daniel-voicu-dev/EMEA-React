@@ -10,7 +10,7 @@ export default class Select extends Component {
     let value = this.props.setValue !== undefined ? this.props.setValue : "";
     let readonly = this.props.readOnly !== undefined && this.props.readOnly === "true" ? true : false;
     return (
-      <select className="form-control" id={this.props.id} required={this.props.required} readOnly={readonly} onChange={(e)=> this.props.getValue(e.currentTarget.value)} value={value}>
+      <select className="form-control rounded-0" id={this.props.id} required={this.props.required} readOnly={readonly} onChange={(e)=> this.props.getValue(e.currentTarget.value)} value={value}>
         <option value="">{this.props.firstOption}</option>
         {this.props.options.map((o,i)=>{ return( <option key={i} value={o.label}>{o.value}</option>) })}
       </select>

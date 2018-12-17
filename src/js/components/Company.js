@@ -131,7 +131,7 @@ export default class Company extends Component {
                       <p className={alertClass}>Please fill in all the fields to create the company.</p>
                       <div className="form-group">
                           <label htmlFor="CompanyName">Name*</label>
-                          <input type="text" id="CompanyName" className="form-control"  onChange={(e) => this.getName(e.currentTarget.value)} value={this.state.name} /> 
+                          <input type="text" id="CompanyName" className="form-control rounded-0"  onChange={(e) => this.getName(e.currentTarget.value)} value={this.state.name} /> 
                       </div>
                       <div className="form-group">
                         <label htmlFor="CompanyEmail">Email* (Admin User – invoice send to)</label>
@@ -139,15 +139,15 @@ export default class Company extends Component {
                       </div>
                       <div className="form-group">
                           <label htmlFor="CompanyAddress">Address*</label>
-                          <input type="text" id="CompanyAddress" className="form-control"  onChange={(e) => this.getAddress(e.currentTarget.value)} value={this.state.address} /> 
+                          <input type="text" id="CompanyAddress" className="form-control rounded-0"  onChange={(e) => this.getAddress(e.currentTarget.value)} value={this.state.address} /> 
                       </div>
                       <div className="form-group">
                           <label htmlFor="CompanyAddress2">Address2</label>
-                          <input type="text" id="CompanyAddress2" className="form-control"  onChange={(e) => this.getAddress2(e.currentTarget.value)} value={this.state.address2} /> 
+                          <input type="text" id="CompanyAddress2" className="form-control rounded-0"  onChange={(e) => this.getAddress2(e.currentTarget.value)} value={this.state.address2} /> 
                       </div>
                       <div className="form-group">
                           <label htmlFor="CompanyCity">City*</label>
-                          <input type="text" id="CompanyCity" className="form-control"  onChange={(e) => this.getCity(e.currentTarget.value)} value={this.state.city} /> 
+                          <input type="text" id="CompanyCity" className="form-control rounded-0"  onChange={(e) => this.getCity(e.currentTarget.value)} value={this.state.city} /> 
                       </div>
                       <div className="form-group">
                           <label htmlFor="CompanyCountry">Country*</label>
@@ -155,15 +155,15 @@ export default class Company extends Component {
                       </div>
                       <div className="form-group">
                           <label htmlFor="CompanyPhone">Phone*</label>
-                          <input type="text" id="CompanyPhone" className="form-control"  onChange={(e) => this.getPhone(e.currentTarget.value)} value={this.state.phone} /> 
+                          <input type="text" id="CompanyPhone" className="form-control rounded-0"  onChange={(e) => this.getPhone(e.currentTarget.value)} value={this.state.phone} /> 
                       </div>
                       <div className="form-group">
                           <label htmlFor="CompanyZip">Zip*</label>
-                          <input type="text" id="CompanyZip" className="form-control"  onChange={(e) => this.getZip(e.currentTarget.value)} value={this.state.zip} /> 
+                          <input type="text" id="CompanyZip" className="form-control rounded-0"  onChange={(e) => this.getZip(e.currentTarget.value)} value={this.state.zip} /> 
                       </div>
                       <div className="form-group">
                           <label htmlFor="CompanyVATNo">VAT/Company Registration Number*</label>
-                          <input type="text" id="CompanyVATNo" className="form-control"  onChange={(e) => this.getCompanyVATNo(e.currentTarget.value)} value={this.state.companyVATNo} /> 
+                          <input type="text" id="CompanyVATNo" className="form-control rounded-0"  onChange={(e) => this.getCompanyVATNo(e.currentTarget.value)} value={this.state.companyVATNo} /> 
                       </div>
                       <div className="form-group">
                         <label>Partner Type</label>
