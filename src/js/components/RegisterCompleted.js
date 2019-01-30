@@ -18,7 +18,8 @@ export default class RegisterFinished extends Component {
                 <div>
                   <h2 className="h2 font-weight-light text-primary mb-3">Thank you for your registration.</h2>
                   <p className="mb-1">You will receive an email shortly with Invoice and Payment link.</p>
-                  <p>We look forward to seeing you at Directions ASIA 2019.</p> 
+                  <p clasName="mb-2">We look forward to seeing you at Directions ASIA 2019.</p> 
+                  <p>Click <a href="http://www.shangri-la.com/reservations/booking/en/index.aspx?hid=SLKL&group_code=DAC310319&check_in=20190331&check_out=20190403" className="text-uppercase text-dark"><strong clasName="text-decoration-underline ">here</strong></a> to book a room at the conference hotel!</p>
                 </div>
               </div>
             </div>
