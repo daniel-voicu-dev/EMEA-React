@@ -4,6 +4,7 @@ import CompanySelect from "./CompanySelect"
 import CountrySelect from "./CountrySelect"
 import Email from "./Email"
 import {registerCompany} from "../actions/userActions";
+import Noty from 'noty';
 
 @connect ((store) => {
   return { 
@@ -63,7 +64,7 @@ export default class Company extends Component {
   getName(name) {
     this.setState({name});    
   }
-  getAddress(address){
+  getAddress(address){    
     this.setState({address});
   } 
   getAddress2(address2){
@@ -90,7 +91,18 @@ export default class Company extends Component {
   handleSendAddress(e) {
     let canSend = this.state.name !== "" && this.state.address !== "" && this.state.city !== "" && this.state.phone !== "";   
     if (canSend) {
-      // this.props.dispatch(createUser(this.props.history, this.state));           
+      // this.props.dispatch(createUser(this.props.history, this.state));    
+      if (this.state.address.length > 50) {
+        new Noty({
+          text: "The address field can not have more than 50 characters",
+          theme: 'mint',
+          timeout: 3000,
+          layout: "center",
+          modal: true,
+          type: "error"
+        }).show();         
+        return;
+      }       
       this.props.dispatch(registerCompany(this.state));
       // this.setState({name: ""});
       // this.setState({address: ""});
@@ -130,7 +142,7 @@ export default class Company extends Component {
                   <div>
                       <p className={alertClass}>Please fill in all the fields to create the company.</p>
                       <div className="form-group">
-                          <label htmlFor="CompanyName">Name*</label>
+                          <label htmlFor="CompanyName">Company Name*</label>
                           <input type="text" id="CompanyName" className="form-control rounded-0"  onChange={(e) => this.getName(e.currentTarget.value)} value={this.state.name} /> 
                       </div>
                       <div className="form-group">
@@ -139,11 +151,11 @@ export default class Company extends Component {
                       </div>
                       <div className="form-group">
                           <label htmlFor="CompanyAddress">Address*</label>
-                          <input type="text" id="CompanyAddress" className="form-control rounded-0"  onChange={(e) => this.getAddress(e.currentTarget.value)} value={this.state.address} /> 
+                          <input type="text" id="CompanyAddress" className="form-control rounded-0" maxlength="50" onChange={(e) => this.getAddress(e.currentTarget.value)} value={this.state.address} /> 
                       </div>
                       <div className="form-group">
                           <label htmlFor="CompanyAddress2">Address2</label>
-                          <input type="text" id="CompanyAddress2" className="form-control rounded-0"  onChange={(e) => this.getAddress2(e.currentTarget.value)} value={this.state.address2} /> 
+                          <input type="text" id="CompanyAddress2" className="form-control rounded-0" maxlength="50" onChange={(e) => this.getAddress2(e.currentTarget.value)} value={this.state.address2} /> 
                       </div>
                       <div className="form-group">
                           <label htmlFor="CompanyCity">City*</label>

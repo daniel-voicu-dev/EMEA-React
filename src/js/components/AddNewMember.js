@@ -6,6 +6,7 @@ import Company from "./Company"
 import Terms from "./Terms"
 import CountrySelect from "./CountrySelect";
 import {addNewMember} from "../actions/userActions"
+import Noty from 'noty';
 @connect ((store) => {
   return {
     domain: store.user.Domain,
@@ -124,7 +125,17 @@ class AddNewMember extends Component {
     var companyNo = this.props.companyNo; 
     if (canSend) {
       //this.props.dispatch(addNewMember(this.props.history, this.state));
-      
+      if (this.state.address.length > 50) {
+        new Noty({
+          text: "The address field can not have more than 50 characters",
+          theme: 'mint',
+          timeout: 3000,
+          layout: "center",
+          modal: true,
+          type: "error"
+        }).show();         
+        return;
+      } 
       let obj = {
           "Login": this.state.email,
           "Password": this.state.password,
@@ -194,7 +205,7 @@ class AddNewMember extends Component {
                       </div>
                       <div className="form-group">
                           <label htmlFor="Address">Address*</label>
-                          <input type="text" id="Address" className="form-control rounded-0" onChange={(e) => this.getAddress(e.currentTarget.value)} defaultValue={this.state.address} /> 
+                          <input type="text" id="Address" className="form-control rounded-0" maxlength="50" onChange={(e) => this.getAddress(e.currentTarget.value)} defaultValue={this.state.address} /> 
                       </div>
                       <div className="form-row">
                           <div className="form-group col">

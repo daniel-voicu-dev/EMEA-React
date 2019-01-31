@@ -6,6 +6,7 @@ import Terms from "./Terms"
 import CountrySelect from "./CountrySelect"
 import Company from "./Company"
 import {createUser, updateUserCompanyNo} from "../actions/userActions"
+import Noty from 'noty'
 @connect ((store) => {
   return {   
     email: store.user.Email, 
@@ -146,6 +147,21 @@ export default class CreateUser extends Component {
   handleSend(e) {
     let canSend = this.state.email !== "" && this.state.password !== "" && this.state.name !== "" && this.state.address !== "" && this.state.city !== "" && this.state.country !== "" && this.state.zip !== "" && this.state.company !== "" && this.state.terms === true;   
     if (canSend) {
+
+      if (this.state.address.length > 50) {
+        new Noty({
+          text: "The address field can not have more than 50 characters",
+          theme: 'mint',
+          timeout: 3000,
+          layout: "center",
+          modal: true,
+          type: "error"
+        }).show();         
+        return;
+      }       
+
+
+
       this.props.dispatch(createUser(this.props.history, this.state));
     } else {
       this.setState({alert: true});      
@@ -188,7 +204,7 @@ export default class CreateUser extends Component {
                   </div>
                   <div className="form-group">
                       <label htmlFor="Address">Address*</label>
-                      <input type="text" id="Address" className="form-control rounded-0" onChange={(e) => this.getAddress(e.currentTarget.value)} defaultValue={this.state.address} /> 
+                      <input type="text" id="Address" className="form-control rounded-0" maxlength="50" onChange={(e) => this.getAddress(e.currentTarget.value)} defaultValue={this.state.address} /> 
                   </div>
                   <div className="form-row">
                       <div className="form-group col">
