@@ -274,9 +274,9 @@ export function registerCompany(data) {
     });
     //dispatch({type: "ADD_COMPANY_FULFILLED", payload: r.data})
     //dispatch({type: "SET_COMPANY", payload: r.data})
-   }).catch(function(error){
+   }).catch(function(error){     
     new Noty({
-      text: error.response.dataExceptionMessage,
+      text: error.response.data.ExceptionMessage,
       theme: 'mint',
       timeout: 3000,
       modal: true,

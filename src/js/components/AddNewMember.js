@@ -205,21 +205,21 @@ class AddNewMember extends Component {
                       </div>
                       <div className="form-group">
                           <label htmlFor="Address">Address*</label>
-                          <input type="text" id="Address" className="form-control rounded-0" maxlength="50" onChange={(e) => this.getAddress(e.currentTarget.value)} defaultValue={this.state.address} /> 
+                          <input type="text" id="Address" className="form-control rounded-0" maxlength="50" onChange={(e) => this.getAddress(e.currentTarget.value)} value={this.state.address} /> 
                       </div>
                       <div className="form-row">
                           <div className="form-group col">
                               <label htmlFor="City">City*</label>
-                              <input type="text" id="City" className="form-control rounded-0" onChange={(e) => this.getCity(e.currentTarget.value)} defaultValue={this.state.city} /> 
+                              <input type="text" id="City" className="form-control rounded-0" onChange={(e) => this.getCity(e.currentTarget.value)} value={this.state.city} /> 
                           </div>
                           <div className="form-group col">
                               <label htmlFor="ZipCode">Zip Code*</label>
-                              <input type="text" id="ZipCode" className="form-control rounded-0" onChange={(e) => this.getZip(e.currentTarget.value)} defaultValue={this.state.zip} /> 
+                              <input type="text" id="ZipCode" className="form-control rounded-0" onChange={(e) => this.getZip(e.currentTarget.value)} value={this.state.zip} /> 
                           </div>
                       </div>
                       <div className="form-group">
                           <label htmlFor="Phone">Phone*</label>
-                          <input type="text" id="Phone" className="form-control rounded-0" onChange={(e) => this.getPhone(e.currentTarget.value)} defaultValue={this.state.phone} /> 
+                          <input type="text" id="Phone" className="form-control rounded-0" onChange={(e) => this.getPhone(e.currentTarget.value)} value={this.state.phone} /> 
                       </div>
                       <div className="form-group">
                           <label htmlFor="Country">Country*</label>                      
