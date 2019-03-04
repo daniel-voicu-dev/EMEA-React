@@ -6,7 +6,7 @@ import store from "../store";
 import Event from "./Event";
 import PickEvent from "./Steps/PickEvent";
 import PickEventItem from "./Steps/PickEventItem";
-import Start from "./Start";
+import Start from "./Steps/Start";
 import Login from "./Login";
 import CreateUser from "./CreateUser";
 import RegisterOthers from "./RegisterOthers";
@@ -32,9 +32,11 @@ export default class Layout extends Component {
     return (
       <HashRouter basename="/">
         <React.Fragment>  
-          <Route exact path='/' component={PickEvent} /> 
-          <Route path='/event' component={PickEventItem} />      
-          <Route path='/start' component={Start} />
+        {
+          // <Route exact path='/' component={PickEvent} /> 
+          // <Route path='/event' component={PickEventItem} />      
+        }
+          <Route exact path='/' component={Start} />
           <Route path='/login' component={Login} />
           <Route path='/create-user' component={CreateUser} />
           <Route path='/register-others' component={RegisterOthers} />

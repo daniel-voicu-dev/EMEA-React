@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import Header from "../Header";
 import { getEvent } from '../../actions/eventActions';
+import { getCountries } from '../../actions/userActions';
 
 
 const PickEvent = (props) => {  
@@ -11,14 +12,9 @@ const PickEvent = (props) => {
   let [selectedEvent, setSelectedEvent] = useState(null);
   let alertMessage = alert ? (<p className="alert alert-danger">Please select an event to continue</p>) : ("");
 
-  useEffect(() => {
-    // Update the document title using the browser API
-    // axios.post(postDomain, {"EventNo": "ASIA2019"}).then(function(r){
-    //   dispatch({type: "SET_EVENT", payload: r.data.EventItems[0]});
-    // })
-    // console.log(selectedEvent);
-    //console.log(props);
-  });
+  useEffect(() => {   
+    props.getCountries();
+  },[]);
  
   const handleSubmit = (v) => {    
     if (v !== null && v !== "") {
@@ -72,7 +68,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
   }
 }
 
-const mapDispatchToProps = { getEvent }
+const mapDispatchToProps = { getEvent, getCountries }
 
 export default connect(
   mapStateToProps,

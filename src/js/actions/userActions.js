@@ -3,7 +3,7 @@ import store from "../store";
 import {apiDomain} from "./variables";
 import Noty from 'noty';
 
-export function getCountries() {  
+export const getCountries = () => {  
   let postDomain = apiDomain + "/api/countries";
   return (dispatch) => {
     axios.post(postDomain, {}).then(r => {      
