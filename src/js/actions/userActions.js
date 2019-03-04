@@ -1,7 +1,5 @@
 import axios from 'axios';
 import store from "../store";
-import jquery from "jquery";
-import bootstrap from "bootstrap";
 import {apiDomain} from "./variables";
 import Noty from 'noty';
 

@@ -4,6 +4,8 @@ import {Route, Link, BrowserRouter as Router, HashRouter} from 'react-router-dom
 
 import store from "../store";
 import Event from "./Event";
+import PickEvent from "./Steps/PickEvent";
+import PickEventItem from "./Steps/PickEventItem";
 import Start from "./Start";
 import Login from "./Login";
 import CreateUser from "./CreateUser";
@@ -29,8 +31,10 @@ export default class Layout extends Component {
   render() {    
     return (
       <HashRouter basename="/">
-        <React.Fragment>         
-          <Route exact path='/' component={Start} />
+        <React.Fragment>  
+          <Route exact path='/' component={PickEvent} /> 
+          <Route path='/event' component={PickEventItem} />      
+          <Route path='/start' component={Start} />
           <Route path='/login' component={Login} />
           <Route path='/create-user' component={CreateUser} />
           <Route path='/register-others' component={RegisterOthers} />

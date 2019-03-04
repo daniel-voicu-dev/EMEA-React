@@ -7,13 +7,14 @@ export default function counter(state = {
   "UnitPrice": null,
   "Currency": eventConfiguration.Currency,
   "Culture": eventConfiguration.Culture,
-  "FillInFields": validationErrors.FillInFields
+  "FillInFields": validationErrors.FillInFields,
+  "EventItems": []
 }, {type,payload}) {   
   switch (type) {   
   case "SET_EVENT":
-    return {...state, ...payload};
-  case "SET_EVENT_PRICE":
-    return {...state, itemPrice: payload} 
+    return {...state, ...payload};  
+  case "SET_EVENT_ITEMS":
+    return {...state, EventItems: [...payload]}    
   default:
     return state
   }
