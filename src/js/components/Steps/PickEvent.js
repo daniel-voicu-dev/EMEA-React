@@ -8,7 +8,7 @@ import { getCountries } from '../../actions/userActions';
 
 const PickEvent = (props) => {  
   let [alert,setAlert] = useState(false);
-  let [events,setEvents] = useState([{eventName: "ASIA 2019", eventNo: "ASIA2019", ItemDescription: "Normal Price", ItemNo: "70062"}, {eventName: "Europe 2019", eventNo: "EUROPE2019", ItemDescription: "Normal Price", ItemNo: "99999"}]);
+  let [events,setEvents] = useState([{eventName: "ASIA 2019", eventNo: "ASIA2019", ItemDescription: "Normal Price", ItemNo: "70062"}, {eventName: "ASIA 2019 (TEST)", eventNo: "ASIA2019", ItemDescription: "Normal Price", ItemNo: "70062"}]);
   let [selectedEvent, setSelectedEvent] = useState(null);
   let alertMessage = alert ? (<p className="alert alert-danger">Please select an event to continue</p>) : ("");
 

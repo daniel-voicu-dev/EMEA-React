@@ -5,7 +5,7 @@ import PickEvent from "./Steps/PickEvent";
 import Start from "./Steps/Start";
 import Login from "./Steps/Login";
 import CreateUser from "./CreateUser";
-import RegisterOthers from "./RegisterOthers";
+import RegisterOthers from "./Steps/RegisterOthers";
 import ReviewRegister from "./ReviewRegister";
 import RegisterCompleted from "./RegisterCompleted";
 import AddMoreMembers from "./AddMoreMembers";

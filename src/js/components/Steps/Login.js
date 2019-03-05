@@ -6,7 +6,6 @@ import Email from "../Email";
 import Password from "../Password";
 
 import { verifyUserAndGoToNextStep } from '../../actions/userActions';
-import store from "../../store";
 import axios from 'axios';
 import Noty from 'noty';
 

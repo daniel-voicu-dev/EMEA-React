@@ -2,6 +2,7 @@ import axios from 'axios';
 import store from "../store";
 import {apiDomain} from "./variables";
 import Noty from 'noty';
+import history from '../history';
 
 export function setCompany(o) {
   return (dispatch) => {       
@@ -69,18 +70,16 @@ export function addUserListToOrder(history, array, nextStep) {
 }
 
 
-export function addUserToOrder(history, obj, nextStep) {
+export const addUserToOrder = (obj) => {
   return (dispatch) => {  
-    // dispatch({type: "ADD_USER_TO_ORDER", payload: email});  
-    
     let data = {
       "Login": obj.RegistrationForEmail,
       "CreateOneInvoiceForAllRegistrations": true,
       "PersonRegistration": [
         {
           "RegistrationForEmail": obj.RegistrationForEmail,
-          "EventNo": store.getState().event.EventNo,
-          "EventItemNo": store.getState().event.ItemNo,
+          "EventNo": obj.EventNo,
+          "EventItemNo": obj.ItemNo,
           "PromoCode": obj.PromoCode
         }
       ]
@@ -91,7 +90,7 @@ export function addUserToOrder(history, obj, nextStep) {
       if (document.querySelector(".modal-backdrop") !== null) {
         document.querySelector(".modal-backdrop").remove();
       }
-      history.push(nextStep)
+      history.push("/review-register")
     }).catch((error) => {
       let errorPromoCodeMessage = `The Promo Code ${obj.PromoCode} is invalid.`
       new Noty({

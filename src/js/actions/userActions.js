@@ -113,8 +113,9 @@ export const verifyUserAndGoToNextStep = (email, password) => {
   }
 }
 
-export function goToAddMoreMembers(history) {
-  return (dispath) => {
+export const goToAddMoreMembers = (event) => {
+  return (dispatch) => {
+    dispatch({type: "SET_EVENT", payload: {"ItemNo": event.ItemNo, "ItemDescription": event.ItemDescription}})
     history.push("/add-more-members");
   }
 }
