@@ -144,7 +144,7 @@ export default class CreateUser extends Component {
     this.setState({...this.state, [e.currentTarget.attributes.name.value]: !this.state[e.currentTarget.attributes.name.value] });
   }
   changeInputTextState(e){
-    this.setState({...this.state, [e.currentTarget.attributes.name.value]: [e.currentTarget.value] });
+    this.setState({...this.state, [e.currentTarget.attributes.name.value]: e.currentTarget.value });
   }
   handleSend(e) {
     let canSend = this.state.email !== "" && this.state.password !== "" && this.state.name !== "" && this.state.address !== "" && this.state.city !== "" && this.state.country !== "" && this.state.zip !== "" && this.state.company !== "" && this.state.terms === true;   
