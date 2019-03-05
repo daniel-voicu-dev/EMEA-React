@@ -18,7 +18,7 @@ const PickEvent = (props) => {
  
   const handleSubmit = (v) => {    
     if (v !== null && v !== "") {
-      props.getEvent(props.history,{"EventNo": selectedEvent})
+      props.getEvent({"EventNo": selectedEvent})
     } else {
       setAlert(true);
     }    

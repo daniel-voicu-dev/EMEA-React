@@ -2,6 +2,7 @@ import axios from 'axios';
 import store from "../store";
 import {apiDomain} from "./variables";
 import Noty from 'noty';
+import history from '../history';
 
 export const getCountries = () => {  
   let postDomain = apiDomain + "/api/countries";
@@ -12,7 +13,7 @@ export const getCountries = () => {
   }
 }
 
-export function goToLogin(history, email) {
+export const goToLogin = (email) => {
   return (dispatch) => {   
     let postDomain = apiDomain + "/api/personinformation";    
     let sendObj = {
@@ -51,7 +52,7 @@ export function goToLogin(history, email) {
   }
 }
 
-export function verifyUserAndGoToNextStep(history, email, password) {
+export const verifyUserAndGoToNextStep = (email, password) => {
   let postDomain = apiDomain + "/api/login";   
   return (dispatch) => { 
     axios.post(postDomain, {"Login": email,"Password": password,"EventNo":  store.getState().event.EventNo}).then(r=>{ 

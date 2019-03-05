@@ -3,8 +3,7 @@ import {connect} from 'react-redux';
 import Header from "../Header";
 import Email from "../Email";
 
-import { getEvent } from '../../actions/eventActions';
-import { goToLogin, getCountries} from '../../actions/userActions';
+import { goToLogin} from '../../actions/userActions';
 
 const Start = props => {
 
@@ -12,16 +11,10 @@ const Start = props => {
   let [alert,setAlert] = useState(false);
   let alertMessage = alert ? (<p className="alert alert-danger">{props.fillInFields}</p>) : ("");
 
-  useEffect(() => {   
-    props.getCountries();
-    props.getEvent(history);  
-    console.log(props); 
-  },[]);
-
   const handleSend = (e) => {
     let canSend = email !== "";
     if (canSend) {
-      props.goToLogin(props.history, email);
+      props.goToLogin(email);
     } else {
       setAlert(true);     
     }
@@ -69,7 +62,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
   }
 }
 
-const mapDispatchToProps = { goToLogin,getCountries, getEvent }
+const mapDispatchToProps = { goToLogin }
 
 export default connect(
   mapStateToProps,

@@ -14,7 +14,7 @@ export default function counter(state = {
   case "SET_EVENT":
     return {...state, ...payload};  
   case "SET_EVENT_ITEMS":
-    return {...state, EventItems: [...payload]}    
+    return {...state, EventItems: [...state.EventItems,...payload]}    
   default:
     return state
   }
