@@ -12,7 +12,8 @@ Noty.overrideDefaults({
 
 function isValidEmail(value){
   if (value !== "") {
-    return value.indexOf("@") > 0 && value.indexOf(".") > 2 && value.length > 5 && value.indexOf(".") < value.length - 1 && value.indexOf("@") < value.lastIndexOf(".") - 1;
+    // return value.indexOf("@") > 0 && value.indexOf(".") > 2 && value.length > 5 && value.indexOf(".") < value.length - 1 && value.indexOf("@") < value.lastIndexOf(".") - 1;
+    return value.indexOf("@") > 0 && value.indexOf(".") > 0 && value.length > 5 && value.indexOf(".") < value.length - 1 && value.indexOf("@") < value.lastIndexOf(".") - 1;
   }
   return true;
 }
