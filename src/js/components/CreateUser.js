@@ -317,3 +317,64 @@ export default class CreateUser extends Component {
     )
   }
 }
+
+
+
+
+
+const CreateUser = props => {
+ 
+
+  
+ 
+  return (
+    <React.Fragment>
+      <Header />
+      <div className="container">
+        <div className="row">
+          <article className="col-12">
+            <div className="row">
+              <div className="col-4">
+                <img className="img-fluid" src="/images/registration-asia-2019.png" alt="" />
+              </div>
+              <div className="col-8 d-flex align-items-center flex-wrap">                  
+                <div>
+                  <h2 className="h2 font-weight-light text-dark">{props.eventName} Registrations</h2>
+                  <p>To register create a Directions Community User</p>
+                  <p>Enter your business email to continue</p>
+                  {alertMessage}
+                  <div id="form">
+                    <div className="form-group">                        
+                      <Email required={true} readonly={false} getEmail={(email) => {setEmail(email)}}/>
+                    </div>
+                    <div className="form-group">
+                      <button type="button" className="px-5 btn btn-primary" onClick={() => handleSend()}>Next</button>   
+                    </div>                      
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>  
+    </React.Fragment>
+  )
+}
+
+const mapStateToProps = (state /*, ownProps*/) => {
+  return {
+    email: state.user.Email, 
+    countries: state.user.CountryList,   
+    error: state.user.error,
+    companies: state.user.CompanyList,
+    eventName: state.event.EventName,
+    companyList: state.user.CompanyList
+  }
+}
+
+const mapDispatchToProps = { goToLogin }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CreateUser)
