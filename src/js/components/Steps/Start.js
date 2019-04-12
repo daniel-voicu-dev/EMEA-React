@@ -4,12 +4,19 @@ import Header from "../Header";
 import Email from "../Email";
 
 import { goToLogin} from '../../actions/userActions';
+import { getEvent } from '../../actions/eventActions';
+import { getCountries } from '../../actions/userActions';
 
 const Start = props => {
 
   let [email,setEmail] = useState("");
   let [alert,setAlert] = useState(false);
   let alertMessage = alert ? (<p className="alert alert-danger">{props.fillInFields}</p>) : ("");
+
+  useEffect(()=>{
+    props.getCountries();
+    props.getEvent({"EventNo": "EMEA2019"})
+  },[])
 
   const handleSend = (e) => {
     let canSend = email !== "";
@@ -62,7 +69,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
   }
 }
 
-const mapDispatchToProps = { goToLogin }
+const mapDispatchToProps = { goToLogin, getEvent, getCountries }
 
 export default connect(
   mapStateToProps,

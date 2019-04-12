@@ -5,7 +5,7 @@ import {Router} from 'react-router-dom'
 import Layout from "./components/Layout";
 import store from "./store";
 import history from './history';
-
+import "bootstrap/js/src/modal.js";
 const app = document.getElementById("app");
 ReactDOM.render(<Provider store={store}><Router history={history}><Layout /></Router></Provider>, app);
 

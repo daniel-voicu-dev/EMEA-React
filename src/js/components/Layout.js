@@ -19,8 +19,7 @@ const Layout = () => {
   return (
     <HashRouter basename="/">
       <React.Fragment> 
-        <Route exact path='/' component={PickEvent} /> 
-        <Route path='/start' component={Start} />
+        <Route exact path='/' component={Start} />         
         <Route path='/login' component={Login} />
         <Route path='/create-user' component={CreateUser} />
         <Route path='/register-others' component={RegisterOthers} />
