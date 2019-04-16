@@ -35,7 +35,7 @@ const Start = props => {
           <article className="col-12">
             <div className="row">
               <div className="col-4">
-                <img className="img-fluid" src="/images/registration-asia-2019.png" alt="" />
+                <img className="img-fluid" src="/images/registration-emea-2019.png" alt="" />
               </div>
               <div className="col-8 d-flex align-items-center flex-wrap">                  
                 <div>
