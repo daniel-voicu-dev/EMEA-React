@@ -27,6 +27,7 @@ export default class ReviewRegister extends Component {
     super(props);
     this.state = {            
       total: 0,
+      totalVAT: 0,
       orderlines: []      
     };
   }  
@@ -42,9 +43,11 @@ export default class ReviewRegister extends Component {
         });        
         if (orderForCurrentLogin.length > 0) {         
           let total = orderForCurrentLogin.reduce((r,v,k) => {return r = r + v.Amount}, 0);          
+          let totalVAT = orderForCurrentLogin.reduce((r,v,k) => {return r = r + v.AmountInclVAT}, 0);   
           let users = orderForCurrentLogin.reduce((r,v,k) => {return [...r,{"Name": v.PersonName, "Login": v.PersonEmail}]},[]);
           this.setState({orderlines: users});
-          this.setState({total: total});          
+          this.setState({total: total});     
+          this.setState({totalVAT: totalVAT});        
         } else {
           throw new Error("There was no registration available for this user");
         }
@@ -58,6 +61,7 @@ export default class ReviewRegister extends Component {
   render() {    
     let country = this.props.countries.filter(x=> {return x.Code===this.props.company.CountryCode})[0].Name;     
     let total = new Intl.NumberFormat(this.props.culture, { style: 'currency', currency: this.props.currency }).format(parseFloat(this.state.total));
+    let totalVat = new Intl.NumberFormat(this.props.culture, { style: 'currency', currency: this.props.currency }).format(parseFloat(this.state.totalVAT));
     return (
       <React.Fragment>
         <Header />
@@ -87,9 +91,11 @@ export default class ReviewRegister extends Component {
                             <li>{country}</li>
                           </ul> 
                         <p className="mb-0 text-primary font-weight-bold">
-                          Order total: {total}*
+                          Order total: {total}
                         </p>
-                        <small>* prices do not include VAT or other applicable taxes</small>
+                        <p className="mb-0 text-primary font-weight-bold">
+                          Order total(with VAT): {totalVat}
+                        </p>
                     </div>
                     <div className="mt-3">
                       { this.props.admin===true &&

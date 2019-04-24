@@ -160,7 +160,8 @@ export function registerUsers(history) {
     
     nRegisteringUsers.show();   
     axios.post(postDomain, {"EventNo": store.getState().event.EventNo, "Login": store.getState().user.Email}).then((r)=>{
-      // console.log("success confirming users");         
+      // console.log("success confirming users");       
+      dispatch({type: "GET_PAYMENT_LINKS", payload: r.data.StripePaymentLinks});
       nRegisteringUsers.close();
       history.push("/registration-completed");
     });
