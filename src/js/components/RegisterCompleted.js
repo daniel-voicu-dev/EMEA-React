@@ -13,14 +13,13 @@ export default class RegisterFinished extends Component {
     super(props);
     this.state = {      
       allRegistrations: props.allRegistrations,
-      paymentLinks: props.paymentLinks
+      paymentLinks: props.paymentLinks[0].Link
     };
   }  
  
 
 
-  renderPayments(obj) {
-    
+  renderPayments() {    
   // let emails = this.state.paymentLinks.reduce((r,v,k) => {
   //   let email = obj.RegisteredPerson.reduce((i,j) => {
   //     return [...i, j.RegisteredPersonEmail]
@@ -29,29 +28,31 @@ export default class RegisterFinished extends Component {
   //     return [...r, ...email];
   //   }, []);
 
-    let emails = obj.RegisteredPersons.reduce((i,j) => {
-      return [...i, j.RegisteredPersonEmail]
-    }, []);
+//     let emails = obj.RegisteredPersons.reduce((i,j) => {
+//       return [...i, j.RegisteredPersonEmail]
+//     }, []);
   
-console.log(emails, obj, this.state.allRegistrations )
+// console.log(emails, obj, this.state.allRegistrations )
 
-    let user = this.state.allRegistrations.reduce((r,v) => {
+//     let user = this.state.allRegistrations.reduce((r,v) => {
 
-      if(emails.indexOf(v.Email) > -1) {
-        return [...r , v]
-      } else {
-        return [...r]
-      }
-    }, [])
-console.log(user, emails, "user email")
-    let payForWho = user.length > 1 ? user.map((o,i, k) => {
-      if(i === k.length - 1) {
-        return o.Name;
-      } else {
-        return o.Name + ", ";
-      }
-    }) : user[0].Name;
-    return (<p>Click <a href={obj.Link} class="text-uppercase text-dark"><strong clasname="text-decoration-underline ">here</strong></a> to make the payment for {payForWho}. </p>)
+//       if(emails.indexOf(v.Email) > -1) {
+//         return [...r , v]
+//       } else {
+//         return [...r]
+//       }
+//     }, [])
+// console.log(user, emails, "user email")
+//     let payForWho = user.length > 1 ? user.map((o,i, k) => {
+//       if(i === k.length - 1) {
+//         return o.Name;
+//       } else {
+//         return o.Name + ", ";
+//       }
+//     }) : user[0].Name;
+    return (
+    <p>Click <a href={this.state.paymentLinks} class="text-uppercase text-dark"><strong clasname="text-decoration-underline ">here</strong></a> to make the payment. </p>
+    )
   }
   render() {    
     return (
@@ -68,9 +69,10 @@ console.log(user, emails, "user email")
                 <div>
                   <h2 className="h2 font-weight-light text-primary mb-3">Thank you for your registration.</h2>
                   <p className="mb-1">You will receive an email shortly with Invoice and Payment link.</p>
-                  <p clasName="mb-2">We look forward to seeing you at Directions ASIA 2019.</p> 
+                  <p clasName="mb-2">We look forward to seeing you at Directions EMEA 2019.</p> 
                   <p>Click <a href="https://www.optimice-hotelregistration.de/directions_2019/index.php?show=event&eventSub=Participation&e_access=UkdseVpUSXdNVGc9KioqUTI4eVFHNTBJVGc9" className="text-uppercase text-dark"><strong clasName="text-decoration-underline ">here</strong></a> to book a room at the conference hotel!</p>
-                  {this.props.paymentLinks.map((o,i)=> {return this.renderPayments(o)})}      
+                  {this.state.paymentLinks !== "N/A" &&
+                  this.renderPayments()}
                 </div>
               </div>
             </div>

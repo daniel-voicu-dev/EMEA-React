@@ -231,7 +231,7 @@ class AddNewMember extends Component {
                       </div>
                       <div className="form-group">
                           <label htmlFor="JobTitle">Job Title</label>
-                          <input type="text" id="JobTitle" className="form-control rounded-0" name="JobTitle" onChange={(e) => this.changeInputTextState(e)} /> 
+                          <input type="text" id="JobTitle" className="form-control rounded-0" name="JobTitle" maxlength="30" onChange={(e) => this.changeInputTextState(e)} /> 
                       </div>
                       <div className="form-group">
                           <label>You Product Interest</label>

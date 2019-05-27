@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import Header from "./Header";
 import {apiDomain} from "./../actions/variables";
 import axios from 'axios';
-import { registerUsers, addUsersToBeConfirmedList, updateOrderTotal } from '../actions/orderActions';
+import { registerUsers, addUsersToBeConfirmedList, updateOrderTotal, deleteRegistration } from '../actions/orderActions';
 
 @connect ((store) => {
   return {
@@ -58,6 +58,7 @@ export default class ReviewRegister extends Component {
     this.props.dispatch(registerUsers(this.props.history));
   }
 
+  
   render() {    
     let country = this.props.countries.filter(x=> {return x.Code===this.props.company.CountryCode})[0].Name;     
     let total = new Intl.NumberFormat(this.props.culture, { style: 'currency', currency: this.props.currency }).format(parseFloat(this.state.total));
@@ -99,7 +100,8 @@ export default class ReviewRegister extends Component {
                     </div>
                     <div className="mt-3">
                       { this.props.admin===true &&
-                        <Link to="/add-more-members" className="btn btn-dark px-5 mr-3">Add new user to the registration</Link>                  
+                       // <Link to="/add-more-members" className="btn btn-dark px-5 mr-3" onClick={()=>this.deleteRegistration()}>Add new user to the registration</Link>     
+                       <button type="button" className="btn btn-dark px-5 mr-3" onClick={()=>this.props.dispatch(deleteRegistration())}>Go Back</button>       
                       }
                     
                       <button type="button" onClick={()=>this.confirmRegistration()} className="btn btn-primary px-5">Confirm registration</button>

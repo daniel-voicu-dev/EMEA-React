@@ -68,7 +68,15 @@ export function addUserListToOrder(history, array, nextStep) {
     
   }
 }
-
+export const deleteRegistration = () => {
+  return (dispatch) => {
+    let postDomain = apiDomain + "/api/removeallregistrations";
+    axios.post(postDomain, {"EventNo": store.getState().event.EventNo, "Login": store.getState().user.Email}).then((r)=>{
+       console.log("success deleting users");      
+       history.push('/add-more-members')
+    });
+  } 
+}
 
 export const addUserToOrder = (obj) => {
   return (dispatch) => {  
@@ -118,8 +126,6 @@ export function addCurrentUserToOrder(history, email, link) {
 }
 
 
-
-
 export function registerUsers(history) {
   return (dispatch) => {       
     let postDomain = apiDomain + "/api/confirmregistration";
@@ -160,9 +166,14 @@ export function registerUsers(history) {
     
     nRegisteringUsers.show();   
     axios.post(postDomain, {"EventNo": store.getState().event.EventNo, "Login": store.getState().user.Email}).then((r)=>{
-      // console.log("success confirming users");       
+      // console.log("success confirming users");      
+      let payURL = r.data.StripePaymentLinks[0].Link;
       dispatch({type: "GET_PAYMENT_LINKS", payload: r.data.StripePaymentLinks});
       nRegisteringUsers.close();
+      if(payURL !== "N/A") {
+        window.open(payURL,'_blank');
+      }
+      
       history.push("/registration-completed");
     });
     // dispatch({type: "SET_COMPANY", payload: o});

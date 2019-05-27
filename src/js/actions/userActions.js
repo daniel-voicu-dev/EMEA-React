@@ -115,6 +115,7 @@ export const verifyUserAndGoToNextStep = (email, password) => {
 
 export const goToAddMoreMembers = (event) => {
   return (dispatch) => {
+    console.log('this is it')
     dispatch({type: "SET_EVENT", payload: {"ItemNo": event.ItemNo, "ItemDescription": event.ItemDescription}})
     history.push("/add-more-members");
   }
