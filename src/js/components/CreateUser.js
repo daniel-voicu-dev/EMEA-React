@@ -64,7 +64,7 @@ export default class CreateUser extends Component {
     }
   }
   componentDidUpdate() {   
-    if (this.props.companyList.length === 1) {
+    if (this.props.companyList.length === 1) {    
       var selectedCompany = this.props.companyList[0];
       let address = selectedCompany.Address;
       let city = selectedCompany.City;
@@ -72,26 +72,26 @@ export default class CreateUser extends Component {
       let country = selectedCompany.CountryCode;
       let phone = selectedCompany.PhoneNo;
       let company = selectedCompany.No;
-      if (this.state.company === "") {
+      if (this.state.company === "" && company !== "") {
         this.setState({company});
       }
-      if (this.state.address === "") {
+      if (this.state.address === "" && address !== "") {
         this.setState({address});
       }
-      if (this.state.city === "") {
+      if (this.state.city === "" && city !== "") {
         this.setState({city});
       }
-      if (this.state.zip === "") {
+      if (this.state.zip === "" && zip !== "") {
         this.setState({zip});
       }
-      if (this.state.country === "") {
+      if (this.state.country === "" && country !== "") {
         this.setState({country});
       }
-      if (this.state.phone === "") {
+      if (this.state.phone === "" && phone !== "") {
         this.setState({phone});
       }
     }
-    console.log(this.state);
+    console.log(this.state,  'this is the state you are looking for');
   }
   getEmail(email) {
     this.setState({email});
@@ -126,7 +126,7 @@ export default class CreateUser extends Component {
     let zip = selectedCompany.PostCode;
     let country = selectedCompany.CountryCode;
     let phone = selectedCompany.PhoneNo;
-    console.log(address,city,zip,city,country,phone);
+    console.log(address,city,zip,city,country,phone, 'this is the long one');
     this.setState({address});
     this.setState({city});
     this.setState({zip});

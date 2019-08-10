@@ -7,7 +7,8 @@ export const getEvent = (event = {"EventNo": "EMEA2019"}) => {
   return (dispatch) => {       
     let postDomain = apiDomain + "/api/eventItems";  
     axios.post(postDomain, event).then(function(r){
-      dispatch({type: "SET_EVENT", payload: {...event,"EventName":"EMEA2019"}});      
+      console.log(event, 'this')
+      dispatch({type: "SET_EVENT", payload: {...event,"EventName":"EMEA2019", }});      
       dispatch({type: "SET_EVENT_ITEMS", payload: r.data.EventItems});
     }).catch(error => {      
       new Noty({
@@ -25,6 +26,7 @@ export const getEvent = (event = {"EventNo": "EMEA2019"}) => {
 export const setEvent = (o) => {
   return (dispatch) => {
     dispatch({type: "SET_EVENT", payload: o});
+    
     history.push("/start");
   }
 }
