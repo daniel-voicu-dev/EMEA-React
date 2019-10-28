@@ -2,6 +2,7 @@ import axios from 'axios';
 import store from "../store";
 import {apiDomain} from "./variables";
 import Noty from 'noty';
+import history from '../history';
 
 export const getCountries = () => {  
   let postDomain = apiDomain + "/api/countries";
@@ -12,7 +13,7 @@ export const getCountries = () => {
   }
 }
 
-export function goToLogin(history, email) {
+export const goToLogin = (email) => {
   return (dispatch) => {   
     let postDomain = apiDomain + "/api/personinformation";    
     let sendObj = {
@@ -51,7 +52,7 @@ export function goToLogin(history, email) {
   }
 }
 
-export function verifyUserAndGoToNextStep(history, email, password) {
+export const verifyUserAndGoToNextStep = (email, password) => {
   let postDomain = apiDomain + "/api/login";   
   return (dispatch) => { 
     axios.post(postDomain, {"Login": email,"Password": password,"EventNo":  store.getState().event.EventNo}).then(r=>{ 
@@ -65,6 +66,7 @@ export function verifyUserAndGoToNextStep(history, email, password) {
 
         let domain = store.getState().user.Domain;
         domain = domain.substr(1);
+        let userEmail = store.getState().user.Email;
         let eventNo = store.getState().event.EventNo;  
 
         //gets info for the company the user is registered to and sets admin state/unregistered users/
@@ -81,7 +83,7 @@ export function verifyUserAndGoToNextStep(history, email, password) {
               dispatch({type: "ADD_UNREGISTERED_USERS", payload: companyFilteredByLogin.UnregisteredPerson});
             }
             //goes to next step based on login and registration
-            axios.post(apiDomain + "/api/getregistrations", {"EventNo": eventNo,"LoginOrDomain": domain}).then(r3 => {
+            axios.post(apiDomain + "/api/getregistrations", {"EventNo": eventNo,"LoginOrDomain": userEmail}).then(r3 => {
               if (r3.data.CompanyRegistrations.length > 0) {
                 let getAllRegistrations = r3.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo}).reduce((r,v,k) => {return [...r, ...v.PersonRegistrations]},[]);
                 let userAlreadyRegistered = getAllRegistrations.filter(o=>{return o.PersonEmail === email}).length > 0 ? getAllRegistrations.filter(o=>{return o.PersonEmail === email})[0].RegistrationInvoiceNo == "" : false;
@@ -91,7 +93,11 @@ export function verifyUserAndGoToNextStep(history, email, password) {
                 //console.log("usersToBeConfirmed",usersToBeConfirmed);
                 dispatch({type: "USERS_TO_BE_CONFIRMED", payload: usersToBeConfirmed});
                 dispatch({type: "UPDATE_USER_IS_CONFIRMED", payload: userIsAlreadyConfirmed});
-                dispatch({type: "ADD_EXISTING_REGISTRATIONS_BY_USER", payload: getAllRegistrations.filter(o=>{return o.CreatedByContactEmail === email && o.RegistrationInvoiceNo !== ""})})
+                // if(userIsAdmin) {
+                  dispatch({type: "ADD_EXISTING_REGISTRATIONS_BY_USER", payload: getAllRegistrations.filter(o=>{return o.RegistrationInvoiceNo !== ""})})
+                // }  else {
+                //   dispatch({type: "ADD_EXISTING_REGISTRATIONS_BY_USER", payload: getAllRegistrations.filter(o=>{return o.CreatedByContactEmail === email && o.RegistrationInvoiceNo !== ""})})
+                // }
                 if (userAlreadyRegistered === true && !userIsAdmin) {
                   dispatch({type: "ADD_USER_TO_ORDER", payload: {"Name": store.getState().user.Name, "Login": store.getState().user.Email}});
                   history.push("/review-register");
@@ -112,8 +118,10 @@ export function verifyUserAndGoToNextStep(history, email, password) {
   }
 }
 
-export function goToAddMoreMembers(history) {
-  return (dispath) => {
+export const goToAddMoreMembers = (event) => {
+  return (dispatch) => {
+    console.log('this is it')
+    dispatch({type: "SET_EVENT", payload: {"ItemNo": event.ItemNo, "ItemDescription": event.ItemDescription}})
     history.push("/add-more-members");
   }
 }

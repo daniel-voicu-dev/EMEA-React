@@ -64,7 +64,7 @@ export default class CreateUser extends Component {
     }
   }
   componentDidUpdate() {   
-    if (this.props.companyList.length === 1) {
+    if (this.props.companyList.length === 1) {    
       var selectedCompany = this.props.companyList[0];
       let address = selectedCompany.Address;
       let city = selectedCompany.City;
@@ -72,26 +72,26 @@ export default class CreateUser extends Component {
       let country = selectedCompany.CountryCode;
       let phone = selectedCompany.PhoneNo;
       let company = selectedCompany.No;
-      if (this.state.company === "") {
+      if (this.state.company === "" && company !== "") {
         this.setState({company});
       }
-      if (this.state.address === "") {
+      if (this.state.address === "" && address !== "") {
         this.setState({address});
       }
-      if (this.state.city === "") {
+      if (this.state.city === "" && city !== "") {
         this.setState({city});
       }
-      if (this.state.zip === "") {
+      if (this.state.zip === "" && zip !== "") {
         this.setState({zip});
       }
-      if (this.state.country === "") {
+      if (this.state.country === "" && country !== "") {
         this.setState({country});
       }
-      if (this.state.phone === "") {
+      if (this.state.phone === "" && phone !== "") {
         this.setState({phone});
       }
     }
-    console.log(this.state);
+
   }
   getEmail(email) {
     this.setState({email});
@@ -126,7 +126,7 @@ export default class CreateUser extends Component {
     let zip = selectedCompany.PostCode;
     let country = selectedCompany.CountryCode;
     let phone = selectedCompany.PhoneNo;
-    console.log(address,city,zip,city,country,phone);
+    console.log(address,city,zip,city,country,phone, 'this is the long one');
     this.setState({address});
     this.setState({city});
     this.setState({zip});
@@ -179,7 +179,7 @@ export default class CreateUser extends Component {
         <article className="col-12">
           <div className="row">
             <div className="col-4">
-              <img className="img-fluid" src="/images/registration-asia-2019.png" alt="" />
+              <img className="img-fluid" src="/images/registration-emea-2019.png" alt="" />
             </div>
             <div className="col-8 d-flex align-items-center flex-wrap">
               <div>
@@ -233,7 +233,7 @@ export default class CreateUser extends Component {
                   </div>
                   <div className="form-group">
                       <label htmlFor="JobTitle">Job Title</label>
-                      <input type="text" id="JobTitle" className="form-control rounded-0" name="JobTitle" onChange={(e) => this.changeInputTextState(e)} /> 
+                      <input type="text" id="JobTitle" className="form-control rounded-0" maxlength="30" name="JobTitle" onChange={(e) => this.changeInputTextState(e)} /> 
                   </div>
                   <div className="form-group">
                       <label>You Product Interest</label>
@@ -317,3 +317,4 @@ export default class CreateUser extends Component {
     )
   }
 }
+

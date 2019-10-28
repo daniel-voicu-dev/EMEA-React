@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import Header from "./Header";
 import {apiDomain} from "./../actions/variables";
 import axios from 'axios';
-import { registerUsers, addUsersToBeConfirmedList, updateOrderTotal } from '../actions/orderActions';
+import { registerUsers, addUsersToBeConfirmedList, updateOrderTotal, deleteRegistration } from '../actions/orderActions';
 
 @connect ((store) => {
   return {
@@ -27,6 +27,7 @@ export default class ReviewRegister extends Component {
     super(props);
     this.state = {            
       total: 0,
+      totalVAT: 0,
       orderlines: []      
     };
   }  
@@ -34,17 +35,20 @@ export default class ReviewRegister extends Component {
   componentWillMount() {
       let domain = this.props.domain;
       domain = domain.substr(1);
+      let userEmail = this.props.login;
       let eventNo = this.props.event;      
-      axios.post(apiDomain + "/api/getregistrations", {"EventNo": eventNo,"LoginOrDomain": domain}).then(r => {        
+      axios.post(apiDomain + "/api/getregistrations", {"EventNo": eventNo,"LoginOrDomain": userEmail}).then(r => {        
         var getAllRegistrations = r.data.CompanyRegistrations.filter(o => {return o.EventNo === eventNo}).reduce((r,v,k) => {return [...r, ...v.PersonRegistrations]},[]);
         var orderForCurrentLogin = getAllRegistrations.filter(obj => {
           return obj.RegistrationInvoiceNo === "" && obj.CreatedByContactEmail === this.props.login;
         });        
         if (orderForCurrentLogin.length > 0) {         
           let total = orderForCurrentLogin.reduce((r,v,k) => {return r = r + v.Amount}, 0);          
+          let totalVAT = orderForCurrentLogin.reduce((r,v,k) => {return r = r + v.AmountInclVAT}, 0);   
           let users = orderForCurrentLogin.reduce((r,v,k) => {return [...r,{"Name": v.PersonName, "Login": v.PersonEmail}]},[]);
           this.setState({orderlines: users});
-          this.setState({total: total});          
+          this.setState({total: total});     
+          this.setState({totalVAT: totalVAT});        
         } else {
           throw new Error("There was no registration available for this user");
         }
@@ -55,9 +59,11 @@ export default class ReviewRegister extends Component {
     this.props.dispatch(registerUsers(this.props.history));
   }
 
+  
   render() {    
     let country = this.props.countries.filter(x=> {return x.Code===this.props.company.CountryCode})[0].Name;     
     let total = new Intl.NumberFormat(this.props.culture, { style: 'currency', currency: this.props.currency }).format(parseFloat(this.state.total));
+    let totalVat = new Intl.NumberFormat(this.props.culture, { style: 'currency', currency: this.props.currency }).format(parseFloat(this.state.totalVAT));
     return (
       <React.Fragment>
         <Header />
@@ -66,7 +72,7 @@ export default class ReviewRegister extends Component {
             <article className="col-12">
               <div className="row">
                 <div className="col-4">
-                  <img className="img-fluid" src="/images/registration-asia-2019.png" alt="" />
+                  <img className="img-fluid" src="/images/registration-emea-2019.png" alt="" />
                 </div>
                 <div className="col-8 d-flex align-items-center flex-wrap">
                   <div>
@@ -87,13 +93,16 @@ export default class ReviewRegister extends Component {
                             <li>{country}</li>
                           </ul> 
                         <p className="mb-0 text-primary font-weight-bold">
-                          Order total: {total}*
+                          Order total: {total}
                         </p>
-                        <small>* prices do not include VAT or other applicable taxes</small>
+                        <p className="mb-0 text-primary font-weight-bold">
+                          Order total(with VAT): {totalVat}
+                        </p>
                     </div>
                     <div className="mt-3">
                       { this.props.admin===true &&
-                        <Link to="/add-more-members" className="btn btn-dark px-5 mr-3">Add new user to the registration</Link>                  
+                       // <Link to="/add-more-members" className="btn btn-dark px-5 mr-3" onClick={()=>this.deleteRegistration()}>Add new user to the registration</Link>     
+                       <button type="button" className="btn btn-dark px-5 mr-3" onClick={()=>this.props.dispatch(deleteRegistration())}>Go Back</button>       
                       }
                     
                       <button type="button" onClick={()=>this.confirmRegistration()} className="btn btn-primary px-5">Confirm registration</button>

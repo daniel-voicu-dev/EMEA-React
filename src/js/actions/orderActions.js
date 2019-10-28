@@ -2,6 +2,7 @@ import axios from 'axios';
 import store from "../store";
 import {apiDomain} from "./variables";
 import Noty from 'noty';
+import history from '../history';
 
 export function setCompany(o) {
   return (dispatch) => {       
@@ -67,20 +68,26 @@ export function addUserListToOrder(history, array, nextStep) {
     
   }
 }
+export const deleteRegistration = () => {
+  return (dispatch) => {
+    let postDomain = apiDomain + "/api/removeallregistrations";
+    axios.post(postDomain, {"EventNo": store.getState().event.EventNo, "Login": store.getState().user.Email}).then((r)=>{
+       console.log("success deleting users");      
+       history.push('/add-more-members')
+    });
+  } 
+}
 
-
-export function addUserToOrder(history, obj, nextStep) {
+export const addUserToOrder = (obj) => {
   return (dispatch) => {  
-    // dispatch({type: "ADD_USER_TO_ORDER", payload: email});  
-    
     let data = {
       "Login": obj.RegistrationForEmail,
       "CreateOneInvoiceForAllRegistrations": true,
       "PersonRegistration": [
         {
           "RegistrationForEmail": obj.RegistrationForEmail,
-          "EventNo": store.getState().event.EventNo,
-          "EventItemNo": store.getState().event.ItemNo,
+          "EventNo": obj.EventNo,
+          "EventItemNo": obj.ItemNo,
           "PromoCode": obj.PromoCode
         }
       ]
@@ -91,7 +98,7 @@ export function addUserToOrder(history, obj, nextStep) {
       if (document.querySelector(".modal-backdrop") !== null) {
         document.querySelector(".modal-backdrop").remove();
       }
-      history.push(nextStep)
+      history.push("/review-register")
     }).catch((error) => {
       let errorPromoCodeMessage = `The Promo Code ${obj.PromoCode} is invalid.`
       new Noty({
@@ -117,8 +124,6 @@ export function addCurrentUserToOrder(history, email, link) {
     history.push(link);
   }
 }
-
-
 
 
 export function registerUsers(history) {
@@ -161,8 +166,14 @@ export function registerUsers(history) {
     
     nRegisteringUsers.show();   
     axios.post(postDomain, {"EventNo": store.getState().event.EventNo, "Login": store.getState().user.Email}).then((r)=>{
-      // console.log("success confirming users");         
+      // console.log("success confirming users");      
+      let payURL = r.data.StripePaymentLinks[0].Link;
+      dispatch({type: "GET_PAYMENT_LINKS", payload: r.data.StripePaymentLinks});
       nRegisteringUsers.close();
+      if(payURL !== "N/A") {
+        window.open(payURL,'_blank');
+      }
+      
       history.push("/registration-completed");
     });
     // dispatch({type: "SET_COMPANY", payload: o});

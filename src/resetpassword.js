@@ -1,6 +1,6 @@
 var gEvent = {
   "label": "ASIA",
-  "eventNo": "ASIA2019"
+  "eventNo": "DOKDK2020"
 };
 
 Noty.overrideDefaults({

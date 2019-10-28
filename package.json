@@ -44,11 +44,12 @@
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
-    "webpack": "^3.10.0",
+    "webpack": "^3.12.0",
     "webpack-dev-server": "^2.11.0"
   },
   "dependencies": {
     "bootstrap": "^4.0.0-beta.3",
+    "history": "^4.7.2",
     "i": "^0.3.6",
     "ionicons": "^3.0.0",
     "jquery": "^3.2.1",

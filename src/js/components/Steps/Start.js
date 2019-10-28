@@ -3,8 +3,9 @@ import {connect} from 'react-redux';
 import Header from "../Header";
 import Email from "../Email";
 
+import { goToLogin} from '../../actions/userActions';
 import { getEvent } from '../../actions/eventActions';
-import { goToLogin, getCountries} from '../../actions/userActions';
+import { getCountries } from '../../actions/userActions';
 
 const Start = props => {
 
@@ -12,16 +13,15 @@ const Start = props => {
   let [alert,setAlert] = useState(false);
   let alertMessage = alert ? (<p className="alert alert-danger">{props.fillInFields}</p>) : ("");
 
-  useEffect(() => {   
+  useEffect(()=>{
     props.getCountries();
-    props.getEvent(history);  
-    console.log(props); 
-  },[]);
+    props.getEvent({"EventNo": "DOKDK2020"})
+  },[])
 
   const handleSend = (e) => {
     let canSend = email !== "";
     if (canSend) {
-      props.goToLogin(props.history, email);
+      props.goToLogin(email);
     } else {
       setAlert(true);     
     }
@@ -35,7 +35,7 @@ const Start = props => {
           <article className="col-12">
             <div className="row">
               <div className="col-4">
-                <img className="img-fluid" src="/images/registration-asia-2019.png" alt="" />
+                <img className="img-fluid" src="/images/registration-emea-2019.png" alt="" />
               </div>
               <div className="col-8 d-flex align-items-center flex-wrap">                  
                 <div>
@@ -69,7 +69,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
   }
 }
 
-const mapDispatchToProps = { goToLogin,getCountries, getEvent }
+const mapDispatchToProps = { goToLogin, getEvent, getCountries }
 
 export default connect(
   mapStateToProps,

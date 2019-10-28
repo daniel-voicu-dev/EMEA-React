@@ -8,7 +8,7 @@ import { getCountries } from '../../actions/userActions';
 
 const PickEvent = (props) => {  
   let [alert,setAlert] = useState(false);
-  let [events,setEvents] = useState([{eventName: "ASIA 2019", eventNo: "ASIA2019", ItemDescription: "Normal Price", ItemNo: "70062"}, {eventName: "Europe 2019", eventNo: "EUROPE2019", ItemDescription: "Normal Price", ItemNo: "99999"}]);
+  let [events,setEvents] = useState([{eventName: "ASIA 2019", eventNo: "DOKDK2020", ItemDescription: "Normal Price", ItemNo: "70062"}, {eventName: "ASIA 2019 (TEST)", eventNo: "DOKDK2020", ItemDescription: "Normal Price", ItemNo: "70062"}]);
   let [selectedEvent, setSelectedEvent] = useState(null);
   let alertMessage = alert ? (<p className="alert alert-danger">Please select an event to continue</p>) : ("");
 
@@ -18,7 +18,7 @@ const PickEvent = (props) => {
  
   const handleSubmit = (v) => {    
     if (v !== null && v !== "") {
-      props.getEvent(props.history,{"EventNo": selectedEvent})
+      props.getEvent({"EventNo": selectedEvent})
     } else {
       setAlert(true);
     }    
@@ -41,7 +41,7 @@ const PickEvent = (props) => {
           <article className="col-12">
             <div className="row">
               <div className="col-4 d-none">
-                <img className="img-fluid" src="/images/registration-asia-2019.png" alt="" />
+                <img className="img-fluid" src="/images/registration-emea-2019.png" alt="" />
               </div>
               <div className="col-8 col-12 d-flex align-items-center flex-wrap">                  
                 <div>
