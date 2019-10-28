@@ -15,7 +15,7 @@ const Start = props => {
 
   useEffect(()=>{
     props.getCountries();
-    props.getEvent({"EventNo": "EMEA2019"})
+    props.getEvent({"EventNo": "DOKDK2020"})
   },[])
 
   const handleSend = (e) => {

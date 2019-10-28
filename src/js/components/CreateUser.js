@@ -91,7 +91,7 @@ export default class CreateUser extends Component {
         this.setState({phone});
       }
     }
-    console.log(this.state,  'this is the state you are looking for');
+
   }
   getEmail(email) {
     this.setState({email});
@@ -233,7 +233,7 @@ export default class CreateUser extends Component {
                   </div>
                   <div className="form-group">
                       <label htmlFor="JobTitle">Job Title</label>
-                      <input type="text" id="JobTitle" className="form-control rounded-0" name="JobTitle" onChange={(e) => this.changeInputTextState(e)} /> 
+                      <input type="text" id="JobTitle" className="form-control rounded-0" maxlength="30" name="JobTitle" onChange={(e) => this.changeInputTextState(e)} /> 
                   </div>
                   <div className="form-group">
                       <label>You Product Interest</label>

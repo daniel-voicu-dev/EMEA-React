@@ -1,6 +1,6 @@
 export const apiDomain = "";
 export const eventConfiguration = {
-  "Id": "ASIA2019",
+  "Id": "DOKDK2020",
   "Currency": "EUR",
   "Culture": "de-DE"
 };

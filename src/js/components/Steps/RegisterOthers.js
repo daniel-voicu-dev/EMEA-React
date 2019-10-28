@@ -9,8 +9,8 @@ const RegisterOthers = (props) => {
   let [PromoCode, setPromoCode] = useState("");
   
   let seeExistingRegistrations = props.registeredUsers.length > 0 ? ( <div><button type="button" onClick={() => history.push("/see-registrations")} className="btn btn-primary px-5">See existing registrations</button></div>) : ("");
-  let adminActionBlock = props.admin ? (<div className="mb-3">
-  {props.eventItems.map(o=> {return(<div className="mb-3"><button type="button" onClick={()=>props.goToAddMoreMembers(o)} className="btn btn-primary px-5">Next Step: Register for {o.ItemDescription}</button></div>)})}
+  let adminActionBlock = props.admin && document.getElementById('RegisterOthersButton') == null ? (<div className="mb-3">
+  {props.eventItems.map(o=> {return(<div className="mb-3"><button type="button" onClick={()=>props.goToAddMoreMembers(o)} id="RegisterOthersButton" className="btn btn-primary px-5">Next Step: Register for {o.ItemDescription}</button></div>)})}
   </div>) : ("");
   let nonAdminActionBlock = (props.isConfirmed === false && props.admin === false) ? (
     <div>
